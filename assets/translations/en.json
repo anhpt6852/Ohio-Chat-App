@@ -1,0 +1,34 @@
+{
+    "title": "",
+    "chooseLanguage": "Select language",
+    "error": {
+        "empty_error": "This field cannot be left blank",
+        "invalid_phone": "Invalid phone number",
+        "image_error": "Cannot load image",
+        "not_same_password": "Re-entered password does not match"
+    },
+    "login": {
+        "forget_password": {
+            "label": "Forgot password?"
+        },
+        "register": {
+            "label": "Not a member?",
+            "suggest": "Sign Up"
+        },
+        "usernameLabel": "Username",
+        "passwordLabel": "Password",
+        "loginButtonLabel": "Login"
+    },
+    "register": {
+        "title": "Create an account",
+        "fullname": "Fullname",
+        "phone": "Phone",
+        "email": "Email",
+        "password": "Password",
+        "re_password": "Confirm password",
+        "button_label": "Register",
+        "verify": {
+            "title": "Confirm email"
+        }
+    }
+ }

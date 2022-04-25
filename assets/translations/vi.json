@@ -1,0 +1,34 @@
+{
+    "title": "",
+    "chooseLanguage": "Chọn ngôn ngữ",
+    "error": {
+        "empty_error": "Không được bỏ trống trường này",
+        "invalid_phone": "Số điện thoại không hợp lệ",
+        "image_error": "Không thể tải được hình ảnh",
+        "not_same_password": "Mật khẩu nhập lại không khớp"
+    },
+    "login": {
+        "forget_password": {
+            "label": "Quên mật khẩu"
+        },
+        "register": {
+            "label": "Bạn chưa có tài khoản?",
+            "suggest": "Đăng ký"
+        },
+        "usernameLabel": "Tên đăng nhập",
+        "passwordLabel": "Mật khẩu",
+        "loginButtonLabel": "Đăng nhập"
+    },
+    "register": {
+        "title": "Đăng ký tài khoản",
+        "fullname": "Họ và tên",
+        "phone": "Số điện thoại",
+        "email": "Email",
+        "password": "Mật khẩu",
+        "re_password": "Xác nhận mật khẩu",
+        "button_label": "Đăng ký",
+        "verify": {
+            "title": "Xác nhận email"
+        }
+    }
+}
