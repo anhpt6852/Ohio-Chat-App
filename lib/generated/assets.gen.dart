@@ -7,6 +7,22 @@
 
 import 'package:flutter/widgets.dart';
 
+class $AssetsImagesGen {
+  const $AssetsImagesGen();
+
+  /// File path: assets/images/login_background.jpeg
+  AssetGenImage get loginBackground =>
+      const AssetGenImage('assets/images/login_background.jpeg');
+
+  /// File path: assets/images/logo_banner.png
+  AssetGenImage get logoBanner =>
+      const AssetGenImage('assets/images/logo_banner.png');
+
+  /// File path: assets/images/logo_square.jpg
+  AssetGenImage get logoSquare =>
+      const AssetGenImage('assets/images/logo_square.jpg');
+}
+
 class $AssetsTranslationsGen {
   const $AssetsTranslationsGen();
 
@@ -20,6 +36,7 @@ class $AssetsTranslationsGen {
 class Assets {
   Assets._();
 
+  static const $AssetsImagesGen images = $AssetsImagesGen();
   static const $AssetsTranslationsGen translations = $AssetsTranslationsGen();
 }
 

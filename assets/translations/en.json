@@ -2,12 +2,19 @@
     "title": "",
     "chooseLanguage": "Select language",
     "error": {
+        "login": {
+            "invalid_user": "This account currently does not exist",
+            "invalid_email": "Please enter the correct email address",
+            "empty_password": "Please enter a password",
+            "wrong_password": "Password is incorrect please try again"
+        },
         "empty_error": "This field cannot be left blank",
         "invalid_phone": "Invalid phone number",
         "image_error": "Cannot load image",
         "not_same_password": "Re-entered password does not match"
     },
     "login": {
+        "subtitle": "Let's build a friendly community",
         "forget_password": {
             "label": "Forgot password?"
         },

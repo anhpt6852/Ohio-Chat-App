@@ -1,8 +1,8 @@
 import 'package:dio/dio.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:ohio_chat_app/core/commons/presentation/snack_bar.dart';
-import 'package:ohio_chat_app/core/services/logger.dart';
 import 'package:ohio_chat_app/feature/register/data/models/register_response.dart';
 import 'package:ohio_chat_app/feature/register/data/repositories/register_repositories_impl.dart';
 import 'package:ohio_chat_app/feature/register/domain/repositories/register_repositories.dart';
@@ -23,36 +23,27 @@ class RegisterController {
   RegisterController({required this.ref, required this.registerRepositories});
 
   final TextEditingController usernameController = TextEditingController();
-  final TextEditingController phoneController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController rePasswordController = TextEditingController();
   final RoundedLoadingButtonController buttonController =
       RoundedLoadingButtonController();
+  //instance Firebase
+  final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 
-  doRegister(context,
-      {required String phoneNumber,
-      required String password,
+  registerWithEmailPassword(
+      {required String name,
       required String email,
-      required String fullname}) async {
+      required String password}) async {
     try {
-      var result = await ref.read(registerProvider(
-          phoneNumber: phoneNumber,
-          password: password,
-          email: email,
-          fullname: fullname)) as RegisterResponse;
-
-      CommonSnackbar.show(context,
-          message: result.msg, type: SnackbarType.success);
-      buttonController.reset();
-
-      Navigator.of(context).pushNamed(AppRoutes.verify);
-    } catch (e) {
-      buttonController.reset();
-      if (e is DioError) {
-        CommonSnackbar.show(context,
-            message: e.response!.data['msg'], type: SnackbarType.error);
-      }
+      var res = await _firebaseAuth.createUserWithEmailAndPassword(
+          email: email.trim(), password: password.trim());
+      print(res);
+      res.user?.updateDisplayName(name);
+      return {"status": true, "message": "success", "data": res.user};
+    } on FirebaseAuthException catch (e) {
+      print(e.toString());
+      return {"status": false, "message": e.message.toString(), "data": ""};
     }
   }
 }

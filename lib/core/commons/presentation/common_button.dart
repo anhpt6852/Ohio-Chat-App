@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ohio_chat_app/core/config/theme.dart';
 import 'package:ohio_chat_app/core/constant/colors.dart';
@@ -63,6 +62,7 @@ class CommonButton extends StatelessWidget {
         borderRadius: BorderRadius.circular(8.0),
       ),
       child: RoundedLoadingButton(
+        width: MediaQuery.of(context).size.width,
         color: backgroudColor ?? _backgroundColor,
         child: child ??
             Text(

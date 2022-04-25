@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "140002509211",
+    "project_id": "ohio-chat-app",
+    "storage_bucket": "ohio-chat-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:140002509211:android:9c295aa73c59ab0dbbe13e",
+        "android_client_info": {
+          "package_name": "ohio.studio.chat_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "140002509211-rfbhjcfjefkqllrncu8kjmiui1btmvec.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBPYNaNfbA0xoMGAnhVXWVW-lxc0vd-PGo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "140002509211-rfbhjcfjefkqllrncu8kjmiui1btmvec.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

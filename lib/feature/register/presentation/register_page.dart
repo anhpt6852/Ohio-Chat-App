@@ -52,24 +52,6 @@ class RegisterPage extends ConsumerWidget {
             const SizedBox(height: 8),
             CommonTextFormField(
               height: 52,
-              keyboardType: TextInputType.phone,
-              hintText: tr(LocaleKeys.register_phone),
-              controller: controller.phoneController,
-              prefixIcon: const Align(
-                  alignment: Alignment.centerLeft,
-                  child: Icon(Icons.phone, size: 24)),
-              prefixBoxConstrains:
-                  const BoxConstraints(maxHeight: 24, maxWidth: 32),
-              validator: (str) {
-                if (str == null || str.isEmpty) {
-                  return tr(LocaleKeys.error_empty_error);
-                }
-                return null;
-              },
-            ),
-            const SizedBox(height: 8),
-            CommonTextFormField(
-              height: 52,
               hintText: tr(LocaleKeys.register_email),
               controller: controller.emailController,
               prefixIcon: const Align(
@@ -148,11 +130,10 @@ class RegisterPage extends ConsumerWidget {
                 ),
                 onPressed: () {
                   if (_formKey.currentState!.validate()) {
-                    controller.doRegister(context,
-                        phoneNumber: controller.phoneController.text,
+                    controller.registerWithEmailPassword(
                         password: controller.passwordController.text,
                         email: controller.emailController.text,
-                        fullname: controller.usernameController.text);
+                        name: controller.usernameController.text);
                   } else {
                     controller.buttonController.reset();
                   }

@@ -2,12 +2,19 @@
     "title": "",
     "chooseLanguage": "Chọn ngôn ngữ",
     "error": {
+        "login": {
+            "invalid_user": "Tài khoản này hiện không tồn tại",
+            "invalid_email": "Vui lòng nhập chính xác địa chỉ email",
+            "empty_password": "Vui lòng nhập mật khẩu",
+            "wrong_password": "Mật khẩu không đúng xin vui lòng thử lại"
+        },
         "empty_error": "Không được bỏ trống trường này",
         "invalid_phone": "Số điện thoại không hợp lệ",
         "image_error": "Không thể tải được hình ảnh",
         "not_same_password": "Mật khẩu nhập lại không khớp"
     },
     "login": {
+        "subtitle": "Hãy xây dựng một cộng đồng thân thiện",
         "forget_password": {
             "label": "Quên mật khẩu"
         },
@@ -15,6 +22,7 @@
             "label": "Bạn chưa có tài khoản?",
             "suggest": "Đăng ký"
         },
+        
         "usernameLabel": "Tên đăng nhập",
         "passwordLabel": "Mật khẩu",
         "loginButtonLabel": "Đăng nhập"

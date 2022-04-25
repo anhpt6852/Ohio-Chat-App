@@ -11,9 +11,7 @@ import 'package:ohio_chat_app/generated/locale_keys.g.dart';
 import 'package:ohio_chat_app/routes.dart';
 
 class LoginForm extends ConsumerWidget {
-  LoginForm({Key? key}) : super(key: key);
-
-  final _formKey = GlobalKey<FormState>();
+  const LoginForm({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -41,160 +39,161 @@ class LoginForm extends ConsumerWidget {
                           return Padding(
                             padding:
                                 const EdgeInsets.symmetric(horizontal: 16.0),
-                            child: Form(
-                              key: _formKey,
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  const SizedBox(height: 32.0),
-                                  CommonTextFormField(
-                                    labelText:
-                                        tr(LocaleKeys.login_usernameLabel),
-                                    controller: controller.usernameController,
-                                    keyboardType: TextInputType.phone,
-                                    textInputAction: TextInputAction.done,
-                                    onChanged: (str) {
-                                      if (str.length < 10) {
-                                        controller.setIsValidateUsername(false);
-                                      }
-                                    },
-                                    validator: (str) {
-                                      if (str == null || str.isEmpty) {
-                                        return tr(LocaleKeys.error_empty_error);
-                                      }
-                                      if (str.length < 10) {
-                                        return tr(
-                                            LocaleKeys.error_invalid_phone);
-                                      }
-                                      return null;
-                                    },
-                                  ),
-                                  AnimatedSwitcher(
-                                      duration:
-                                          const Duration(milliseconds: 500),
-                                      transitionBuilder: (Widget child,
-                                              Animation<double> animation) =>
-                                          SizeTransition(
-                                              child: child,
-                                              sizeFactor: animation),
-                                      child: ref
-                                              .watch(controller
-                                                  .isValidateUsername.state)
-                                              .state
-                                          ? Column(
-                                              children: [
-                                                const SizedBox(height: 16),
-                                                CommonTextFormField(
-                                                  labelText: tr(LocaleKeys
-                                                      .login_passwordLabel),
-                                                  controller: controller
-                                                      .passwordController,
-                                                  textInputAction:
-                                                      TextInputAction.done,
-                                                  obscureText: true,
-                                                  onChanged: (str) {},
-                                                  onFieldSubmitted: (_) {},
-                                                  validator: (str) {
-                                                    if (str == null ||
-                                                        str.isEmpty) {
-                                                      return tr(LocaleKeys
-                                                          .error_empty_error);
-                                                    }
-                                                    return null;
-                                                  },
-                                                ),
-                                                Align(
-                                                  alignment:
-                                                      Alignment.centerRight,
-                                                  child: GestureDetector(
-                                                    onTap: () {},
-                                                    child: Text(
-                                                      tr(LocaleKeys
-                                                          .login_forget_password_label),
-                                                      style: t16M.apply(
-                                                          color: AppColors
-                                                              .primary),
-                                                    ),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                const SizedBox(height: 32.0),
+                                CommonTextFormField(
+                                  labelText: tr(LocaleKeys.login_usernameLabel),
+                                  controller: controller.usernameController,
+                                  textInputAction: TextInputAction.done,
+                                ),
+                                AnimatedSwitcher(
+                                    duration: const Duration(milliseconds: 500),
+                                    transitionBuilder: (Widget child,
+                                            Animation<double> animation) =>
+                                        SizeTransition(
+                                            child: child,
+                                            sizeFactor: animation),
+                                    child: ref
+                                            .watch(controller
+                                                .isValidateUsername.state)
+                                            .state
+                                        ? Column(
+                                            children: [
+                                              const SizedBox(height: 16),
+                                              CommonTextFormField(
+                                                labelText: tr(LocaleKeys
+                                                    .login_passwordLabel),
+                                                controller: controller
+                                                    .passwordController,
+                                                textInputAction:
+                                                    TextInputAction.done,
+                                                obscureText: true,
+                                                onChanged: (str) {},
+                                                onFieldSubmitted: (_) {},
+                                              ),
+                                              Align(
+                                                alignment:
+                                                    Alignment.centerRight,
+                                                child: GestureDetector(
+                                                  onTap: () {},
+                                                  child: Text(
+                                                    tr(LocaleKeys
+                                                        .login_forget_password_label),
+                                                    style: t16M.apply(
+                                                        color:
+                                                            AppColors.primary),
                                                   ),
                                                 ),
-                                              ],
-                                            )
-                                          : const SizedBox.shrink()),
-                                  const SizedBox(height: 16),
-                                  CommonButton(
-                                    child: Text(
-                                      tr(LocaleKeys.login_loginButtonLabel),
-                                      style: t16M,
-                                    ),
-                                    onPressed: () {
-                                      if (_formKey.currentState!.validate()) {
-                                        if (controller
-                                            .passwordController.text.isEmpty) {
-                                          controller.setIsValidateUsername(
-                                              controller.passwordController.text
-                                                  .isEmpty);
-                                        } else {
-                                          ref.read(fetchUsernameProvider);
-                                          ref
-                                              .read(loginControllerProvider)
-                                              .login(context);
-                                        }
-                                      } else {
-                                        controller.buttonController.reset();
-                                      }
-                                    },
-                                    btnController: controller.buttonController,
-                                  ),
-                                  const SizedBox(height: 16),
-                                  AnimatedSwitcher(
-                                      duration:
-                                          const Duration(milliseconds: 500),
-                                      transitionBuilder: (Widget child,
-                                              Animation<double> animation) =>
-                                          SizeTransition(
-                                              child: child,
-                                              sizeFactor: animation),
-                                      child: ref
-                                              .watch(controller
-                                                  .isValidateUsername.state)
-                                              .state
-                                          ? const SizedBox.shrink()
-                                          : Align(
-                                              alignment: Alignment.center,
-                                              child: GestureDetector(
-                                                onTap: () {},
-                                                child: RichText(
-                                                  text: TextSpan(children: [
-                                                    TextSpan(
-                                                        text: tr(LocaleKeys
-                                                            .login_register_label),
-                                                        style: t14M.apply(
-                                                            color: AppColors
-                                                                .ink[400])),
-                                                    const WidgetSpan(
-                                                        child:
-                                                            SizedBox(width: 4)),
-                                                    WidgetSpan(
-                                                        child: GestureDetector(
-                                                            onTap: () => Navigator
-                                                                .pushNamed(
-                                                                    context,
-                                                                    AppRoutes
-                                                                        .register),
-                                                            child: Text(
-                                                                tr(LocaleKeys
-                                                                    .login_register_suggest),
-                                                                style: t14M.apply(
-                                                                    color: AppColors
-                                                                        .primary))))
-                                                  ]),
-                                                ),
                                               ),
-                                            )),
-                                  const SizedBox(height: 16),
-                                ],
-                              ),
+                                            ],
+                                          )
+                                        : const SizedBox.shrink()),
+                                const SizedBox(height: 16),
+                                CommonButton(
+                                  child: Text(
+                                    tr(LocaleKeys.login_loginButtonLabel),
+                                    style: t16M,
+                                  ),
+                                  onPressed: () async {
+                                    if (ref
+                                        .read(
+                                            controller.isValidateUsername.state)
+                                        .state) {
+                                      if (await controller.checkUserExisted(
+                                          controller.usernameController.text)) {
+                                        controller.setIsValidateUsername(true);
+                                      } else {
+                                        CommonSnackbar.show(context,
+                                            type: SnackbarType.warning,
+                                            message: tr(LocaleKeys
+                                                .error_login_invalid_user));
+                                      }
+                                    } else {
+                                      CommonSnackbar.show(context,
+                                          type: SnackbarType.warning,
+                                          message: tr(LocaleKeys
+                                              .error_login_invalid_email));
+                                    }
+
+                                    if (controller
+                                        .passwordController.text.isNotEmpty) {
+                                      var loginRes = await controller.doLogin(
+                                          email: controller
+                                              .usernameController.text,
+                                          password: controller
+                                              .passwordController.text);
+                                      if (!loginRes['status']) {
+                                        CommonSnackbar.show(context,
+                                            type: SnackbarType.warning,
+                                            message: tr(LocaleKeys
+                                                .error_login_wrong_password));
+                                      } else {
+                                        Navigator.of(context)
+                                            .pushNamedAndRemoveUntil(
+                                                AppRoutes.home,
+                                                (route) => false);
+                                      }
+                                    } else {
+                                      CommonSnackbar.show(context,
+                                          type: SnackbarType.warning,
+                                          message: tr(LocaleKeys
+                                              .error_login_empty_password));
+                                    }
+
+                                    controller.buttonController.reset();
+                                  },
+                                  btnController: controller.buttonController,
+                                ),
+                                const SizedBox(height: 16),
+                                AnimatedSwitcher(
+                                    duration: const Duration(milliseconds: 500),
+                                    transitionBuilder: (Widget child,
+                                            Animation<double> animation) =>
+                                        SizeTransition(
+                                            child: child,
+                                            sizeFactor: animation),
+                                    child: ref
+                                            .watch(controller
+                                                .isValidateUsername.state)
+                                            .state
+                                        ? const SizedBox.shrink()
+                                        : Align(
+                                            alignment: Alignment.center,
+                                            child: GestureDetector(
+                                              onTap: () {},
+                                              child: RichText(
+                                                text: TextSpan(children: [
+                                                  TextSpan(
+                                                      text: tr(LocaleKeys
+                                                          .login_register_label),
+                                                      style: t14M.apply(
+                                                          color: AppColors
+                                                              .ink[400])),
+                                                  const WidgetSpan(
+                                                      child:
+                                                          SizedBox(width: 4)),
+                                                  WidgetSpan(
+                                                      child: GestureDetector(
+                                                          onTap: () => Navigator
+                                                              .pushNamed(
+                                                                  context,
+                                                                  AppRoutes
+                                                                      .register),
+                                                          child: Text(
+                                                              tr(LocaleKeys
+                                                                  .login_register_suggest),
+                                                              style: t14M.apply(
+                                                                  color: AppColors
+                                                                      .primary))))
+                                                ]),
+                                              ),
+                                            ),
+                                          )),
+                                const SizedBox(height: 16),
+                              ],
                             ),
                           );
                         },
