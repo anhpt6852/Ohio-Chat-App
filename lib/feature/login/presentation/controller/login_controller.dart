@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:ohio_templates/feature/login/data/models/login_model.dart';
-import 'package:ohio_templates/feature/login/data/repositories/login_repositories_impl.dart';
-import 'package:ohio_templates/feature/login/domain/repositories/login_repositories.dart';
-import 'package:ohio_templates/routes.dart';
+import 'package:ohio_chat_app/feature/login/data/models/login_model.dart';
+import 'package:ohio_chat_app/feature/login/data/repositories/login_repositories_impl.dart';
+import 'package:ohio_chat_app/feature/login/domain/repositories/login_repositories.dart';
+import 'package:ohio_chat_app/routes.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
 
 final loginControllerProvider = Provider.autoDispose((ref) {

@@ -1,8 +1,8 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:ohio_templates/core/config/theme.dart';
-import 'package:ohio_templates/routes.dart';
+import 'package:ohio_chat_app/core/config/theme.dart';
+import 'package:ohio_chat_app/routes.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 
 import 'package:timeago/timeago.dart' as timeago;

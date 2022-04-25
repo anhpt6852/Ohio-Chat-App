@@ -1,13 +1,13 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:ohio_templates/core/commons/presentation/snack_bar.dart';
-import 'package:ohio_templates/core/services/logger.dart';
-import 'package:ohio_templates/feature/register/data/models/register_response.dart';
-import 'package:ohio_templates/feature/register/data/repositories/register_repositories_impl.dart';
-import 'package:ohio_templates/feature/register/domain/repositories/register_repositories.dart';
-import 'package:ohio_templates/feature/register/domain/usecases/register.dart';
-import 'package:ohio_templates/routes.dart';
+import 'package:ohio_chat_app/core/commons/presentation/snack_bar.dart';
+import 'package:ohio_chat_app/core/services/logger.dart';
+import 'package:ohio_chat_app/feature/register/data/models/register_response.dart';
+import 'package:ohio_chat_app/feature/register/data/repositories/register_repositories_impl.dart';
+import 'package:ohio_chat_app/feature/register/domain/repositories/register_repositories.dart';
+import 'package:ohio_chat_app/feature/register/domain/usecases/register.dart';
+import 'package:ohio_chat_app/routes.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
 
 final registerControllerProvider = Provider.autoDispose((ref) {

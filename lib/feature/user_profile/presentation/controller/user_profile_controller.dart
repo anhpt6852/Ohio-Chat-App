@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:ohio_templates/feature/user_profile/data/repositories/user_profile_repositories_impl.dart';
-import 'package:ohio_templates/feature/user_profile/domain/repositories/user_profile_repositories.dart';
+import 'package:ohio_chat_app/feature/user_profile/data/repositories/user_profile_repositories_impl.dart';
+import 'package:ohio_chat_app/feature/user_profile/domain/repositories/user_profile_repositories.dart';
 
 final userProfileControllerProvider = Provider.autoDispose((ref) {
   final userProfileRepositories = ref.watch(userProfileRepositoryProvider);

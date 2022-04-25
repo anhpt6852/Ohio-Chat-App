@@ -1,9 +1,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="ohio.studio.flutter_templates">
+    package="ohio.studio.chat_app">
     <uses-permission android:name="android.permission.INTERNET"/>
     
    <application
-        android:label="ohio_templates"
+        android:label="ohio_chat_app"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

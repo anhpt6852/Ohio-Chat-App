@@ -1,11 +1,11 @@
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:ohio_templates/core/results/failures.dart';
-import 'package:ohio_templates/core/services/network_module.dart';
-import 'package:ohio_templates/core/values/endpoints.dart';
-import 'package:ohio_templates/feature/register/data/models/register_response.dart';
-import 'package:ohio_templates/feature/register/domain/repositories/register_repositories.dart';
+import 'package:ohio_chat_app/core/results/failures.dart';
+import 'package:ohio_chat_app/core/services/network_module.dart';
+import 'package:ohio_chat_app/core/values/endpoints.dart';
+import 'package:ohio_chat_app/feature/register/data/models/register_response.dart';
+import 'package:ohio_chat_app/feature/register/domain/repositories/register_repositories.dart';
 
 final registerRepositoryProvider =
     Provider.autoDispose<RegisterRepositoriesImpl>(

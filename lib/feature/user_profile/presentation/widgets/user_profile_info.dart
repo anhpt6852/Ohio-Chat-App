@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:ohio_templates/core/commons/presentation/common_loading.dart';
-import 'package:ohio_templates/core/commons/presentation/snack_bar.dart';
-import 'package:ohio_templates/feature/user_profile/presentation/controller/user_profile_controller.dart';
+import 'package:ohio_chat_app/core/commons/presentation/common_loading.dart';
+import 'package:ohio_chat_app/core/commons/presentation/snack_bar.dart';
+import 'package:ohio_chat_app/feature/user_profile/presentation/controller/user_profile_controller.dart';
 
 class UserProfileInfo extends ConsumerWidget {
   const UserProfileInfo({Key? key}) : super(key: key);

@@ -1,5 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:ohio_templates/feature/register/data/repositories/register_repositories_impl.dart';
+import 'package:ohio_chat_app/feature/register/data/repositories/register_repositories_impl.dart';
 
 registerProvider(
         {required String phoneNumber,

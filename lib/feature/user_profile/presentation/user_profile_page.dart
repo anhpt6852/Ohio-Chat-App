@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:ohio_templates/core/commons/presentation/common_button.dart';
-import 'package:ohio_templates/core/constant/colors.dart';
-import 'package:ohio_templates/feature/user_profile/presentation/widgets/profile_pic.dart';
-import 'package:ohio_templates/routes.dart';
+import 'package:ohio_chat_app/core/commons/presentation/common_button.dart';
+import 'package:ohio_chat_app/core/constant/colors.dart';
+import 'package:ohio_chat_app/feature/user_profile/presentation/widgets/profile_pic.dart';
+import 'package:ohio_chat_app/routes.dart';
 
 import 'widgets/user_profile_info.dart';
 

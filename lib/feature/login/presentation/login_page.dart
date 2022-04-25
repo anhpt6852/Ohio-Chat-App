@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:ohio_templates/core/constant/colors.dart';
-import 'package:ohio_templates/feature/login/presentation/widgets/login_form.dart';
+import 'package:ohio_chat_app/core/constant/colors.dart';
+import 'package:ohio_chat_app/feature/login/presentation/widgets/login_form.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({Key? key}) : super(key: key);

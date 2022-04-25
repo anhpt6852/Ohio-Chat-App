@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:ohio_templates/feature/home/presentation/home_page.dart';
-import 'package:ohio_templates/feature/login/presentation/login_page.dart';
-import 'package:ohio_templates/feature/register/presentation/register_page.dart';
-import 'package:ohio_templates/feature/register/presentation/widgets/confirm_email_page.dart';
-import 'package:ohio_templates/feature/user_profile/presentation/user_profile_page.dart';
-import 'package:ohio_templates/feature/user_profile/presentation/widgets/user_profile_config.dart';
+import 'package:ohio_chat_app/feature/home/presentation/home_page.dart';
+import 'package:ohio_chat_app/feature/login/presentation/login_page.dart';
+import 'package:ohio_chat_app/feature/register/presentation/register_page.dart';
+import 'package:ohio_chat_app/feature/register/presentation/widgets/confirm_email_page.dart';
+import 'package:ohio_chat_app/feature/user_profile/presentation/user_profile_page.dart';
 
 class AppRoutes {
   static const login = '/login-page';

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:ohio_templates/core/config/theme.dart';
-import 'package:ohio_templates/core/constant/colors.dart';
+import 'package:ohio_chat_app/core/config/theme.dart';
+import 'package:ohio_chat_app/core/constant/colors.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
 enum SnackbarType { informative, success, error, warning }
@@ -49,6 +49,7 @@ class CommonSnackbar {
       }
       return icon;
     }
+
     //custom snackbar
     customSnackbar(String message) => Material(
           child: Container(

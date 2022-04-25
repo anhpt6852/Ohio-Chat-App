@@ -5,8 +5,8 @@ import 'package:dio/dio.dart';
 import 'package:dio_smart_retry/dio_smart_retry.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:ohio_templates/core/commons/presentation/snack_bar.dart';
-import 'package:ohio_templates/core/constant/networks.dart';
+import 'package:ohio_chat_app/core/commons/presentation/snack_bar.dart';
+import 'package:ohio_chat_app/core/constant/networks.dart';
 
 final networkModuleProvider =
     Provider.autoDispose<NetworkModule>((ref) => NetworkModule());

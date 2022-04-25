@@ -1,4 +1,4 @@
-import 'package:ohio_templates/core/constant/networks.dart';
+import 'package:ohio_chat_app/core/constant/networks.dart';
 
 class Endpoints {
   Endpoints._();

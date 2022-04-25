@@ -1,5 +1,5 @@
 import 'package:dartz/dartz.dart';
-import 'package:ohio_templates/core/results/failures.dart';
+import 'package:ohio_chat_app/core/results/failures.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 void processUsecaseResult(

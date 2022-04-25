@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:ohio_templates/core/commons/presentation/common_button.dart';
-import 'package:ohio_templates/core/config/theme.dart';
-import 'package:ohio_templates/feature/user_profile/data/models/user_profile_model.dart';
+import 'package:ohio_chat_app/core/commons/presentation/common_button.dart';
+import 'package:ohio_chat_app/core/config/theme.dart';
+import 'package:ohio_chat_app/feature/user_profile/data/models/user_profile_model.dart';
 
 // final profileConfigNotifierProvider =
 //     StateNotifierProvider<UserProfileNotifier, UserProfileState>(

@@ -1,4 +1,4 @@
-import 'package:ohio_templates/feature/register/data/models/register_response.dart';
+import 'package:ohio_chat_app/feature/register/data/models/register_response.dart';
 
 abstract class RegisterRepositories {
   Future<RegisterResponse> register(

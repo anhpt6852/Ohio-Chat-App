@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:ohio_templates/core/config/theme.dart';
-import 'package:ohio_templates/core/constant/colors.dart';
+import 'package:ohio_chat_app/core/config/theme.dart';
+import 'package:ohio_chat_app/core/constant/colors.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
 
 enum ButtonType { primary, disabled, secondary, icon }

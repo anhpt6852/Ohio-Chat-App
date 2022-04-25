@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:ohio_templates/core/config/theme.dart';
-import 'package:ohio_templates/core/constant/colors.dart';
+import 'package:ohio_chat_app/core/config/theme.dart';
+import 'package:ohio_chat_app/core/constant/colors.dart';
 
 class CommonTextFormField extends StatefulWidget {
   final FocusNode? focusNode;
@@ -114,7 +114,8 @@ class _CommonTextFormFieldState extends State<CommonTextFormField> {
               autofocus: (widget.autofocus)!,
               textAlignVertical: TextAlignVertical.center,
               decoration: InputDecoration(
-isDense: false,                errorStyle: t14M,
+                isDense: false,
+                errorStyle: t14M,
                 border: InputBorder.none,
                 labelText: widget.labelText,
                 hintText: widget.hintText,

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:ohio_templates/core/constant/colors.dart';
+import 'package:ohio_chat_app/core/constant/colors.dart';
 
 const primaryFont = 'SVN-Gilroy';
 

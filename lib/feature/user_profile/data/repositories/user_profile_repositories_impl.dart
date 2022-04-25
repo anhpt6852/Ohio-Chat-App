@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:ohio_templates/feature/user_profile/data/models/user_profile_model.dart';
-import 'package:ohio_templates/feature/user_profile/domain/repositories/user_profile_repositories.dart';
+import 'package:ohio_chat_app/feature/user_profile/data/models/user_profile_model.dart';
+import 'package:ohio_chat_app/feature/user_profile/domain/repositories/user_profile_repositories.dart';
 
 final userProfileRepositoryProvider =
     Provider.autoDispose<UserProfileRepositoriesImpl>(
