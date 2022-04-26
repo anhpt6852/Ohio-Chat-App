@@ -6,9 +6,11 @@ abstract class  LocaleKeys {
   static const error_login_invalid_user = 'error.login.invalid_user';
   static const error_login_invalid_email = 'error.login.invalid_email';
   static const error_login_empty_password = 'error.login.empty_password';
+  static const error_login_empty_user = 'error.login.empty_user';
   static const error_login_wrong_password = 'error.login.wrong_password';
   static const error_login = 'error.login';
   static const error_empty_error = 'error.empty_error';
+  static const error_short_password = 'error.short_password';
   static const error_invalid_phone = 'error.invalid_phone';
   static const error_image_error = 'error.image_error';
   static const error_not_same_password = 'error.not_same_password';

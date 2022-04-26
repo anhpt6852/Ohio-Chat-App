@@ -6,9 +6,11 @@
             "invalid_user": "Tài khoản này hiện không tồn tại",
             "invalid_email": "Vui lòng nhập chính xác địa chỉ email",
             "empty_password": "Vui lòng nhập mật khẩu",
+            "empty_user": "Vui lòng nhập tài khoản",
             "wrong_password": "Mật khẩu không đúng xin vui lòng thử lại"
         },
         "empty_error": "Không được bỏ trống trường này",
+        "short_password": "Mật khẩu phải có ít nhất 6 ký tự",
         "invalid_phone": "Số điện thoại không hợp lệ",
         "image_error": "Không thể tải được hình ảnh",
         "not_same_password": "Mật khẩu nhập lại không khớp"

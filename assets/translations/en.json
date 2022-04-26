@@ -6,9 +6,11 @@
             "invalid_user": "This account currently does not exist",
             "invalid_email": "Please enter the correct email address",
             "empty_password": "Please enter a password",
+            "empty_user": "Please enter an email",
             "wrong_password": "Password is incorrect please try again"
         },
         "empty_error": "This field cannot be left blank",
+        "short_password": "Password should be at least 6 characters",
         "invalid_phone": "Invalid phone number",
         "image_error": "Cannot load image",
         "not_same_password": "Re-entered password does not match"

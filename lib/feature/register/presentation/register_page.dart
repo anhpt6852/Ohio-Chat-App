@@ -81,6 +81,9 @@ class RegisterPage extends ConsumerWidget {
                 if (str == null || str.isEmpty) {
                   return tr(LocaleKeys.error_empty_error);
                 }
+                if (str.length < 6) {
+                  return tr(LocaleKeys.error_short_password);
+                }
                 return null;
               },
             ),
@@ -98,6 +101,9 @@ class RegisterPage extends ConsumerWidget {
               validator: (str) {
                 if (str == null || str.isEmpty) {
                   return tr(LocaleKeys.error_empty_error);
+                }
+                if (str.length < 6) {
+                  return tr(LocaleKeys.error_short_password);
                 }
                 if (controller.rePasswordController.text !=
                     controller.passwordController.text) {
@@ -130,7 +136,7 @@ class RegisterPage extends ConsumerWidget {
                 ),
                 onPressed: () {
                   if (_formKey.currentState!.validate()) {
-                    controller.registerWithEmailPassword(
+                    controller.registerWithEmailPassword(context,
                         password: controller.passwordController.text,
                         email: controller.emailController.text,
                         name: controller.usernameController.text);

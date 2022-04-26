@@ -31,7 +31,7 @@ class RegisterController {
   //instance Firebase
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 
-  registerWithEmailPassword(
+  registerWithEmailPassword(context,
       {required String name,
       required String email,
       required String password}) async {
@@ -43,6 +43,10 @@ class RegisterController {
       return {"status": true, "message": "success", "data": res.user};
     } on FirebaseAuthException catch (e) {
       print(e.toString());
+      CommonSnackbar.show(context,
+          type: SnackbarType.error, message: e.message!);
+      buttonController.reset();
+
       return {"status": false, "message": e.message.toString(), "data": ""};
     }
   }
