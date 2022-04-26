@@ -20,6 +20,10 @@
         "forget_password": {
             "label": "Forgot password?"
         },
+        "language_selector": {
+            "vietnam": "Vietnamese",
+            "england": "English"
+        },
         "register": {
             "label": "Not a member?",
             "suggest": "Sign Up"
@@ -39,5 +43,8 @@
         "verify": {
             "title": "Confirm email"
         }
+    },
+    "home": {
+        "title": "Chat"
     }
  }
