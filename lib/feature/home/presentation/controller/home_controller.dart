@@ -30,8 +30,18 @@ class HomeController {
     return db.collection(collectionPath).doc(path).update(updateData);
   }
 
-  Stream<QuerySnapshot> getFirestoreData(
-      String collectionPath, int limit, String? textSearch) {
+  Stream<QuerySnapshot> getChatMessage(String groupChatId, int limit) {
+    print('aaaaa');
+    return db
+        .collection(FirestoreConstants.pathMessageCollection)
+        .doc(groupChatId)
+        .collection(groupChatId)
+        .orderBy(FirestoreConstants.timestamp, descending: true)
+        .limit(limit)
+        .snapshots();
+  }
+
+  Stream<QuerySnapshot> getFirestoreData(String collectionPath, int limit) {
     var data = db.collection(collectionPath).limit(limit).snapshots();
     return db.collection(collectionPath).limit(limit).snapshots();
   }
