@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ohio_chat_app/feature/chat/presentation/message_page.dart';
 import 'package:ohio_chat_app/feature/home/presentation/home_page.dart';
 import 'package:ohio_chat_app/feature/login/presentation/login_page.dart';
 import 'package:ohio_chat_app/feature/register/presentation/register_page.dart';
@@ -11,6 +12,7 @@ class AppRoutes {
   static const register = '/register-page';
   static const verify = '/verify-page';
   static const home = '/home-page';
+  static const chat = '/chat-page';
   static const userProfileConfig = '/user-profile-config';
   static const userProfile = '/user-profile-page';
   AppRoutes(Type userProfileConfig);
@@ -38,8 +40,9 @@ class AppRouter {
     switch (settings.name) {
       case AppRoutes.login:
         return _createRoute(const LoginPage());
+
       case AppRoutes.home:
-        return _createRoute(const HomePage());
+        return _createRoute(HomePage());
       case AppRoutes.userProfile:
         return _createRoute(const UserProfilePage());
       case AppRoutes.verify:

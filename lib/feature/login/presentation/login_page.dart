@@ -3,6 +3,8 @@ import 'package:flag/flag.dart';
 import 'package:flutter/material.dart';
 import 'package:ohio_chat_app/core/config/theme.dart';
 import 'package:ohio_chat_app/core/constant/colors.dart';
+import 'package:ohio_chat_app/feature/login/presentation/widgets/language_selector.dart';
+import 'package:ohio_chat_app/feature/login/presentation/widgets/language_widget.dart';
 import 'package:ohio_chat_app/feature/login/presentation/widgets/login_form.dart';
 import 'package:ohio_chat_app/generated/assets.gen.dart';
 import 'package:ohio_chat_app/generated/locale_keys.g.dart';
@@ -24,26 +26,8 @@ class LoginPage extends StatelessWidget {
                 //     width: MediaQuery.of(context).size.width,
                 //     height: MediaQuery.of(context).size.height,
                 //     child: Assets.images.loginBackground.image(fit: BoxFit.fill)),
-                Align(
-                  alignment: Alignment.topRight,
-                  child: Padding(
-                    padding: const EdgeInsets.only(top: 16, right: 16),
-                    child: Container(
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(8.0),
-                          border: Border.all(
-                              width: 2.0, color: AppColors.ink[500]!)),
-                      child: const Flag.fromString(
-                        'us',
-                        borderRadius: 6.0,
-                        height: 24,
-                        width: 32,
-                        fit: BoxFit.fill,
-                      ),
-                    ),
-                  ),
-                ),
-                SizedBox(height: MediaQuery.of(context).size.height / 8),
+                // const LanguageWidget(),
+                SizedBox(height: MediaQuery.of(context).size.height / 6),
                 SizedBox(
                   width: MediaQuery.of(context).size.width,
                   child: Align(

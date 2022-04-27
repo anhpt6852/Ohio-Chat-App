@@ -20,6 +20,10 @@
         "forget_password": {
             "label": "Quên mật khẩu"
         },
+        "language_selector": {
+            "vietnam": "Tiếng Việt",
+            "england": "Tiếng Anh"
+        },
         "register": {
             "label": "Bạn chưa có tài khoản?",
             "suggest": "Đăng ký"
@@ -47,5 +51,8 @@
         "email": "Thư điện tử",
         "save": "Lưu",
         "empty_error": "Không được bỏ trống trường này"
+    },
+    "home": {
+        "title": "Đoạn chat"
     }
 }

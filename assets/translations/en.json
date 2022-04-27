@@ -20,6 +20,10 @@
         "forget_password": {
             "label": "Forgot password?"
         },
+        "language_selector": {
+            "vietnam": "Vietnamese",
+            "england": "English"
+        },
         "register": {
             "label": "Not a member?",
             "suggest": "Sign Up"
@@ -46,5 +50,8 @@
         "email": "Email",
         "save": "Save",
         "empty_error": "This field cannot be left blank"
+    },
+    "home": {
+        "title": "Chat"
     }
  }

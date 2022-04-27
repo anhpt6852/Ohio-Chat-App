@@ -21,6 +21,12 @@ class $AssetsImagesGen {
   /// File path: assets/images/logo_square.jpg
   AssetGenImage get logoSquare =>
       const AssetGenImage('assets/images/logo_square.jpg');
+
+  /// File path: assets/images/uk_flag.png
+  AssetGenImage get ukFlag => const AssetGenImage('assets/images/uk_flag.png');
+
+  /// File path: assets/images/vn_flag.png
+  AssetGenImage get vnFlag => const AssetGenImage('assets/images/vn_flag.png');
 }
 
 class $AssetsTranslationsGen {

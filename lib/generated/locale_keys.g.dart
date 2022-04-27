@@ -18,6 +18,9 @@ abstract class  LocaleKeys {
   static const login_subtitle = 'login.subtitle';
   static const login_forget_password_label = 'login.forget_password.label';
   static const login_forget_password = 'login.forget_password';
+  static const login_language_selector_vietnam = 'login.language_selector.vietnam';
+  static const login_language_selector_england = 'login.language_selector.england';
+  static const login_language_selector = 'login.language_selector';
   static const login_register_label = 'login.register.label';
   static const login_register_suggest = 'login.register.suggest';
   static const login_register = 'login.register';
@@ -41,5 +44,7 @@ abstract class  LocaleKeys {
   static const profile_save = 'profile.save';
   static const profile_empty_error = 'profile.empty_error';
   static const profile = 'profile';
+  static const home_title = 'home.title';
+  static const home = 'home';
 
 }
