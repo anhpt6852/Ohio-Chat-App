@@ -47,5 +47,7 @@ abstract class  LocaleKeys {
   static const profile = 'profile';
   static const home_title = 'home.title';
   static const home = 'home';
+  static const config_options = 'config.options';
+  static const config = 'config';
 
 }

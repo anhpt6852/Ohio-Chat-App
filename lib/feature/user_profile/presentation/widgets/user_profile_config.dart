@@ -17,7 +17,6 @@ class UserProfileConfig extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final controller = ref.watch(userProfileControllerProvider);
-
     controller.getCurrentUser();
     return Scaffold(
         appBar: AppBar(
@@ -36,12 +35,39 @@ class UserProfileConfig extends ConsumerWidget {
         body: SingleChildScrollView(
             padding: const EdgeInsets.all(16.0),
             child: Column(children: [
+              Stack(
+                children: [
+                  SizedBox(
+                    height: 100,
+                    width: 100,
+                    child: CircleAvatar(
+                      backgroundColor: Colors.transparent,
+                      child: Image.network(
+                        controller.displayUserAva(),
+                      ),
+                    ),
+                  ),
+                  Positioned(
+                    bottom: 0,
+                    right: 0,
+                    child: CommonButton(
+                      btnController: controller.buttonController,
+                      onPressed: () {showDialog(BuildContext context, WidgetRef ref) {
+                        return AlertDialog(
+                          title: Text(),
+                        )
+                      } 
+                      },
+                      child: Icon(Icons.add_a_photo)
+                  ))
+                ],
+              ),
               Divider(
                 color: AppColors.ink[0],
               ),
               Container(
                 decoration: BoxDecoration(
-                    color: AppColors.ink[100], //...
+                    color: AppColors.ink[100],
                     borderRadius: BorderRadius.circular(24),
                     border: Border.all(width: 1.2, color: AppColors.ink[0]!)),
                 padding:

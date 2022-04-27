@@ -54,5 +54,8 @@
     },
     "home": {
         "title": "Chat"
+    },
+    "config": {
+        "options": "Choose option"
     }
  }

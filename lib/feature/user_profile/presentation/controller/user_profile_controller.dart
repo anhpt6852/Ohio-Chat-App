@@ -25,6 +25,7 @@ class UserProfileController {
 
   final profileNameController = TextEditingController();
   final profileEmailController = TextEditingController();
+
   final RoundedLoadingButtonController buttonController =
       RoundedLoadingButtonController();
 
@@ -40,6 +41,7 @@ class UserProfileController {
     final User user = _firebaseAuth.currentUser!;
     user.updateDisplayName(profileNameController.text);
     user.updateEmail(profileEmailController.text);
+    user.updatePhotoURL("");
   }
 
   displayUserName() {

@@ -55,5 +55,8 @@
     },
     "home": {
         "title": "Đoạn chat"
+    },
+    "config": {
+        "options": "Chọn cách"
     }
 }
