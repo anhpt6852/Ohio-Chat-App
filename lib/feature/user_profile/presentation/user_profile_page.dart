@@ -19,7 +19,7 @@ class UserProfilePage extends StatelessWidget {
         leading: GestureDetector(
             onTap: () => Navigator.pop(context),
             child: const Icon(Icons.arrow_back_ios)),
-        centerTitle: true, // Move title to center
+        centerTitle: true,
         title: Text(
           tr(LocaleKeys.profile_title),
           style: t16M.copyWith(

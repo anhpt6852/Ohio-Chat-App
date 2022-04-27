@@ -12,8 +12,6 @@ import 'package:ohio_chat_app/generated/locale_keys.g.dart';
 class UserProfileConfig extends ConsumerWidget {
   UserProfileConfig({Key? key}) : super(key: key);
 
-  final _formKeyProfileConfig = GlobalKey<FormState>();
-
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final controller = ref.watch(userProfileControllerProvider);
@@ -24,7 +22,7 @@ class UserProfileConfig extends ConsumerWidget {
           leading: GestureDetector(
               onTap: () => Navigator.pop(context),
               child: const Icon(Icons.arrow_back_ios)),
-          centerTitle: true, // Move title to center
+          centerTitle: true,
           title: Text(
             tr(LocaleKeys.profile_edit),
             style: t16M.copyWith(
@@ -43,23 +41,18 @@ class UserProfileConfig extends ConsumerWidget {
                     child: CircleAvatar(
                       backgroundColor: Colors.transparent,
                       child: Image.network(
-                        controller.displayUserAva(),
-                      ),
+                          'https://cdn3.iconfinder.com/data/icons/avatars-round-flat/33/avat-01-512.png'),
                     ),
                   ),
                   Positioned(
-                    bottom: 0,
-                    right: 0,
-                    child: CommonButton(
-                      btnController: controller.buttonController,
-                      onPressed: () {showDialog(BuildContext context, WidgetRef ref) {
-                        return AlertDialog(
-                          title: Text(),
-                        )
-                      } 
-                      },
-                      child: Icon(Icons.add_a_photo)
-                  ))
+                      height: 40,
+                      width: 40,
+                      bottom: 0,
+                      right: 0,
+                      child: IconButton(
+                        onPressed: () {},
+                        icon: const Icon(Icons.add_a_photo),
+                      ))
                 ],
               ),
               Divider(
@@ -84,7 +77,7 @@ class UserProfileConfig extends ConsumerWidget {
               ),
               Container(
                 decoration: BoxDecoration(
-                    color: AppColors.ink[100], //...
+                    color: AppColors.ink[100],
                     borderRadius: BorderRadius.circular(24),
                     border: Border.all(width: 1.2, color: AppColors.ink[0]!)),
                 padding:

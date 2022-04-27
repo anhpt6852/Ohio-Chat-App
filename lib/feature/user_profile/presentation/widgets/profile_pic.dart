@@ -14,8 +14,7 @@ class ProfilePic extends ConsumerWidget {
       child: CircleAvatar(
         backgroundColor: Colors.transparent,
         child: Image.network(
-          data.displayUserAva(),
-        ),
+            'https://cdn3.iconfinder.com/data/icons/avatars-round-flat/33/avat-01-512.png'),
       ),
     );
   }
