@@ -30,6 +30,15 @@ class HomeController {
     return db.collection(collectionPath).doc(path).update(updateData);
   }
 
+  updateFirestoreMessages(String groupChatId, String path) {
+    db
+        .collection(FirestoreConstants.pathMessageCollection)
+        .doc(groupChatId)
+        .collection(groupChatId)
+        .doc(path)
+        .update({'isSeen': true});
+  }
+
   Stream<QuerySnapshot> getChatMessage(String groupChatId, int limit) {
     print('aaaaa');
     return db

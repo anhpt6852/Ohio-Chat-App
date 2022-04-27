@@ -89,6 +89,7 @@ class MessageController {
         idFrom: currentUserId,
         idTo: peerId,
         timestamp: DateTime.now().millisecondsSinceEpoch.toString(),
+        isSeen: false,
         content: content,
         type: type);
 
