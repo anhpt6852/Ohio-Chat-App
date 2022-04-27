@@ -50,7 +50,8 @@
         "name": "Họ và tên",
         "email": "Thư điện tử",
         "save": "Lưu",
-        "empty_error": "Không được bỏ trống trường này"
+        "empty_error": "Không được bỏ trống trường này",
+        "edit": "Điều chỉnh thông tin cá nhân"
     },
     "home": {
         "title": "Đoạn chat"

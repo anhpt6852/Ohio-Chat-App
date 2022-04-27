@@ -19,57 +19,74 @@ class UserProfileConfig extends ConsumerWidget {
     final controller = ref.watch(userProfileControllerProvider);
 
     controller.getCurrentUser();
-    return Form(
-        child: Column(children: [
-      Divider(
-        color: AppColors.ink[0],
-      ),
-      Container(
-        decoration: BoxDecoration(
-            color: AppColors.ink[100], //...
-            borderRadius: BorderRadius.circular(24),
-            border: Border.all(width: 1.2, color: AppColors.ink[0]!)),
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-        child: CommonTextFormField(
-          labelText: tr(LocaleKeys.profile_name),
-          controller: controller.profileNameController,
-          keyboardType: TextInputType.phone,
-          textInputAction: TextInputAction.done,
+    return Scaffold(
+        appBar: AppBar(
+          automaticallyImplyLeading: false,
+          leading: GestureDetector(
+              onTap: () => Navigator.pop(context),
+              child: const Icon(Icons.arrow_back_ios)),
+          centerTitle: true, // Move title to center
+          title: Text(
+            tr(LocaleKeys.profile_edit),
+            style: t16M.copyWith(
+              color: AppColors.ink[500],
+            ),
+          ),
         ),
-      ),
-      Divider(
-        color: AppColors.ink[0],
-      ),
-      Container(
-        decoration: BoxDecoration(
-            color: AppColors.ink[100], //...
-            borderRadius: BorderRadius.circular(24),
-            border: Border.all(width: 1.2, color: AppColors.ink[0]!)),
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-        child: CommonTextFormField(
-          labelText: tr(LocaleKeys.profile_email),
-          controller: controller.profileEmailController,
-          keyboardType: TextInputType.phone,
-          textInputAction: TextInputAction.done,
-        ),
-      ),
-      Divider(
-        color: AppColors.ink[0],
-      ),
-      CommonButton(
-        child: Text(tr(LocaleKeys.profile_save), style: t16M),
-        onPressed: () async {
-          if (controller.profileNameController.text.isEmpty ||
-              controller.profileEmailController.text.isEmpty) {
-            CommonSnackbar.show(context,
-                type: SnackbarType.warning,
-                message: tr(LocaleKeys.profile_empty_error));
-          } else {
-            controller.updateCurrentUser();
-          }
-        },
-        btnController: controller.buttonController,
-      )
-    ]));
+        body: SingleChildScrollView(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(children: [
+              Divider(
+                color: AppColors.ink[0],
+              ),
+              Container(
+                decoration: BoxDecoration(
+                    color: AppColors.ink[100], //...
+                    borderRadius: BorderRadius.circular(24),
+                    border: Border.all(width: 1.2, color: AppColors.ink[0]!)),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                child: CommonTextFormField(
+                  labelText: tr(LocaleKeys.profile_name),
+                  controller: controller.profileNameController,
+                  keyboardType: TextInputType.phone,
+                  textInputAction: TextInputAction.done,
+                ),
+              ),
+              Divider(
+                color: AppColors.ink[0],
+              ),
+              Container(
+                decoration: BoxDecoration(
+                    color: AppColors.ink[100], //...
+                    borderRadius: BorderRadius.circular(24),
+                    border: Border.all(width: 1.2, color: AppColors.ink[0]!)),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                child: CommonTextFormField(
+                  labelText: tr(LocaleKeys.profile_email),
+                  controller: controller.profileEmailController,
+                  keyboardType: TextInputType.phone,
+                  textInputAction: TextInputAction.done,
+                ),
+              ),
+              Divider(
+                color: AppColors.ink[0],
+              ),
+              CommonButton(
+                child: Text(tr(LocaleKeys.profile_save), style: t16M),
+                onPressed: () async {
+                  if (controller.profileNameController.text.isEmpty ||
+                      controller.profileEmailController.text.isEmpty) {
+                    CommonSnackbar.show(context,
+                        type: SnackbarType.warning,
+                        message: tr(LocaleKeys.profile_empty_error));
+                  } else {
+                    controller.updateCurrentUser();
+                  }
+                },
+                btnController: controller.buttonController,
+              )
+            ])));
   }
 }

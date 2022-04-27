@@ -53,4 +53,10 @@ class UserProfileController {
     final userEmail = user.email.toString();
     return userEmail;
   }
+
+  displayUserAva() {
+    final User user = _firebaseAuth.currentUser!;
+    final userAva = user.photoURL;
+    return userAva;
+  }
 }

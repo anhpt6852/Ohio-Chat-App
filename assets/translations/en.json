@@ -49,7 +49,8 @@
         "name": "Name",
         "email": "Email",
         "save": "Save",
-        "empty_error": "This field cannot be left blank"
+        "empty_error": "This field cannot be left blank",
+        "edit": "Edit Profile"
     },
     "home": {
         "title": "Chat"
