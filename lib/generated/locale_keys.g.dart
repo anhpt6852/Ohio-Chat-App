@@ -35,5 +35,11 @@ abstract class  LocaleKeys {
   static const register_verify_title = 'register.verify.title';
   static const register_verify = 'register.verify';
   static const register = 'register';
+  static const profile_title = 'profile.title';
+  static const profile_name = 'profile.name';
+  static const profile_email = 'profile.email';
+  static const profile_save = 'profile.save';
+  static const profile_empty_error = 'profile.empty_error';
+  static const profile = 'profile';
 
 }

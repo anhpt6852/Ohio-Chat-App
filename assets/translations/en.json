@@ -39,5 +39,12 @@
         "verify": {
             "title": "Confirm email"
         }
+    },
+    "profile": {
+        "title": "User Profile",
+        "name": "Name",
+        "email": "Email",
+        "save": "Save",
+        "empty_error": "This field cannot be left blank"
     }
  }

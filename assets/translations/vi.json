@@ -40,5 +40,12 @@
         "verify": {
             "title": "Xác nhận email"
         }
+    },
+    "profile": {
+        "title": "Thông tin cá nhân",
+        "name": "Họ và tên",
+        "email": "Thư điện tử",
+        "save": "Lưu",
+        "empty_error": "Không được bỏ trống trường này"
     }
 }

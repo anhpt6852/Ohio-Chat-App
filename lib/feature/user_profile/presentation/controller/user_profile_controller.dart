@@ -1,7 +1,9 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:ohio_chat_app/feature/user_profile/data/repositories/user_profile_repositories_impl.dart';
 import 'package:ohio_chat_app/feature/user_profile/domain/repositories/user_profile_repositories.dart';
+import 'package:rounded_loading_button/rounded_loading_button.dart';
 
 final userProfileControllerProvider = Provider.autoDispose((ref) {
   final userProfileRepositories = ref.watch(userProfileRepositoryProvider);
@@ -23,7 +25,32 @@ class UserProfileController {
 
   final profileNameController = TextEditingController();
   final profileEmailController = TextEditingController();
-  final profileCountryController = TextEditingController();
-  // final profileDobController =
+  final RoundedLoadingButtonController buttonController =
+      RoundedLoadingButtonController();
 
+  final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+
+  getCurrentUser() {
+    final User user = _firebaseAuth.currentUser!;
+    profileNameController.text = user.displayName ?? '';
+    profileEmailController.text = user.email ?? '';
+  }
+
+  updateCurrentUser() {
+    final User user = _firebaseAuth.currentUser!;
+    user.updateDisplayName(profileNameController.text);
+    user.updateEmail(profileEmailController.text);
+  }
+
+  displayUserName() {
+    final User user = _firebaseAuth.currentUser!;
+    final userName = user.displayName.toString();
+    return userName;
+  }
+
+  displayUserEmail() {
+    final User user = _firebaseAuth.currentUser!;
+    final userEmail = user.email.toString();
+    return userEmail;
+  }
 }
