@@ -9,6 +9,7 @@ import 'package:ohio_chat_app/core/config/theme.dart';
 import 'package:ohio_chat_app/core/constant/colors.dart';
 import 'package:ohio_chat_app/core/constant/firestore_constants.dart';
 import 'package:ohio_chat_app/feature/chat/data/models/chat_user.dart';
+import 'package:ohio_chat_app/feature/chat/presentation/controller/message_controller.dart';
 import 'package:ohio_chat_app/feature/chat/presentation/message_page.dart';
 import 'package:ohio_chat_app/feature/home/presentation/controller/home_controller.dart';
 import 'package:ohio_chat_app/generated/locale_keys.g.dart';
@@ -25,6 +26,144 @@ class HomePage extends ConsumerWidget {
   Widget build(BuildContext context, ref) {
     final controller = ref.watch(homeControllerProvider);
 
+    buildListTile(BuildContext context, DocumentSnapshot? documentSnapshot) {
+      final firebaseAuth = FirebaseAuth.instance;
+      var listMessages = [];
+      controller.getCurrentUid();
+      if (documentSnapshot != null) {
+        var userChat = ref.watch(controller.userChat.state).state;
+        userChat = ChatUser.fromDocument(documentSnapshot);
+        if (userChat.id == ref.watch(controller.currentUid.state).state) {
+          return const SizedBox.shrink();
+        } else {
+          return Padding(
+            padding: const EdgeInsets.only(right: 0.0),
+            child: GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => ChatPage(
+                                peerId: userChat.id,
+                                peerAvatar: userChat.photoUrl,
+                                peerNickname: userChat.displayName,
+                                userAvatar:
+                                    firebaseAuth.currentUser!.photoURL ?? '',
+                              )));
+                },
+                child: StreamBuilder<QuerySnapshot>(
+                    stream: controller.getChatMessage(
+                        '${ref.watch(controller.currentUid.state).state} - ${userChat.id}',
+                        20),
+                    builder: (BuildContext context,
+                        AsyncSnapshot<QuerySnapshot> snapshot) {
+                      print(
+                          '${ref.watch(controller.currentUid.state).state} - ${userChat.id}');
+                      if (snapshot.hasData) {
+                        listMessages = snapshot.data!.docs;
+                        if (listMessages.isNotEmpty) {
+                          return Row(
+                            children: [
+                              userChat.photoUrl.isNotEmpty
+                                  ? ClipRRect(
+                                      borderRadius: BorderRadius.circular(24),
+                                      child: Image.network(
+                                        userChat.photoUrl,
+                                        fit: BoxFit.cover,
+                                        width: 64,
+                                        height: 64,
+                                        loadingBuilder: (BuildContext ctx,
+                                            Widget child,
+                                            ImageChunkEvent? loadingProgress) {
+                                          if (loadingProgress == null) {
+                                            return child;
+                                          } else {
+                                            return const SizedBox(
+                                                width: 50,
+                                                height: 50,
+                                                child:
+                                                    CircularProgressIndicator());
+                                          }
+                                        },
+                                        errorBuilder:
+                                            (context, object, stackTrace) {
+                                          return const Icon(
+                                              Icons.account_circle,
+                                              size: 50);
+                                        },
+                                      ),
+                                    )
+                                  : Container(
+                                      height: 64,
+                                      width: 64,
+                                      decoration: BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          color: AppColors.ink[400]),
+                                      child: const Icon(
+                                        Icons.person,
+                                        color: Colors.white,
+                                        size: 32,
+                                      ),
+                                    ),
+                              Padding(
+                                padding: const EdgeInsets.only(left: 16.0),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      userChat.displayName,
+                                      style: t16M.copyWith(
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                    Row(
+                                      children: [
+                                        ConstrainedBox(
+                                          constraints: BoxConstraints(
+                                              maxWidth: MediaQuery.of(context)
+                                                      .size
+                                                      .width -
+                                                  200),
+                                          child: Text(
+                                            snapshot.data!.docs.first
+                                                .get('content'),
+                                            maxLines: 1,
+                                            overflow: TextOverflow.ellipsis,
+                                            style: t14M.copyWith(
+                                                color: AppColors.ink[400]),
+                                          ),
+                                        ),
+                                        const SizedBox(width: 8.0),
+                                        Text(
+                                          DateFormat('hh:mm a').format(
+                                            DateTime.fromMillisecondsSinceEpoch(
+                                              int.parse(
+                                                  snapshot.data!.docs.first.id),
+                                            ),
+                                          ),
+                                          style: t14M.copyWith(
+                                              color: AppColors.ink[400]),
+                                        )
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          );
+                        } else {
+                          return const SizedBox.shrink();
+                        }
+                      } else {
+                        return const SizedBox.shrink();
+                      }
+                    })),
+          );
+        }
+      } else {
+        return const SizedBox.shrink();
+      }
+    }
+
     buildItem(BuildContext context, DocumentSnapshot? documentSnapshot) {
       final firebaseAuth = FirebaseAuth.instance;
       controller.getCurrentUid();
@@ -34,65 +173,73 @@ class HomePage extends ConsumerWidget {
         if (userChat.id == ref.watch(controller.currentUid.state).state) {
           return const SizedBox.shrink();
         } else {
-          return GestureDetector(
-              onTap: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => ChatPage(
-                              peerId: userChat.id,
-                              peerAvatar: userChat.photoUrl,
-                              peerNickname: userChat.displayName,
-                              userAvatar:
-                                  firebaseAuth.currentUser!.photoURL ?? '',
-                            )));
-              },
-              child: Column(
-                children: [
-                  userChat.photoUrl.isNotEmpty
-                      ? ClipRRect(
-                          borderRadius: BorderRadius.circular(24),
-                          child: Image.network(
-                            userChat.photoUrl,
-                            fit: BoxFit.cover,
-                            width: 64,
+          return Padding(
+            padding: const EdgeInsets.only(right: 16.0),
+            child: GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => ChatPage(
+                                peerId: userChat.id,
+                                peerAvatar: userChat.photoUrl,
+                                peerNickname: userChat.displayName,
+                                userAvatar:
+                                    firebaseAuth.currentUser!.photoURL ?? '',
+                              )));
+                },
+                child: Column(
+                  children: [
+                    userChat.photoUrl.isNotEmpty
+                        ? ClipRRect(
+                            borderRadius: BorderRadius.circular(24),
+                            child: Image.network(
+                              userChat.photoUrl,
+                              fit: BoxFit.cover,
+                              width: 64,
+                              height: 64,
+                              loadingBuilder: (BuildContext ctx, Widget child,
+                                  ImageChunkEvent? loadingProgress) {
+                                if (loadingProgress == null) {
+                                  return child;
+                                } else {
+                                  return const SizedBox(
+                                      width: 50,
+                                      height: 50,
+                                      child: CircularProgressIndicator());
+                                }
+                              },
+                              errorBuilder: (context, object, stackTrace) {
+                                return const Icon(Icons.account_circle,
+                                    size: 50);
+                              },
+                            ),
+                          )
+                        : Container(
                             height: 64,
-                            loadingBuilder: (BuildContext ctx, Widget child,
-                                ImageChunkEvent? loadingProgress) {
-                              if (loadingProgress == null) {
-                                return child;
-                              } else {
-                                return const SizedBox(
-                                    width: 50,
-                                    height: 50,
-                                    child: CircularProgressIndicator(
-                                      color: Colors.grey,
-                                    ));
-                              }
-                            },
-                            errorBuilder: (context, object, stackTrace) {
-                              return const Icon(Icons.account_circle, size: 50);
-                            },
+                            width: 64,
+                            decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: AppColors.ink[400]),
+                            child: const Icon(
+                              Icons.person,
+                              color: Colors.white,
+                              size: 32,
+                            ),
                           ),
-                        )
-                      : Container(
-                          height: 64,
-                          width: 64,
-                          decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: AppColors.ink[400]),
-                          child: const Icon(
-                            Icons.person,
-                            color: Colors.white,
-                            size: 32,
-                          ),
-                        ),
-                  Text(
-                    userChat.displayName,
-                    style: t14M,
-                  )
-                ],
-              ));
+                    SizedBox(
+                      width: 64,
+                      child: Text(
+                        userChat.displayName,
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                        textAlign: TextAlign.center,
+                        style: t14M,
+                      ),
+                    )
+                  ],
+                )),
+          );
         }
       } else {
         return const SizedBox.shrink();
@@ -129,23 +276,31 @@ class HomePage extends ConsumerWidget {
           child: Column(
             children: [
               StreamBuilder<QuerySnapshot>(
-                stream: ref.watch(homeControllerProvider).getFirestoreData(
-                    FirestoreConstants.pathUserCollection, 20, ''),
+                stream: controller.getFirestoreData(
+                    FirestoreConstants.pathUserCollection, 20),
                 builder: (BuildContext context,
                     AsyncSnapshot<QuerySnapshot> snapshot) {
                   if (snapshot.hasData) {
                     if ((snapshot.data?.docs.length ?? 0) > 0) {
-                      return SizedBox(
-                        height: 96,
-                        child: ListView.builder(
-                          shrinkWrap: true,
-                          scrollDirection: Axis.horizontal,
-                          itemCount: snapshot.data!.docs.length,
-                          itemBuilder: (context, index) =>
-                              buildItem(context, snapshot.data?.docs[index]),
-                          controller: scrollController,
+                      return Column(children: [
+                        SizedBox(
+                          height: 112,
+                          child: ListView.builder(
+                            shrinkWrap: true,
+                            scrollDirection: Axis.horizontal,
+                            itemCount: snapshot.data!.docs.length,
+                            itemBuilder: (context, index) =>
+                                buildItem(context, snapshot.data?.docs[index]),
+                            controller: scrollController,
+                          ),
                         ),
-                      );
+                        Wrap(
+                            runSpacing: 16.0,
+                            children: List.generate(
+                                snapshot.data!.docs.length,
+                                (index) => buildListTile(
+                                    context, snapshot.data?.docs[index])))
+                      ]);
                     } else {
                       return const Center(
                         child: Text('No user found...'),

@@ -44,8 +44,8 @@ class RegisterController {
     try {
       var res = await _firebaseAuth.createUserWithEmailAndPassword(
           email: email.trim(), password: password.trim());
+      await res.user?.updateDisplayName(name);
       print(res);
-      res.user?.updateDisplayName(name);
       var firebaseUser = res.user!;
       final QuerySnapshot data = await firebaseFirestore
           .collection(FirestoreConstants.pathUserCollection)
@@ -57,7 +57,7 @@ class RegisterController {
             .collection(FirestoreConstants.pathUserCollection)
             .doc(firebaseUser.uid)
             .set({
-          FirestoreConstants.displayName: firebaseUser.displayName,
+          FirestoreConstants.displayName: name,
           FirestoreConstants.photoUrl: firebaseUser.photoURL,
           FirestoreConstants.id: firebaseUser.uid,
           "createdAt: ": DateTime.now().millisecondsSinceEpoch.toString(),
