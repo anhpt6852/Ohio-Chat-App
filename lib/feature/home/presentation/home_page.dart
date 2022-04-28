@@ -359,12 +359,16 @@ class HomePage extends ConsumerWidget {
             onTap: () => AppRoutes.userProfile,
             child: Padding(
               padding: const EdgeInsets.all(16.0),
-              child: CircleAvatar(
-                backgroundColor: AppColors.ink[400],
-                child: Icon(
-                  Icons.person,
-                  color: AppColors.ink[0],
-                  size: 16,
+              child: GestureDetector(
+                onTap: () =>
+                    Navigator.of(context).pushNamed(AppRoutes.userProfile),
+                child: CircleAvatar(
+                  backgroundColor: AppColors.ink[400],
+                  child: Icon(
+                    Icons.person,
+                    color: AppColors.ink[0],
+                    size: 16,
+                  ),
                 ),
               ),
             ),
