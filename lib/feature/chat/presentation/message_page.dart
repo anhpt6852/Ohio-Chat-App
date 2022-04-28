@@ -36,62 +36,18 @@ class ChatPage extends ConsumerWidget {
   final ScrollController scrollController = ScrollController();
   final FocusNode focusNode = FocusNode();
 
-  // Future getImage() async {
-  //   ImagePicker imagePicker = ImagePicker();
-  //   XFile? pickedFile;
-  //   pickedFile = await imagePicker.pickImage(source: ImageSource.gallery);
-  //   if (pickedFile != null) {
-  //     imageFile = File(pickedFile.path);
-  //     if (imageFile != null) {
-  //       setState(() {
-  //         isLoading = true;
-  //       });
-  //       uploadImageFile();
-  //     }
-  //   }
-  // }
-
-  // void uploadImageFile() async {
-  //   String fileName = DateTime.now().millisecondsSinceEpoch.toString();
-  //   UploadTask uploadTask = chatProvider.uploadImageFile(imageFile!, fileName);
-  //   try {
-  //     TaskSnapshot snapshot = await uploadTask;
-  //     imageUrl = await snapshot.ref.getDownloadURL();
-  //     setState(() {
-  //       isLoading = false;
-  //       onSendMessage(imageUrl, MessageType.image);
-  //     });
-  //   } on FirebaseException catch (e) {
-  //     setState(() {
-  //       isLoading = false;
-  //     });
-  //   }
-  // }
-
-  // void onSendMessage(String content, int type) {
-  //   if (content.trim().isNotEmpty) {
-  //     textEditingController.clear();
-  //     chatProvider.sendChatMessage(
-  //         content, type, groupChatId, currentUserId, widget.peerId);
-  //     scrollController.animateTo(0,
-  //         duration: const Duration(milliseconds: 300), curve: Curves.easeOut);
-  //   } else {}
-  // }
-
-  // checking if received message
-
   @override
   Widget build(BuildContext context, ref) {
     final controller = ref.watch(messageControllerProvider);
 
     Widget chatImage({required String imageSrc, required Function onTap}) {
-      return OutlinedButton(
-        onPressed: onTap(),
+      return GestureDetector(
+        onTap: onTap(),
         child: Image.network(
           imageSrc,
           width: 200,
           height: 200,
-          fit: BoxFit.cover,
+          fit: BoxFit.contain,
           loadingBuilder: (BuildContext ctx, Widget child,
               ImageChunkEvent? loadingProgress) {
             if (loadingProgress == null) return child;
@@ -155,10 +111,14 @@ class ChatPage extends ConsumerWidget {
                       margin: const EdgeInsets.only(right: 8, bottom: 2),
                     )
                   : chatMessages.type == MessageType.image
-                      ? Container(
-                          margin: const EdgeInsets.only(right: 8, top: 8),
-                          child: chatImage(
-                              imageSrc: chatMessages.content, onTap: () {}),
+                      ? GestureDetector(
+                          onTap: () => controller.showPreviewDialog(
+                              context, chatMessages.content),
+                          child: Container(
+                            margin: const EdgeInsets.only(right: 8, top: 8),
+                            child: chatImage(
+                                imageSrc: chatMessages.content, onTap: () {}),
+                          ),
                         )
                       : const SizedBox.shrink(),
               controller.isMessageSent(index)
@@ -239,10 +199,15 @@ class ChatPage extends ConsumerWidget {
                           margin: const EdgeInsets.only(left: 8, bottom: 2),
                         )
                       : chatMessages.type == MessageType.image
-                          ? Container(
-                              margin: const EdgeInsets.only(left: 8, top: 8),
-                              child: chatImage(
-                                  imageSrc: chatMessages.content, onTap: () {}),
+                          ? GestureDetector(
+                              onTap: () => controller.showPreviewDialog(
+                                  context, chatMessages.content),
+                              child: Container(
+                                margin: const EdgeInsets.only(left: 8, top: 8),
+                                child: chatImage(
+                                    imageSrc: chatMessages.content,
+                                    onTap: () {}),
+                              ),
                             )
                           : const SizedBox.shrink(),
                 ],
@@ -319,9 +284,15 @@ class ChatPage extends ConsumerWidget {
                   height: 52,
                   prefixIcon: Padding(
                     padding: const EdgeInsets.only(right: 8.0),
-                    child: Icon(
-                      Icons.camera_alt,
-                      color: AppColors.ink[400],
+                    child: GestureDetector(
+                      onTap: () => controller.getImage(
+                          ref.read(controller.groupChatId.state).state,
+                          controller.currentUserId,
+                          peerId),
+                      child: Icon(
+                        Icons.camera_alt,
+                        color: AppColors.ink[400],
+                      ),
                     ),
                   ),
                   prefixBoxConstrains:

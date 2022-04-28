@@ -4,7 +4,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:ohio_chat_app/core/constant/colors.dart';
 import 'package:ohio_chat_app/core/constant/firestore_constants.dart';
+import 'package:ohio_chat_app/core/constant/message_constants.dart';
 import 'package:ohio_chat_app/feature/chat/data/models/message.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -22,12 +25,15 @@ class MessageController {
 
   List<QueryDocumentSnapshot> listMessages = [];
 
+  File imageFile = File('');
+
   final TextEditingController messageController = TextEditingController();
 
   var groupChatId = StateProvider.autoDispose<String>(((ref) => ''));
   // var currentUserId = StateProvider.autoDispose<String>(((ref) => ''));
   var currentUserId = '';
   var isMessagesLoaded = false;
+
   bool isMessageReceived(int index) {
     if ((index > 0 &&
             listMessages[index - 1].get(FirestoreConstants.idFrom) ==
@@ -51,6 +57,21 @@ class MessageController {
     }
   }
 
+  Future getImage(
+      String groupChatId, String currentUserId, String peerId) async {
+    ImagePicker imagePicker = ImagePicker();
+    XFile? pickedFile;
+    pickedFile = await imagePicker.pickImage(source: ImageSource.gallery);
+    if (pickedFile != null) {
+      imageFile = File(pickedFile.path);
+      TaskSnapshot snapshot = await uploadImageFile(
+          imageFile, DateTime.now().millisecondsSinceEpoch.toString());
+      var imageUrl = await snapshot.ref.getDownloadURL();
+      sendChatMessage(
+          imageUrl, MessageType.image, groupChatId, currentUserId, peerId);
+    }
+  }
+
   UploadTask uploadImageFile(File image, String filename) {
     Reference reference = firebaseStorage.ref().child(filename);
     UploadTask uploadTask = reference.putFile(image);
@@ -63,6 +84,49 @@ class MessageController {
         .collection(collectionPath)
         .doc(docPath)
         .update(dataUpdate);
+  }
+
+  void showPreviewDialog(context, url) {
+    showGeneralDialog(
+      context: context,
+      barrierLabel: "Barrier",
+      barrierDismissible: true,
+      barrierColor: Colors.black,
+      pageBuilder: (_, __, ___) {
+        return SafeArea(
+            child: Dismissible(
+          direction: DismissDirection.vertical,
+          key: const Key('key'),
+          onDismissed: (_) => Navigator.of(context).pop(),
+          resizeDuration: const Duration(milliseconds: 5),
+          child: Stack(
+            children: [
+              Center(
+                  child: Container(
+                      color: Colors.transparent, child: Image.network(url))),
+              Positioned(
+                top: 16,
+                left: 16,
+                child: GestureDetector(
+                  onTap: (() => Navigator.of(context).pop()),
+                  child: Icon(
+                    Icons.close,
+                    size: 32,
+                    color: AppColors.ink[0],
+                  ),
+                ),
+              )
+            ],
+          ),
+        ));
+      },
+      transitionBuilder: (_, anim, __, child) {
+        return FadeTransition(
+          opacity: anim,
+          child: child,
+        );
+      },
+    );
   }
 
   Stream<QuerySnapshot> getChatMessage(String groupChatId, int limit) {

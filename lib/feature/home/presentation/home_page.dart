@@ -78,94 +78,132 @@ class HomePage extends ConsumerWidget {
                                                 '',
                                           )));
                             },
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Row(
-                                  children: [
-                                    userChat.photoUrl.isNotEmpty
-                                        ? ClipRRect(
-                                            borderRadius:
-                                                BorderRadius.circular(24),
-                                            child: Image.network(
-                                              userChat.photoUrl,
-                                              fit: BoxFit.cover,
-                                              width: 64,
+                            child: Container(
+                              width: double.infinity,
+                              color: AppColors.ink[0],
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Row(
+                                    children: [
+                                      userChat.photoUrl.isNotEmpty
+                                          ? ClipRRect(
+                                              borderRadius:
+                                                  BorderRadius.circular(24),
+                                              child: Image.network(
+                                                userChat.photoUrl,
+                                                fit: BoxFit.cover,
+                                                width: 64,
+                                                height: 64,
+                                                loadingBuilder:
+                                                    (BuildContext ctx,
+                                                        Widget child,
+                                                        ImageChunkEvent?
+                                                            loadingProgress) {
+                                                  if (loadingProgress == null) {
+                                                    return child;
+                                                  } else {
+                                                    return const SizedBox(
+                                                        width: 50,
+                                                        height: 50,
+                                                        child:
+                                                            CircularProgressIndicator());
+                                                  }
+                                                },
+                                                errorBuilder: (context, object,
+                                                    stackTrace) {
+                                                  return const Icon(
+                                                      Icons.account_circle,
+                                                      size: 50);
+                                                },
+                                              ),
+                                            )
+                                          : Container(
                                               height: 64,
-                                              loadingBuilder: (BuildContext ctx,
-                                                  Widget child,
-                                                  ImageChunkEvent?
-                                                      loadingProgress) {
-                                                if (loadingProgress == null) {
-                                                  return child;
-                                                } else {
-                                                  return const SizedBox(
-                                                      width: 50,
-                                                      height: 50,
-                                                      child:
-                                                          CircularProgressIndicator());
-                                                }
-                                              },
-                                              errorBuilder: (context, object,
-                                                  stackTrace) {
-                                                return const Icon(
-                                                    Icons.account_circle,
-                                                    size: 50);
-                                              },
+                                              width: 64,
+                                              decoration: BoxDecoration(
+                                                  shape: BoxShape.circle,
+                                                  color: AppColors.ink[400]),
+                                              child: const Icon(
+                                                Icons.person,
+                                                color: Colors.white,
+                                                size: 32,
+                                              ),
                                             ),
-                                          )
-                                        : Container(
-                                            height: 64,
-                                            width: 64,
-                                            decoration: BoxDecoration(
-                                                shape: BoxShape.circle,
-                                                color: AppColors.ink[400]),
-                                            child: const Icon(
-                                              Icons.person,
-                                              color: Colors.white,
-                                              size: 32,
+                                      Padding(
+                                        padding:
+                                            const EdgeInsets.only(left: 16.0),
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              userChat.displayName,
+                                              style: t16M.copyWith(
+                                                  fontWeight: snapshot
+                                                              .data!.docs.first
+                                                              .get('isSeen') ||
+                                                          snapshot.data!.docs
+                                                                  .first
+                                                                  .get(
+                                                                      'idFrom') ==
+                                                              ref
+                                                                  .watch(controller
+                                                                      .currentUid
+                                                                      .state)
+                                                                  .state
+                                                      ? FontWeight.normal
+                                                      : FontWeight.bold),
                                             ),
-                                          ),
-                                    Padding(
-                                      padding:
-                                          const EdgeInsets.only(left: 16.0),
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            userChat.displayName,
-                                            style: t16M.copyWith(
-                                                fontWeight: snapshot
-                                                            .data!.docs.first
-                                                            .get('isSeen') ||
-                                                        snapshot.data!.docs
-                                                                .first
-                                                                .get(
-                                                                    'idFrom') ==
-                                                            ref
-                                                                .watch(controller
-                                                                    .currentUid
-                                                                    .state)
-                                                                .state
-                                                    ? FontWeight.normal
-                                                    : FontWeight.bold),
-                                          ),
-                                          Row(
-                                            children: [
-                                              ConstrainedBox(
-                                                constraints: BoxConstraints(
-                                                    maxWidth:
-                                                        MediaQuery.of(context)
-                                                                .size
-                                                                .width -
-                                                            200),
-                                                child: Text(
-                                                  snapshot.data!.docs.first
-                                                      .get('content'),
-                                                  maxLines: 1,
-                                                  overflow:
-                                                      TextOverflow.ellipsis,
+                                            Row(
+                                              children: [
+                                                ConstrainedBox(
+                                                  constraints: BoxConstraints(
+                                                      maxWidth:
+                                                          MediaQuery.of(context)
+                                                                  .size
+                                                                  .width -
+                                                              200),
+                                                  child: Text(
+                                                    snapshot.data!.docs.first
+                                                        .get('content'),
+                                                    maxLines: 1,
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
+                                                    style: t14M.copyWith(
+                                                        color: snapshot.data!
+                                                                    .docs.first
+                                                                    .get(
+                                                                        'isSeen') ||
+                                                                snapshot.data!.docs.first.get('idFrom') ==
+                                                                    ref
+                                                                        .watch(controller
+                                                                            .currentUid
+                                                                            .state)
+                                                                        .state
+                                                            ? AppColors.ink[400]
+                                                            : AppColors
+                                                                .ink[500],
+                                                        fontWeight: snapshot
+                                                                    .data!
+                                                                    .docs
+                                                                    .first
+                                                                    .get('isSeen') ||
+                                                                snapshot.data!.docs.first.get('idFrom') == ref.watch(controller.currentUid.state).state
+                                                            ? FontWeight.normal
+                                                            : FontWeight.bold),
+                                                  ),
+                                                ),
+                                                const SizedBox(width: 8.0),
+                                                Text(
+                                                  DateFormat('hh:mm a').format(
+                                                    DateTime
+                                                        .fromMillisecondsSinceEpoch(
+                                                      int.parse(snapshot
+                                                          .data!.docs.first.id),
+                                                    ),
+                                                  ),
                                                   style: t14M.copyWith(
                                                       color: snapshot.data!.docs
                                                                   .first
@@ -185,56 +223,28 @@ class HomePage extends ConsumerWidget {
                                                               snapshot.data!.docs.first.get('idFrom') == ref.watch(controller.currentUid.state).state
                                                           ? FontWeight.normal
                                                           : FontWeight.bold),
-                                                ),
-                                              ),
-                                              const SizedBox(width: 8.0),
-                                              Text(
-                                                DateFormat('hh:mm a').format(
-                                                  DateTime
-                                                      .fromMillisecondsSinceEpoch(
-                                                    int.parse(snapshot
-                                                        .data!.docs.first.id),
-                                                  ),
-                                                ),
-                                                style: t14M.copyWith(
-                                                    color: snapshot.data!.docs.first.get('isSeen') ||
-                                                            snapshot.data!.docs.first.get('idFrom') ==
-                                                                ref
-                                                                    .watch(controller
-                                                                        .currentUid
-                                                                        .state)
-                                                                    .state
-                                                        ? AppColors.ink[400]
-                                                        : AppColors.ink[500],
-                                                    fontWeight: snapshot.data!.docs.first.get(
-                                                                'isSeen') ||
-                                                            snapshot.data!.docs
-                                                                    .first
-                                                                    .get('idFrom') ==
-                                                                ref.watch(controller.currentUid.state).state
-                                                        ? FontWeight.normal
-                                                        : FontWeight.bold),
-                                              )
-                                            ],
-                                          ),
-                                        ],
+                                                )
+                                              ],
+                                            ),
+                                          ],
+                                        ),
                                       ),
-                                    ),
-                                  ],
-                                ),
-                                snapshot.data!.docs.first.get('isSeen') ||
-                                        snapshot.data!.docs.first
-                                                .get('idFrom') ==
-                                            ref
-                                                .watch(
-                                                    controller.currentUid.state)
-                                                .state
-                                    ? const SizedBox.shrink()
-                                    : const CircleAvatar(
-                                        backgroundColor: AppColors.primary,
-                                        radius: 6,
-                                      )
-                              ],
+                                    ],
+                                  ),
+                                  snapshot.data!.docs.first.get('isSeen') ||
+                                          snapshot.data!.docs.first
+                                                  .get('idFrom') ==
+                                              ref
+                                                  .watch(controller
+                                                      .currentUid.state)
+                                                  .state
+                                      ? const SizedBox.shrink()
+                                      : const CircleAvatar(
+                                          backgroundColor: AppColors.primary,
+                                          radius: 6,
+                                        )
+                                ],
+                              ),
                             ));
                       } else {
                         return const SizedBox.shrink();
