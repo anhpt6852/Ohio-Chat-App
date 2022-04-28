@@ -10,6 +10,10 @@ import 'package:flutter/widgets.dart';
 class $AssetsImagesGen {
   const $AssetsImagesGen();
 
+  /// File path: assets/images/email_png.png
+  AssetGenImage get emailPng =>
+      const AssetGenImage('assets/images/email_png.png');
+
   /// File path: assets/images/login_background.jpeg
   AssetGenImage get loginBackground =>
       const AssetGenImage('assets/images/login_background.jpeg');

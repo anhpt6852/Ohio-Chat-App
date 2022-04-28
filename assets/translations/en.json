@@ -18,7 +18,13 @@
     "login": {
         "subtitle": "Let's build a friendly community",
         "forget_password": {
-            "label": "Forgot password?"
+            "label": "Forgot password?",
+            "button": "Send email",
+            "check_mail": "Check your email",
+            "check_mail_subtitle": "We have sent you an email with a link to change your password. Please check it",
+            "open_mail_button": "Open email app",
+            "title": "Reset password",
+            "subtitle": "Enter the email associated with your account and we'll send an email with instructions to reset your password."
         },
         "language_selector": {
             "vietnam": "Vietnamese",

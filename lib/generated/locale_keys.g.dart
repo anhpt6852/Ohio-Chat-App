@@ -17,6 +17,12 @@ abstract class  LocaleKeys {
   static const error = 'error';
   static const login_subtitle = 'login.subtitle';
   static const login_forget_password_label = 'login.forget_password.label';
+  static const login_forget_password_button = 'login.forget_password.button';
+  static const login_forget_password_check_mail = 'login.forget_password.check_mail';
+  static const login_forget_password_check_mail_subtitle = 'login.forget_password.check_mail_subtitle';
+  static const login_forget_password_open_mail_button = 'login.forget_password.open_mail_button';
+  static const login_forget_password_title = 'login.forget_password.title';
+  static const login_forget_password_subtitle = 'login.forget_password.subtitle';
   static const login_forget_password = 'login.forget_password';
   static const login_language_selector_vietnam = 'login.language_selector.vietnam';
   static const login_language_selector_england = 'login.language_selector.england';

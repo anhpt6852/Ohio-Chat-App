@@ -33,6 +33,7 @@ dependencies:
   flag: ^6.0.0
   image_picker: ^0.8.5
   flutter_local_notifications: ^9.4.1
+  open_mail_app: ^0.4.5
   
   #Firebase
   firebase_auth: ^3.3.15

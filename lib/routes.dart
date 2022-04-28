@@ -3,14 +3,14 @@ import 'package:ohio_chat_app/feature/chat/presentation/message_page.dart';
 import 'package:ohio_chat_app/feature/home/presentation/home_page.dart';
 import 'package:ohio_chat_app/feature/login/presentation/login_page.dart';
 import 'package:ohio_chat_app/feature/register/presentation/register_page.dart';
-import 'package:ohio_chat_app/feature/register/presentation/widgets/confirm_email_page.dart';
+import 'package:ohio_chat_app/feature/login/presentation/widgets/reset_password_page.dart';
 import 'package:ohio_chat_app/feature/user_profile/presentation/user_profile_page.dart';
 import 'package:ohio_chat_app/feature/user_profile/presentation/widgets/user_profile_config.dart';
 
 class AppRoutes {
   static const login = '/login-page';
   static const register = '/register-page';
-  static const verify = '/verify-page';
+  static const resetPassword = '/reset-password';
   static const home = '/home-page';
   static const chat = '/chat-page';
   static const userProfileConfig = '/user-profile-config';
@@ -45,10 +45,10 @@ class AppRouter {
         return _createRoute(HomePage());
       case AppRoutes.userProfile:
         return _createRoute(const UserProfilePage());
-      case AppRoutes.verify:
-        return _createRoute(const ConfirmEmailPage());
       case AppRoutes.userProfileConfig:
         return _createRoute(UserProfileConfig());
+      case AppRoutes.resetPassword:
+        return _createRoute(const ResetPasswordPage());
       case AppRoutes.register:
         return _createRoute(RegisterPage());
     }

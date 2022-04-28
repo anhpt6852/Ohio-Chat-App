@@ -18,7 +18,13 @@
     "login": {
         "subtitle": "Hãy xây dựng một cộng đồng thân thiện",
         "forget_password": {
-            "label": "Quên mật khẩu"
+            "label": "Quên mật khẩu",
+            "button": "Gửi email",
+            "check_mail": "Kiểm tra email của bạn",
+            "check_mail_subtitle": "Chúng tôi đã gửi một email kèm liên kết để đặt lại mặt khẩu. Hãy kiểm tra nó",
+            "open_mail_button": "Mở email app",
+            "title": "Đặt lại mật khẩu",
+            "subtitle": "Nhập email được liên kết với tài khoản của bạn và chúng tôi sẽ gửi email kèm theo hướng dẫn để đặt lại mật khẩu của bạn."
         },
         "language_selector": {
             "vietnam": "Tiếng Việt",

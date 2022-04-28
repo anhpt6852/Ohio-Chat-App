@@ -36,7 +36,20 @@ class LoginForm extends ConsumerWidget {
               labelText: tr(LocaleKeys.login_passwordLabel),
               controller: controller.passwordController,
               textInputAction: TextInputAction.done,
-              obscureText: true,
+              suffixIcon: GestureDetector(
+                onTap: () {
+                  ref.read(controller.isObscureText.state).state =
+                      !ref.read(controller.isObscureText.state).state;
+                },
+                child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: ref.watch(controller.isObscureText)
+                        ? const Icon(Icons.visibility_off, size: 24)
+                        : const Icon(Icons.visibility, size: 24)),
+              ),
+              sufflixBoxConstrains:
+                  const BoxConstraints(maxHeight: 24, maxWidth: 24),
+              obscureText: ref.watch(controller.isObscureText),
             ),
             const SizedBox(height: 16),
             CommonButton(
@@ -49,13 +62,17 @@ class LoginForm extends ConsumerWidget {
                   CommonSnackbar.show(context,
                       type: SnackbarType.warning,
                       message: tr(LocaleKeys.error_login_empty_password));
-                }
-                if (controller.usernameController.text.isEmpty) {
+                } else if (!controller
+                    .isEmail(controller.usernameController.text)) {
+                  CommonSnackbar.show(context,
+                      type: SnackbarType.warning,
+                      message: tr(LocaleKeys.error_login_invalid_email));
+                } else if (controller.usernameController.text.isEmpty) {
                   CommonSnackbar.show(context,
                       type: SnackbarType.warning,
                       message: tr(LocaleKeys.error_login_empty_user));
                 } else {
-                  var loginRes = await controller.doLogin(
+                  var loginRes = await controller.doLogin(context,
                       email: controller.usernameController.text,
                       password: controller.passwordController.text);
                   if (!loginRes['status']) {
@@ -76,7 +93,9 @@ class LoginForm extends ConsumerWidget {
             Align(
               alignment: Alignment.center,
               child: GestureDetector(
-                onTap: () {},
+                onTap: () {
+                  Navigator.of(context).pushNamed(AppRoutes.resetPassword);
+                },
                 child: Text(
                   tr(LocaleKeys.login_forget_password_label),
                   style: t14M.apply(color: AppColors.primary),
