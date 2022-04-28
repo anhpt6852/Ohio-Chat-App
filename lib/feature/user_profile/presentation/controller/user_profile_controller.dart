@@ -1,5 +1,9 @@
+import 'dart:io';
+
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:ohio_chat_app/feature/user_profile/data/repositories/user_profile_repositories_impl.dart';
 import 'package:ohio_chat_app/feature/user_profile/domain/repositories/user_profile_repositories.dart';
@@ -30,8 +34,10 @@ class UserProfileController {
       RoundedLoadingButtonController();
 
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+  final firebaseStorage = FirebaseStorage.instance;
 
   var isLogoutSuccessfully = false;
+  var imageUrl = StateProvider((ref) => '');
 
   getCurrentUser() {
     final User user = _firebaseAuth.currentUser!;
@@ -43,7 +49,6 @@ class UserProfileController {
     final User user = _firebaseAuth.currentUser!;
     user.updateDisplayName(profileNameController.text);
     user.updateEmail(profileEmailController.text);
-    user.updatePhotoURL("");
   }
 
   String displayUserName() {
@@ -72,6 +77,33 @@ class UserProfileController {
       isLogoutSuccessfully = true;
     } catch (e) {
       isLogoutSuccessfully = false;
+    }
+  }
+
+  File imageFile = File('');
+
+  Future getImage() async {
+    ImagePicker imagePicker = ImagePicker();
+    XFile? pickedFile;
+    pickedFile = await imagePicker.pickImage(source: ImageSource.gallery);
+    if (pickedFile != null) {
+      imageFile = File(pickedFile.path);
+      TaskSnapshot snapshot = await uploadImageFile(
+          imageFile, DateTime.now().millisecondsSinceEpoch.toString());
+      ref.read(imageUrl.state).state = await snapshot.ref.getDownloadURL();
+    }
+  }
+
+  UploadTask uploadImageFile(File image, String filename) {
+    Reference reference = firebaseStorage.ref().child(filename);
+    UploadTask uploadTask = reference.putFile(image);
+    return uploadTask;
+  }
+
+  updateAvatar() {
+    final User user = _firebaseAuth.currentUser!;
+    if (ref.read(imageUrl.state).state != '') {
+      user.updatePhotoURL(ref.read(imageUrl.state).state);
     }
   }
 }

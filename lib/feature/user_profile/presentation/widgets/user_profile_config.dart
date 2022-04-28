@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -12,10 +14,14 @@ import 'package:ohio_chat_app/generated/locale_keys.g.dart';
 class UserProfileConfig extends ConsumerWidget {
   UserProfileConfig({Key? key}) : super(key: key);
 
+  File? imageFile;
+  String imageUrl = '';
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final controller = ref.watch(userProfileControllerProvider);
     controller.getCurrentUser();
+    controller.getImage();
     return Scaffold(
         appBar: AppBar(
           automaticallyImplyLeading: false,
@@ -40,8 +46,7 @@ class UserProfileConfig extends ConsumerWidget {
                     width: 100,
                     child: CircleAvatar(
                       backgroundColor: Colors.transparent,
-                      child: Image.network(
-                          'https://cdn3.iconfinder.com/data/icons/avatars-round-flat/33/avat-01-512.png'),
+                      child: Image.network(imageUrl),
                     ),
                   ),
                   Positioned(

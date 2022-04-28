@@ -1,5 +1,4 @@
 import 'package:easy_localization/easy_localization.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:ohio_chat_app/core/commons/presentation/common_button.dart';
@@ -14,7 +13,7 @@ class UserProfileInfo extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final data = ref.watch(userProfileControllerProvider);
+    final controller = ref.watch(userProfileControllerProvider);
     return Column(children: [
       Divider(
         color: AppColors.ink[0],
@@ -27,7 +26,7 @@ class UserProfileInfo extends ConsumerWidget {
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         child: ListTile(
           leading: const Icon(Icons.person_add_alt_1),
-          title: Text(data.displayUserName()),
+          title: Text(controller.displayUserName()),
         ),
       ),
       Divider(
@@ -41,7 +40,7 @@ class UserProfileInfo extends ConsumerWidget {
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         child: ListTile(
           leading: const Icon(Icons.email),
-          title: Text(data.displayUserEmail()),
+          title: Text(controller.displayUserEmail()),
         ),
       ),
       Divider(
@@ -49,7 +48,7 @@ class UserProfileInfo extends ConsumerWidget {
       ),
       CommonButton(
           child: Text(tr(LocaleKeys.config_logout)),
-          btnController: data.buttonController,
+          btnController: controller.buttonController,
           onPressed: () => showDialog(
                 context: context,
                 builder: (BuildContext context) {
@@ -60,8 +59,8 @@ class UserProfileInfo extends ConsumerWidget {
                         children: [
                           TextButton(
                               onPressed: () {
-                                data.logoutUser();
-                                if (data.isLogoutSuccessfully) {
+                                controller.logoutUser();
+                                if (controller.isLogoutSuccessfully) {
                                   Navigator.of(context).pushNamedAndRemoveUntil(
                                       AppRoutes.login, (route) => false);
                                 } else {
