@@ -1,9 +1,6 @@
-import 'dart:io';
-
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:ohio_chat_app/core/commons/presentation/common_button.dart';
 import 'package:ohio_chat_app/core/commons/presentation/common_text_form_field.dart';
 import 'package:ohio_chat_app/core/commons/presentation/snack_bar.dart';
@@ -13,10 +10,7 @@ import 'package:ohio_chat_app/feature/user_profile/presentation/controller/user_
 import 'package:ohio_chat_app/generated/locale_keys.g.dart';
 
 class UserProfileConfig extends ConsumerWidget {
-  UserProfileConfig({Key? key}) : super(key: key);
-
-  File? imageFile;
-  String imageUrl = '';
+  const UserProfileConfig({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

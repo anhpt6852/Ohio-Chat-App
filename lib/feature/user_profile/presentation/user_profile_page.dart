@@ -31,7 +31,7 @@ class UserProfilePage extends StatelessWidget {
           IconButton(
               onPressed: () =>
                   Navigator.of(context).pushNamed(AppRoutes.userProfileConfig),
-              icon: Icon(Icons.edit))
+              icon: const Icon(Icons.edit))
         ],
       ),
       body: SingleChildScrollView(

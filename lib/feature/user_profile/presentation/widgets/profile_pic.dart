@@ -8,7 +8,7 @@ class ProfilePic extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final controller = ref.watch(userProfileControllerProvider);
-    controller.displayUserAva();
+
     return SizedBox(
       height: 100,
       width: 100,
