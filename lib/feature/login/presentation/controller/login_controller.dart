@@ -4,6 +4,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:ohio_chat_app/core/commons/presentation/snack_bar.dart';
 import 'package:ohio_chat_app/core/constant/firestore_constants.dart';
 import 'package:ohio_chat_app/core/services/fcm_helper.dart';
 import 'package:ohio_chat_app/core/services/shared_preferences.dart';
@@ -41,12 +42,16 @@ class LoginController {
   });
 
   var isObscureText = StateProvider((ref) => true);
+  var isSendEmail = StateProvider((ref) => false);
 
   final usernameController = TextEditingController();
   final passwordController = TextEditingController();
   final RoundedLoadingButtonController buttonController =
       RoundedLoadingButtonController();
 
+  final emailResetController = TextEditingController();
+  final RoundedLoadingButtonController buttonResetPassController =
+      RoundedLoadingButtonController();
   //instance Firebase
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
   final firebaseFirestore = FirebaseFirestore.instance;
@@ -70,7 +75,18 @@ class LoginController {
     return isExist;
   }
 
-  doLogin({required String email, required String password}) async {
+  resetPassword(context, String email) async {
+    try {
+      await _firebaseAuth.sendPasswordResetEmail(email: email);
+      ref.read(isSendEmail.state).state = true;
+      emailResetController.clear();
+    } on FirebaseAuthException catch (e) {
+      CommonSnackbar.show(context,
+          type: SnackbarType.error, message: e.message!);
+    }
+  }
+
+  doLogin(context, {required String email, required String password}) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     try {
       var result = await _firebaseAuth.signInWithEmailAndPassword(
@@ -120,6 +136,9 @@ class LoginController {
       return {"status": true, "message": "success", "data": result.user};
     } on FirebaseAuthException catch (e) {
       print(e.toString());
+      CommonSnackbar.show(context,
+          type: SnackbarType.error, message: e.message!);
+      buttonController.reset();
       return {"status": false, "message": e.message.toString(), "data": ""};
     }
   }
