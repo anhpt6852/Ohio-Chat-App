@@ -57,6 +57,10 @@
         "title": "Đoạn chat"
     },
     "config": {
-        "options": "Chọn cách"
+        "options": "Chọn cách",
+        "logout": "Đăng xuất"
+    },
+    "confirmation": {
+        "logout": "Bạn có muốn đăng xuất?"
     }
 }

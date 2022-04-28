@@ -56,6 +56,10 @@
         "title": "Chat"
     },
     "config": {
-        "options": "Choose option"
+        "options": "Choose option",
+        "logout": "Log out"
+    },
+    "confirmation": {
+        "logout": "Do you want to log out?"
     }
  }

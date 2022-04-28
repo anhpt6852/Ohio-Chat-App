@@ -31,6 +31,8 @@ class UserProfileController {
 
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 
+  var isLogoutSuccessfully = false;
+
   getCurrentUser() {
     final User user = _firebaseAuth.currentUser!;
     profileNameController.text = user.displayName ?? '';
@@ -44,21 +46,32 @@ class UserProfileController {
     user.updatePhotoURL("");
   }
 
-  displayUserName() {
+  String displayUserName() {
     final User user = _firebaseAuth.currentUser!;
     final userName = user.displayName.toString();
     return userName;
   }
 
-  displayUserEmail() {
+  String displayUserEmail() {
     final User user = _firebaseAuth.currentUser!;
     final userEmail = user.email.toString();
     return userEmail;
   }
 
-  displayUserAva() {
+  String displayUserAva() {
     final User user = _firebaseAuth.currentUser!;
-    final userAva = user.photoURL;
+    final userAva = user.photoURL ?? '';
     return userAva;
+  }
+
+  logoutUser() {
+    try {
+      final User user = _firebaseAuth.currentUser!;
+      FirebaseAuth.instance.signOut();
+
+      isLogoutSuccessfully = true;
+    } catch (e) {
+      isLogoutSuccessfully = false;
+    }
   }
 }

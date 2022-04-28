@@ -48,6 +48,9 @@ abstract class  LocaleKeys {
   static const home_title = 'home.title';
   static const home = 'home';
   static const config_options = 'config.options';
+  static const config_logout = 'config.logout';
   static const config = 'config';
+  static const confirmation_logout = 'confirmation.logout';
+  static const confirmation = 'confirmation';
 
 }
