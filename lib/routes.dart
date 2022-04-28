@@ -5,6 +5,7 @@ import 'package:ohio_chat_app/feature/login/presentation/login_page.dart';
 import 'package:ohio_chat_app/feature/register/presentation/register_page.dart';
 import 'package:ohio_chat_app/feature/login/presentation/widgets/reset_password_page.dart';
 import 'package:ohio_chat_app/feature/user_profile/presentation/user_profile_page.dart';
+import 'package:ohio_chat_app/feature/user_profile/presentation/widgets/user_profile_config.dart';
 
 class AppRoutes {
   static const login = '/login-page';
@@ -44,13 +45,10 @@ class AppRouter {
         return _createRoute(HomePage());
       case AppRoutes.userProfile:
         return _createRoute(const UserProfilePage());
+      case AppRoutes.userProfileConfig:
+        return _createRoute(UserProfileConfig());
       case AppRoutes.resetPassword:
         return _createRoute(const ResetPasswordPage());
-      // case AppRoutes.userProfileConfig:
-      //   return MaterialPageRoute<dynamic>(
-      //     builder: (_) => const UserProfileConfig(),
-      //     settings: settings,
-      //   );
       case AppRoutes.register:
         return _createRoute(RegisterPage());
     }

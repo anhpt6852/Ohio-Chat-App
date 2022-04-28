@@ -50,8 +50,24 @@
             "title": "Confirm email"
         }
     },
+    "profile": {
+        "title": "User Profile",
+        "name": "Name",
+        "email": "Email",
+        "save": "Save",
+        "empty_error": "This field cannot be left blank",
+        "edit": "Edit Profile",
+        "success": "Save profile successfully"
+    },
     "home": {
         "title": "Chat"
+    },
+    "config": {
+        "options": "Choose option",
+        "logout": "Log out"
+    },
+    "confirmation": {
+        "logout": "Do you want to log out?"
     },
     "chat": {
         "last_seen": "Active",

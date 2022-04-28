@@ -81,7 +81,7 @@ class LoginForm extends ConsumerWidget {
                         message: tr(LocaleKeys.error_login_wrong_password));
                   } else {
                     Navigator.of(context).pushNamedAndRemoveUntil(
-                        AppRoutes.home, (route) => false);
+                        AppRoutes.userProfile, (route) => false);
                   }
                 }
 

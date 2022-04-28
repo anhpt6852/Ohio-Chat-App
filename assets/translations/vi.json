@@ -51,8 +51,24 @@
             "title": "Xác nhận email"
         }
     },
+    "profile": {
+        "title": "Thông tin cá nhân",
+        "name": "Họ và tên",
+        "email": "Thư điện tử",
+        "save": "Lưu",
+        "empty_error": "Không được bỏ trống trường này",
+        "edit": "Điều chỉnh thông tin cá nhân",
+        "success": "Lưu dữ liệu thành công"
+    },
     "home": {
         "title": "Đoạn chat"
+    },
+    "config": {
+        "options": "Chọn cách",
+        "logout": "Đăng xuất"
+    },
+    "confirmation": {
+        "logout": "Bạn có muốn đăng xuất?"
     },
     "chat": {
         "last_seen": "Hoạt động",

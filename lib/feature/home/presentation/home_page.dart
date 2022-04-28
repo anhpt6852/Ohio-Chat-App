@@ -13,6 +13,7 @@ import 'package:ohio_chat_app/feature/chat/presentation/controller/message_contr
 import 'package:ohio_chat_app/feature/chat/presentation/message_page.dart';
 import 'package:ohio_chat_app/feature/home/presentation/controller/home_controller.dart';
 import 'package:ohio_chat_app/generated/locale_keys.g.dart';
+import 'package:ohio_chat_app/routes.dart';
 
 class HomePage extends ConsumerWidget {
   final ScrollController scrollController = ScrollController();
@@ -355,7 +356,7 @@ class HomePage extends ConsumerWidget {
           centerTitle: true,
           automaticallyImplyLeading: false,
           leading: GestureDetector(
-            onTap: () {},
+            onTap: () => AppRoutes.userProfile,
             child: Padding(
               padding: const EdgeInsets.all(16.0),
               child: CircleAvatar(
