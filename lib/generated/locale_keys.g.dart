@@ -40,5 +40,10 @@ abstract class  LocaleKeys {
   static const register = 'register';
   static const home_title = 'home.title';
   static const home = 'home';
+  static const chat_last_seen = 'chat.last_seen';
+  static const chat_bf_minute = 'chat.bf_minute';
+  static const chat_bf_day = 'chat.bf_day';
+  static const chat_bf_hour = 'chat.bf_hour';
+  static const chat = 'chat';
 
 }

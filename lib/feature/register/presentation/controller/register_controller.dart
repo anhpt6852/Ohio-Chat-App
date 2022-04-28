@@ -1,8 +1,12 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dio/dio.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:ohio_chat_app/core/commons/presentation/snack_bar.dart';
 import 'package:ohio_chat_app/core/constant/firestore_constants.dart';
 import 'package:ohio_chat_app/feature/chat/data/models/chat_user.dart';
@@ -35,6 +39,10 @@ class RegisterController {
   //instance Firebase
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
   final firebaseFirestore = FirebaseFirestore.instance;
+  final firebaseStorage = FirebaseStorage.instance;
+
+  var imageUrl = StateProvider((ref) => '');
+  var isImageLoading = StateProvider((ref) => false);
 
   registerWithEmailPassword(context,
       {required String name,
@@ -94,5 +102,29 @@ class RegisterController {
 
       return {"status": false, "message": e.message.toString(), "data": ""};
     }
+  }
+
+  Future getImage() async {
+    ImagePicker imagePicker = ImagePicker();
+    XFile? pickedFile;
+    pickedFile = await imagePicker.pickImage(source: ImageSource.gallery);
+    if (pickedFile != null) {
+      var imageFile = File(pickedFile.path);
+      try {
+        ref.read(isImageLoading.state).state = true;
+        TaskSnapshot snapshot = await uploadImageFile(
+            imageFile, DateTime.now().millisecondsSinceEpoch.toString());
+        ref.read(imageUrl.state).state = await snapshot.ref.getDownloadURL();
+        ref.read(isImageLoading.state).state = false;
+      } catch (e) {
+        ref.read(isImageLoading.state).state = false;
+      }
+    }
+  }
+
+  UploadTask uploadImageFile(File image, String filename) {
+    Reference reference = firebaseStorage.ref().child(filename);
+    UploadTask uploadTask = reference.putFile(image);
+    return uploadTask;
   }
 }

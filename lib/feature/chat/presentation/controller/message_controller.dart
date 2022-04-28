@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -9,9 +10,14 @@ import 'package:ohio_chat_app/core/constant/colors.dart';
 import 'package:ohio_chat_app/core/constant/firestore_constants.dart';
 import 'package:ohio_chat_app/core/constant/message_constants.dart';
 import 'package:ohio_chat_app/feature/chat/data/models/message.dart';
+import 'package:ohio_chat_app/generated/locale_keys.g.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 final messageControllerProvider = Provider.autoDispose((ref) {
+  return MessageController(ref);
+});
+
+final getTimeProvider = Provider.autoDispose((ref) {
   return MessageController(ref);
 });
 
@@ -54,6 +60,49 @@ class MessageController {
       return true;
     } else {
       return false;
+    }
+  }
+
+  getTimeOfLastSeen() {
+    var listTime = [];
+
+    listMessages.forEach((element) {
+      if (element.get('isSeen') == true &&
+          element.get('idFrom') != currentUserId) {
+        listTime.add(element.id);
+      }
+    });
+    if (listTime.isNotEmpty) {
+      var timeDiffrence = DateTime.now()
+          .difference(DateTime.fromMillisecondsSinceEpoch(
+            int.parse(listTime.first),
+          ))
+          .inHours;
+      print(timeDiffrence);
+      if (timeDiffrence > 24) {
+        return DateTime.now()
+                .difference(DateTime.fromMillisecondsSinceEpoch(
+                  int.parse(listTime.first),
+                ))
+                .inDays
+                .toString() +
+            ' ' +
+            tr(LocaleKeys.chat_bf_day);
+      }
+      if (timeDiffrence < 1) {
+        return DateTime.now()
+                .difference(DateTime.fromMillisecondsSinceEpoch(
+                  int.parse(listTime.first),
+                ))
+                .inMinutes
+                .toString() +
+            ' ' +
+            tr(LocaleKeys.chat_bf_minute);
+      } else {
+        return timeDiffrence.toString() + ' ' + tr(LocaleKeys.chat_bf_hour);
+      }
+    } else {
+      return '';
     }
   }
 
