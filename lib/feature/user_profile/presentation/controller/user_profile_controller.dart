@@ -39,16 +39,24 @@ class UserProfileController {
   var isLogoutSuccessfully = false;
   var imageUrl = StateProvider((ref) => '');
 
-  getCurrentUser() {
+  getUserName() {
     final User user = _firebaseAuth.currentUser!;
     profileNameController.text = user.displayName ?? '';
+  }
+
+  getUserEmail() {
+    final User user = _firebaseAuth.currentUser!;
     profileEmailController.text = user.email ?? '';
   }
 
-  updateCurrentUser() {
+  updateUserName() async {
     final User user = _firebaseAuth.currentUser!;
-    user.updateDisplayName(profileNameController.text);
-    user.updateEmail(profileEmailController.text);
+    await user.updateDisplayName(profileNameController.text);
+  }
+
+  updateUserEmail() async {
+    final User user = _firebaseAuth.currentUser!;
+    await user.updateEmail(profileEmailController.text);
   }
 
   String displayUserName() {

@@ -62,9 +62,17 @@ class HomePage extends ConsumerWidget {
                                   ref
                                       .watch(controller.currentUid.state)
                                       .state) {
-                                controller.updateFirestoreMessages(
-                                    '${ref.watch(controller.currentUid.state).state} - ${userChat.id}',
-                                    snapshot.data!.docs.first.id);
+                                ref
+                                            .watch(controller.currentUid.state)
+                                            .state
+                                            .compareTo(userChat.id) >
+                                        0
+                                    ? controller.updateFirestoreMessages(
+                                        '${ref.watch(controller.currentUid.state).state} - ${userChat.id}',
+                                        snapshot.data!.docs.first.id)
+                                    : controller.updateFirestoreMessages(
+                                        '${userChat.id} - ${ref.watch(controller.currentUid.state).state}',
+                                        snapshot.data!.docs.first.id);
                               }
                               Navigator.push(
                                   context,

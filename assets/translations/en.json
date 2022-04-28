@@ -61,5 +61,12 @@
     },
     "confirmation": {
         "logout": "Do you want to log out?"
+    },
+    "chat": {
+        "last_seen": "Active",
+        "bf_minute": "minutes ago",
+        "bf_day": "days ago",
+        "bf_hour": "hours ago"
     }
+    
  }

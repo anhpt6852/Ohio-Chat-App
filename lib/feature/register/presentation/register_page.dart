@@ -22,17 +22,67 @@ class RegisterPage extends ConsumerWidget {
         title: Text(tr(LocaleKeys.register_title),
             style: t16M.copyWith(color: AppColors.ink[500])),
         centerTitle: true,
+        elevation: 0.0,
         automaticallyImplyLeading: false,
         leading: GestureDetector(
             onTap: () => Navigator.pop(context),
             child: const Icon(Icons.arrow_back_ios)));
 
     final body = Container(
-        color: AppColors.ink[100],
+        color: AppColors.ink[0],
         padding: const EdgeInsets.all(16.0),
         child: Form(
           key: _formKey,
           child: Column(children: [
+            ref.watch(controller.isImageLoading) == true
+                ? const SizedBox(
+                    height: 112,
+                    width: 112,
+                    child: Center(child: CommonLoading()))
+                : GestureDetector(
+                    onTap: () {
+                      controller.getImage();
+                    },
+                    child: ref.watch(controller.imageUrl) == ''
+                        ? Stack(
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.all(0.0),
+                                child: CircleAvatar(
+                                  radius: 48,
+                                  backgroundColor: AppColors.ink[300],
+                                  child: Icon(
+                                    Icons.person,
+                                    color: AppColors.ink[0],
+                                    size: 56,
+                                  ),
+                                ),
+                              ),
+                              Positioned(
+                                bottom: 0,
+                                right: 0,
+                                child: Container(
+                                  padding: const EdgeInsets.all(4.0),
+                                  decoration: BoxDecoration(
+                                      color: AppColors.ink[0],
+                                      shape: BoxShape.circle),
+                                  child: Icon(
+                                    Icons.camera_alt,
+                                    color: AppColors.ink[300],
+                                    size: 24,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          )
+                        : Image.network(
+                            ref.watch(controller.imageUrl),
+                            width: 112,
+                            height: 112,
+                            fit: BoxFit.contain,
+                          ),
+                  ),
+            const SizedBox(height: 24),
             CommonTextFormField(
               height: 52,
               hintText: tr(LocaleKeys.register_fullname),

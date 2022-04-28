@@ -20,8 +20,8 @@ class UserProfileConfig extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final controller = ref.watch(userProfileControllerProvider);
-    controller.getCurrentUser();
-    controller.getImage();
+    controller.getUserEmail();
+    controller.getUserName();
     return Scaffold(
         appBar: AppBar(
           automaticallyImplyLeading: false,
@@ -46,7 +46,7 @@ class UserProfileConfig extends ConsumerWidget {
                     width: 100,
                     child: CircleAvatar(
                       backgroundColor: Colors.transparent,
-                      child: Image.network(imageUrl),
+                      child: Image.network(controller.displayUserAva()),
                     ),
                   ),
                   Positioned(
@@ -55,7 +55,10 @@ class UserProfileConfig extends ConsumerWidget {
                       bottom: 0,
                       right: 0,
                       child: IconButton(
-                        onPressed: () {},
+                        onPressed: (() {
+                          controller.getImage();
+                          controller.updateAvatar();
+                        }),
                         icon: const Icon(Icons.add_a_photo),
                       ))
                 ],
@@ -106,7 +109,8 @@ class UserProfileConfig extends ConsumerWidget {
                         type: SnackbarType.warning,
                         message: tr(LocaleKeys.profile_empty_error));
                   } else {
-                    controller.updateCurrentUser();
+                    await controller.updateUserName();
+                    await controller.updateUserEmail();
                   }
                 },
                 btnController: controller.buttonController,

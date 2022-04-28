@@ -1,9 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:ohio_chat_app/core/constant/firestore_constants.dart';
+import 'package:ohio_chat_app/core/services/fcm_helper.dart';
 import 'package:ohio_chat_app/core/services/shared_preferences.dart';
 import 'package:ohio_chat_app/feature/chat/data/models/chat_user.dart';
 import 'package:ohio_chat_app/feature/login/data/models/login_model.dart';
@@ -12,6 +14,7 @@ import 'package:ohio_chat_app/feature/login/domain/repositories/login_repositori
 import 'package:ohio_chat_app/routes.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 
 final loginControllerProvider = Provider.autoDispose((ref) {
   final loginRepositories = ref.watch(loginRepositoryProvider);
@@ -107,6 +110,11 @@ class LoginController {
         await prefs.setString(
             FirestoreConstants.phoneNumber, userChat.phoneNumber);
       }
+
+      try {
+        RemoteMessage? initialMessage =
+            await FirebaseMessaging.instance.getInitialMessage();
+      } catch (e) {}
       return {"status": true, "message": "success", "data": result.user};
     } on FirebaseAuthException catch (e) {
       print(e.toString());

@@ -62,5 +62,11 @@
     },
     "confirmation": {
         "logout": "Bạn có muốn đăng xuất?"
+    },
+    "chat": {
+        "last_seen": "Hoạt động",
+        "bf_minute": "phút trước",
+        "bf_day": "ngày trước",
+        "bf_hour": "giờ trước"
     }
 }

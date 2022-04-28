@@ -7,14 +7,14 @@ class ProfilePic extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final data = ref.watch(userProfileControllerProvider);
+    final controller = ref.watch(userProfileControllerProvider);
+    controller.displayUserAva();
     return SizedBox(
       height: 100,
       width: 100,
       child: CircleAvatar(
         backgroundColor: Colors.transparent,
-        child: Image.network(
-            'https://cdn3.iconfinder.com/data/icons/avatars-round-flat/33/avat-01-512.png'),
+        child: Image.network(controller.displayUserAva()),
       ),
     );
   }

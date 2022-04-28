@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
@@ -12,6 +13,7 @@ import 'package:ohio_chat_app/core/constant/message_constants.dart';
 import 'package:ohio_chat_app/feature/chat/data/models/message.dart';
 import 'package:ohio_chat_app/feature/chat/presentation/controller/message_controller.dart';
 import 'package:ohio_chat_app/feature/login/presentation/login_page.dart';
+import 'package:ohio_chat_app/generated/locale_keys.g.dart';
 
 class ChatPage extends ConsumerWidget {
   final String peerId;
@@ -108,7 +110,7 @@ class ChatPage extends ConsumerWidget {
                       chatContent: chatMessages.content,
                       color: AppColors.primary,
                       textColor: AppColors.ink[0],
-                      margin: const EdgeInsets.only(right: 8, bottom: 2),
+                      margin: const EdgeInsets.only(right: 8, top: 2),
                     )
                   : chatMessages.type == MessageType.image
                       ? GestureDetector(
@@ -196,7 +198,7 @@ class ChatPage extends ConsumerWidget {
                           color: AppColors.primary,
                           textColor: AppColors.ink[0],
                           chatContent: chatMessages.content,
-                          margin: const EdgeInsets.only(left: 8, bottom: 2),
+                          margin: const EdgeInsets.only(left: 8, top: 2),
                         )
                       : chatMessages.type == MessageType.image
                           ? GestureDetector(
@@ -237,6 +239,68 @@ class ChatPage extends ConsumerWidget {
       }
     }
 
+    Widget buildPeerInfo(int index, DocumentSnapshot? documentSnapshot) {
+      if (documentSnapshot != null) {
+        return Center(
+          child: Column(
+            children: [
+              peerAvatar == ''
+                  ? Padding(
+                      padding: const EdgeInsets.all(0.0),
+                      child: CircleAvatar(
+                        radius: 40,
+                        backgroundColor: AppColors.ink[400],
+                        child: Icon(
+                          Icons.person,
+                          color: AppColors.ink[0],
+                          size: 56,
+                        ),
+                      ),
+                    )
+                  : Image.network(
+                      peerAvatar,
+                      width: 40,
+                      height: 40,
+                      fit: BoxFit.cover,
+                      loadingBuilder: (BuildContext ctx, Widget child,
+                          ImageChunkEvent? loadingProgress) {
+                        if (loadingProgress == null) return child;
+                        return Center(
+                          child: CircularProgressIndicator(
+                            color: AppColors.primary,
+                            value: loadingProgress.expectedTotalBytes != null &&
+                                    loadingProgress.expectedTotalBytes != null
+                                ? loadingProgress.cumulativeBytesLoaded /
+                                    loadingProgress.expectedTotalBytes!
+                                : null,
+                          ),
+                        );
+                      },
+                      errorBuilder: (context, object, stackTrace) {
+                        return Icon(
+                          Icons.account_circle,
+                          size: 35,
+                          color: AppColors.ink[100],
+                        );
+                      },
+                    ),
+              Text(
+                peerNickname,
+                style: t20M,
+              ),
+              const Text(
+                'OhioChat',
+                style: t14M,
+              ),
+              const SizedBox(height: 24)
+            ],
+          ),
+        );
+      } else {
+        return const SizedBox.shrink();
+      }
+    }
+
     Widget buildListMessage() {
       return Flexible(
         child: ref.watch(controller.groupChatId.state).state.isNotEmpty
@@ -253,11 +317,81 @@ class ChatPage extends ConsumerWidget {
                           itemCount: snapshot.data?.docs.length,
                           reverse: true,
                           controller: scrollController,
-                          itemBuilder: (context, index) =>
-                              buildItem(index, snapshot.data?.docs[index]));
+                          itemBuilder: (context, index) {
+                            return Column(
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              children: [
+                                index == (controller.listMessages.length - 1)
+                                    ? buildPeerInfo(
+                                        index, snapshot.data?.docs[index])
+                                    : const SizedBox.shrink(),
+                                buildItem(index, snapshot.data?.docs[index]),
+                              ],
+                            );
+                          });
                     } else {
-                      return const Center(
-                        child: Text('No messages...'),
+                      return Center(
+                        child: Column(
+                          children: [
+                            peerAvatar == ''
+                                ? Padding(
+                                    padding: const EdgeInsets.all(0.0),
+                                    child: CircleAvatar(
+                                      radius: 40,
+                                      backgroundColor: AppColors.ink[400],
+                                      child: Icon(
+                                        Icons.person,
+                                        color: AppColors.ink[0],
+                                        size: 56,
+                                      ),
+                                    ),
+                                  )
+                                : Image.network(
+                                    peerAvatar,
+                                    width: 40,
+                                    height: 40,
+                                    fit: BoxFit.cover,
+                                    loadingBuilder: (BuildContext ctx,
+                                        Widget child,
+                                        ImageChunkEvent? loadingProgress) {
+                                      if (loadingProgress == null) return child;
+                                      return Center(
+                                        child: CircularProgressIndicator(
+                                          color: AppColors.primary,
+                                          value: loadingProgress
+                                                          .expectedTotalBytes !=
+                                                      null &&
+                                                  loadingProgress
+                                                          .expectedTotalBytes !=
+                                                      null
+                                              ? loadingProgress
+                                                      .cumulativeBytesLoaded /
+                                                  loadingProgress
+                                                      .expectedTotalBytes!
+                                              : null,
+                                        ),
+                                      );
+                                    },
+                                    errorBuilder:
+                                        (context, object, stackTrace) {
+                                      return Icon(
+                                        Icons.account_circle,
+                                        size: 35,
+                                        color: AppColors.ink[100],
+                                      );
+                                    },
+                                  ),
+                            Text(
+                              peerNickname,
+                              style: t20M,
+                            ),
+                            const Text(
+                              'OhioChat',
+                              style: t14M,
+                            ),
+                            const SizedBox(height: 24)
+                          ],
+                        ),
                       );
                     }
                   } else {
@@ -342,11 +476,11 @@ class ChatPage extends ConsumerWidget {
                 centerTitle: true,
                 title: Row(
                   children: [
-                    userAvatar == ''
+                    peerAvatar == ''
                         ? Padding(
                             padding: const EdgeInsets.all(0.0),
                             child: CircleAvatar(
-                              radius: 16,
+                              radius: 18,
                               backgroundColor: AppColors.ink[400],
                               child: Icon(
                                 Icons.person,
@@ -356,7 +490,7 @@ class ChatPage extends ConsumerWidget {
                             ),
                           )
                         : Image.network(
-                            userAvatar,
+                            peerAvatar,
                             width: 40,
                             height: 40,
                             fit: BoxFit.cover,
@@ -385,9 +519,22 @@ class ChatPage extends ConsumerWidget {
                             },
                           ),
                     const SizedBox(width: 8),
-                    Text(
-                      peerNickname.trim(),
-                      style: t16M.copyWith(color: AppColors.ink[500]),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          peerNickname.trim(),
+                          style: t16M.copyWith(color: AppColors.ink[500]),
+                        ),
+                        controller.getTimeOfLastSeen() == ''
+                            ? const SizedBox.shrink()
+                            : Text(
+                                tr(LocaleKeys.chat_last_seen) +
+                                    ' ' +
+                                    controller.getTimeOfLastSeen(),
+                                style:
+                                    t12M.copyWith(color: AppColors.ink[400])),
+                      ],
                     ),
                   ],
                 ),
