@@ -1,6 +1,6 @@
 // DO NOT EDIT. This is code generated via package:easy_localization/generate.dart
 
-abstract class LocaleKeys {
+abstract class  LocaleKeys {
   static const title = 'title';
   static const chooseLanguage = 'chooseLanguage';
   static const error_login_invalid_user = 'error.login.invalid_user';
@@ -18,10 +18,8 @@ abstract class LocaleKeys {
   static const login_subtitle = 'login.subtitle';
   static const login_forget_password_label = 'login.forget_password.label';
   static const login_forget_password = 'login.forget_password';
-  static const login_language_selector_vietnam =
-      'login.language_selector.vietnam';
-  static const login_language_selector_england =
-      'login.language_selector.england';
+  static const login_language_selector_vietnam = 'login.language_selector.vietnam';
+  static const login_language_selector_england = 'login.language_selector.england';
   static const login_language_selector = 'login.language_selector';
   static const login_register_label = 'login.register.label';
   static const login_register_suggest = 'login.register.suggest';
@@ -46,6 +44,7 @@ abstract class LocaleKeys {
   static const profile_save = 'profile.save';
   static const profile_empty_error = 'profile.empty_error';
   static const profile_edit = 'profile.edit';
+  static const profile_success = 'profile.success';
   static const profile = 'profile';
   static const home_title = 'home.title';
   static const home = 'home';
@@ -59,4 +58,5 @@ abstract class LocaleKeys {
   static const chat_bf_day = 'chat.bf_day';
   static const chat_bf_hour = 'chat.bf_hour';
   static const chat = 'chat';
+
 }

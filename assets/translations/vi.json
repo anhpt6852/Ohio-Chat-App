@@ -51,7 +51,8 @@
         "email": "Thư điện tử",
         "save": "Lưu",
         "empty_error": "Không được bỏ trống trường này",
-        "edit": "Điều chỉnh thông tin cá nhân"
+        "edit": "Điều chỉnh thông tin cá nhân",
+        "success": "Lưu dữ liệu thành công"
     },
     "home": {
         "title": "Đoạn chat"

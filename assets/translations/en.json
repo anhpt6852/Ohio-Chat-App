@@ -50,7 +50,8 @@
         "email": "Email",
         "save": "Save",
         "empty_error": "This field cannot be left blank",
-        "edit": "Edit Profile"
+        "edit": "Edit Profile",
+        "success": "Save profile successfully"
     },
     "home": {
         "title": "Chat"

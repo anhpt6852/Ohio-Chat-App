@@ -29,7 +29,8 @@ class UserProfilePage extends StatelessWidget {
         ),
         actions: [
           IconButton(
-              onPressed: () => AppRoutes.userProfileConfig,
+              onPressed: () =>
+                  Navigator.of(context).pushNamed(AppRoutes.userProfileConfig),
               icon: Icon(Icons.edit))
         ],
       ),

@@ -1,12 +1,18 @@
 import 'dart:io';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:ohio_chat_app/core/commons/presentation/snack_bar.dart';
+import 'package:ohio_chat_app/core/constant/firestore_constants.dart';
 import 'package:ohio_chat_app/feature/user_profile/data/repositories/user_profile_repositories_impl.dart';
 import 'package:ohio_chat_app/feature/user_profile/domain/repositories/user_profile_repositories.dart';
+import 'package:ohio_chat_app/generated/locale_keys.g.dart';
+import 'package:ohio_chat_app/routes.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
 
 final userProfileControllerProvider = Provider.autoDispose((ref) {
@@ -35,8 +41,10 @@ class UserProfileController {
 
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
   final firebaseStorage = FirebaseStorage.instance;
+  var firebaseFirestore = FirebaseFirestore.instance;
 
   var isLogoutSuccessfully = false;
+  var isUpdateSuccessfully = false;
   var imageUrl = StateProvider((ref) => '');
 
   getUserName() {
@@ -47,16 +55,6 @@ class UserProfileController {
   getUserEmail() {
     final User user = _firebaseAuth.currentUser!;
     profileEmailController.text = user.email ?? '';
-  }
-
-  updateUserName() async {
-    final User user = _firebaseAuth.currentUser!;
-    await user.updateDisplayName(profileNameController.text);
-  }
-
-  updateUserEmail() async {
-    final User user = _firebaseAuth.currentUser!;
-    await user.updateEmail(profileEmailController.text);
   }
 
   String displayUserName() {
@@ -73,7 +71,8 @@ class UserProfileController {
 
   String displayUserAva() {
     final User user = _firebaseAuth.currentUser!;
-    final userAva = user.photoURL ?? '';
+    var userAva = user.photoURL ??
+        'https://cdn3.iconfinder.com/data/icons/avatars-round-flat/33/avat-01-512.png';
     return userAva;
   }
 
@@ -108,10 +107,33 @@ class UserProfileController {
     return uploadTask;
   }
 
-  updateAvatar() {
-    final User user = _firebaseAuth.currentUser!;
-    if (ref.read(imageUrl.state).state != '') {
-      user.updatePhotoURL(ref.read(imageUrl.state).state);
+  updateUser(context) async {
+    try {
+      final User user = _firebaseAuth.currentUser!;
+      await user.updateDisplayName(profileNameController.text);
+      await firebaseFirestore
+          .collection(FirestoreConstants.pathUserCollection)
+          .doc(user.uid)
+          .update({
+        FirestoreConstants.displayName: profileNameController.text,
+      });
+      await user.updateEmail(profileEmailController.text);
+      if (ref.read(imageUrl.state).state != '') {
+        await user.updatePhotoURL(ref.read(imageUrl.state).state);
+        await firebaseFirestore
+            .collection(FirestoreConstants.pathUserCollection)
+            .doc(user.uid)
+            .update({
+          FirestoreConstants.displayName: ref.read(imageUrl.state).state,
+        });
+      }
+
+      isUpdateSuccessfully = true;
+      AppRoutes.userProfile;
+      CommonSnackbar.show(context,
+          type: SnackbarType.success, message: tr(LocaleKeys.profile_success));
+    } catch (e) {
+      isUpdateSuccessfully = false;
     }
   }
 }
