@@ -40,6 +40,8 @@ class LoginController {
     return 'vi';
   });
 
+  var isObscureText = StateProvider((ref) => true);
+
   final usernameController = TextEditingController();
   final passwordController = TextEditingController();
   final RoundedLoadingButtonController buttonController =

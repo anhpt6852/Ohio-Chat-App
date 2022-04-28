@@ -36,7 +36,20 @@ class LoginForm extends ConsumerWidget {
               labelText: tr(LocaleKeys.login_passwordLabel),
               controller: controller.passwordController,
               textInputAction: TextInputAction.done,
-              obscureText: true,
+              suffixIcon: GestureDetector(
+                onTap: () {
+                  ref.read(controller.isObscureText.state).state =
+                      !ref.read(controller.isObscureText.state).state;
+                },
+                child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: ref.watch(controller.isObscureText)
+                        ? const Icon(Icons.visibility_off, size: 24)
+                        : const Icon(Icons.visibility, size: 24)),
+              ),
+              sufflixBoxConstrains:
+                  const BoxConstraints(maxHeight: 24, maxWidth: 24),
+              obscureText: ref.watch(controller.isObscureText),
             ),
             const SizedBox(height: 16),
             CommonButton(

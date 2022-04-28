@@ -43,6 +43,8 @@ class RegisterController {
 
   var imageUrl = StateProvider((ref) => '');
   var isImageLoading = StateProvider((ref) => false);
+  var isObscureText = StateProvider((ref) => true);
+  var isObscureReText = StateProvider((ref) => true);
 
   registerWithEmailPassword(context,
       {required String name,
@@ -53,6 +55,9 @@ class RegisterController {
       var res = await _firebaseAuth.createUserWithEmailAndPassword(
           email: email.trim(), password: password.trim());
       await res.user?.updateDisplayName(name);
+      if (ref.read(imageUrl.state).state != '') {
+        await res.user?.updatePhotoURL(ref.read(imageUrl.state).state);
+      }
       print(res);
       var firebaseUser = res.user!;
       final QuerySnapshot data = await firebaseFirestore

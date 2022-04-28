@@ -14,6 +14,8 @@ class RegisterPage extends ConsumerWidget {
 
   final _formKey = GlobalKey<FormState>();
 
+  FocusNode focusPass = FocusNode();
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final controller = ref.watch(registerControllerProvider);
@@ -28,158 +30,150 @@ class RegisterPage extends ConsumerWidget {
             onTap: () => Navigator.pop(context),
             child: const Icon(Icons.arrow_back_ios)));
 
-    final body = Container(
-        color: AppColors.ink[0],
+    final body = SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
-        child: Form(
-          key: _formKey,
-          child: Column(children: [
-            ref.watch(controller.isImageLoading) == true
-                ? const SizedBox(
-                    height: 112,
-                    width: 112,
-                    child: Center(child: CommonLoading()))
-                : GestureDetector(
-                    onTap: () {
-                      controller.getImage();
-                    },
-                    child: ref.watch(controller.imageUrl) == ''
-                        ? Stack(
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.all(0.0),
-                                child: CircleAvatar(
-                                  radius: 48,
-                                  backgroundColor: AppColors.ink[300],
-                                  child: Icon(
-                                    Icons.person,
-                                    color: AppColors.ink[0],
-                                    size: 56,
-                                  ),
-                                ),
-                              ),
-                              Positioned(
-                                bottom: 0,
-                                right: 0,
-                                child: Container(
-                                  padding: const EdgeInsets.all(4.0),
-                                  decoration: BoxDecoration(
+        child: Container(
+          color: AppColors.ink[0],
+          child: Form(
+            key: _formKey,
+            child: Column(children: [
+              ref.watch(controller.isImageLoading) == true
+                  ? const SizedBox(
+                      height: 112,
+                      width: 112,
+                      child: Center(child: CommonLoading()))
+                  : GestureDetector(
+                      onTap: () {
+                        controller.getImage();
+                      },
+                      child: ref.watch(controller.imageUrl) == ''
+                          ? Stack(
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.all(0.0),
+                                  child: CircleAvatar(
+                                    radius: 48,
+                                    backgroundColor: AppColors.ink[300],
+                                    child: Icon(
+                                      Icons.person,
                                       color: AppColors.ink[0],
-                                      shape: BoxShape.circle),
-                                  child: Icon(
-                                    Icons.camera_alt,
-                                    color: AppColors.ink[300],
-                                    size: 24,
+                                      size: 56,
+                                    ),
                                   ),
                                 ),
-                              ),
-                            ],
-                          )
-                        : Image.network(
-                            ref.watch(controller.imageUrl),
-                            width: 112,
-                            height: 112,
-                            fit: BoxFit.contain,
-                          ),
-                  ),
-            const SizedBox(height: 24),
-            CommonTextFormField(
-              height: 52,
-              hintText: tr(LocaleKeys.register_fullname),
-              controller: controller.usernameController,
-              prefixIcon: const Align(
-                  alignment: Alignment.centerLeft,
-                  child: Icon(Icons.person, size: 24)),
-              prefixBoxConstrains:
-                  const BoxConstraints(maxHeight: 24, maxWidth: 32),
-              validator: (str) {
-                if (str == null || str.isEmpty) {
-                  return tr(LocaleKeys.error_empty_error);
-                }
-                return null;
-              },
-            ),
-            const SizedBox(height: 8),
-            CommonTextFormField(
-              height: 52,
-              hintText: tr(LocaleKeys.register_email),
-              controller: controller.emailController,
-              prefixIcon: const Align(
-                  alignment: Alignment.centerLeft,
-                  child: Icon(Icons.email, size: 24)),
-              prefixBoxConstrains:
-                  const BoxConstraints(maxHeight: 24, maxWidth: 32),
-              validator: (str) {
-                if (str == null || str.isEmpty) {
-                  return tr(LocaleKeys.error_empty_error);
-                }
-                return null;
-              },
-            ),
-            const SizedBox(height: 8),
-            CommonTextFormField(
-              height: 52,
-              hintText: tr(LocaleKeys.register_password),
-              controller: controller.passwordController,
-              obscureText: true,
-              prefixIcon: const Align(
-                  alignment: Alignment.centerLeft,
-                  child: Icon(Icons.lock, size: 24)),
-              prefixBoxConstrains:
-                  const BoxConstraints(maxHeight: 24, maxWidth: 32),
-              validator: (str) {
-                if (str == null || str.isEmpty) {
-                  return tr(LocaleKeys.error_empty_error);
-                }
-                if (str.length < 6) {
-                  return tr(LocaleKeys.error_short_password);
-                }
-                return null;
-              },
-            ),
-            const SizedBox(height: 8),
-            CommonTextFormField(
-              height: 52,
-              hintText: tr(LocaleKeys.register_re_password),
-              controller: controller.rePasswordController,
-              obscureText: true,
-              prefixIcon: const Align(
-                  alignment: Alignment.centerLeft,
-                  child: Icon(Icons.lock, size: 24)),
-              prefixBoxConstrains:
-                  const BoxConstraints(maxHeight: 24, maxWidth: 32),
-              validator: (str) {
-                if (str == null || str.isEmpty) {
-                  return tr(LocaleKeys.error_empty_error);
-                }
-                if (str.length < 6) {
-                  return tr(LocaleKeys.error_short_password);
-                }
-                if (controller.rePasswordController.text !=
-                    controller.passwordController.text) {
-                  return tr(LocaleKeys.error_not_same_password);
-                }
-                return null;
-              },
-            ),
-          ]),
-        ));
-
-    return GestureDetector(
-      onTap: () => FocusScope.of(context).unfocus(),
-      child: Stack(
-        children: [
-          Scaffold(
-            appBar: appBar,
-            body: body,
-          ),
-          Positioned(
-            bottom: MediaQuery.of(context).viewInsets.bottom,
-            left: 0,
-            right: 0,
-            child: Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: CommonButton(
+                                Positioned(
+                                  bottom: 0,
+                                  right: 0,
+                                  child: Container(
+                                    padding: const EdgeInsets.all(4.0),
+                                    decoration: BoxDecoration(
+                                        color: AppColors.ink[0],
+                                        shape: BoxShape.circle),
+                                    child: Icon(
+                                      Icons.camera_alt,
+                                      color: AppColors.ink[300],
+                                      size: 24,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            )
+                          : Image.network(
+                              ref.watch(controller.imageUrl),
+                              width: 112,
+                              height: 112,
+                              fit: BoxFit.contain,
+                            ),
+                    ),
+              const SizedBox(height: 24),
+              CommonTextFormField(
+                height: 52,
+                hintText: tr(LocaleKeys.register_fullname),
+                controller: controller.usernameController,
+                validator: (str) {
+                  if (str == null || str.isEmpty) {
+                    return tr(LocaleKeys.error_empty_error);
+                  }
+                  return null;
+                },
+              ),
+              const SizedBox(height: 8),
+              CommonTextFormField(
+                height: 52,
+                hintText: tr(LocaleKeys.register_email),
+                controller: controller.emailController,
+                validator: (str) {
+                  if (str == null || str.isEmpty) {
+                    return tr(LocaleKeys.error_empty_error);
+                  }
+                  return null;
+                },
+              ),
+              const SizedBox(height: 8),
+              CommonTextFormField(
+                height: 52,
+                hintText: tr(LocaleKeys.register_password),
+                controller: controller.passwordController,
+                suffixIcon: GestureDetector(
+                  onTap: () {
+                    ref.read(controller.isObscureText.state).state =
+                        !ref.read(controller.isObscureText.state).state;
+                  },
+                  child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: ref.watch(controller.isObscureText)
+                          ? const Icon(Icons.visibility_off, size: 24)
+                          : const Icon(Icons.visibility, size: 24)),
+                ),
+                sufflixBoxConstrains:
+                    const BoxConstraints(maxHeight: 16, maxWidth: 24),
+                obscureText: ref.watch(controller.isObscureText),
+                validator: (str) {
+                  if (str == null || str.isEmpty) {
+                    return tr(LocaleKeys.error_empty_error);
+                  }
+                  if (str.length < 6) {
+                    return tr(LocaleKeys.error_short_password);
+                  }
+                  return null;
+                },
+              ),
+              const SizedBox(height: 8),
+              CommonTextFormField(
+                height: 52,
+                focusNode: focusPass,
+                hintText: tr(LocaleKeys.register_re_password),
+                controller: controller.rePasswordController,
+                suffixIcon: GestureDetector(
+                  onTap: () {
+                    ref.read(controller.isObscureReText.state).state =
+                        !ref.read(controller.isObscureReText.state).state;
+                  },
+                  child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: ref.watch(controller.isObscureReText)
+                          ? const Icon(Icons.visibility_off, size: 24)
+                          : const Icon(Icons.visibility, size: 24)),
+                ),
+                sufflixBoxConstrains:
+                    const BoxConstraints(maxHeight: 16, maxWidth: 24),
+                obscureText: ref.watch(controller.isObscureReText),
+                validator: (str) {
+                  if (str == null || str.isEmpty) {
+                    return tr(LocaleKeys.error_empty_error);
+                  }
+                  if (str.length < 6) {
+                    return tr(LocaleKeys.error_short_password);
+                  }
+                  if (controller.rePasswordController.text !=
+                      controller.passwordController.text) {
+                    return tr(LocaleKeys.error_not_same_password);
+                  }
+                  return null;
+                },
+              ),
+              const SizedBox(height: 24),
+              CommonButton(
                 child: Text(
                   tr(LocaleKeys.register_button_label),
                   style: t16M,
@@ -196,9 +190,15 @@ class RegisterPage extends ConsumerWidget {
                 },
                 btnController: controller.buttonController,
               ),
-            ),
+            ]),
           ),
-        ],
+        ));
+
+    return GestureDetector(
+      onTap: () => FocusScope.of(context).unfocus(),
+      child: Scaffold(
+        appBar: appBar,
+        body: body,
       ),
     );
   }
