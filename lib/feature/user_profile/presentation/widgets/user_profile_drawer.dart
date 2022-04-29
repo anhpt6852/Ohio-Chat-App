@@ -1,6 +1,8 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:ohio_chat_app/core/commons/presentation/common_button.dart';
+import 'package:ohio_chat_app/core/commons/presentation/snack_bar.dart';
 import 'package:ohio_chat_app/feature/user_profile/presentation/controller/user_profile_controller.dart';
 import 'package:ohio_chat_app/generated/locale_keys.g.dart';
 import 'package:ohio_chat_app/routes.dart';
@@ -43,7 +45,21 @@ class UserProfileDrawer extends ConsumerWidget {
         leading: const Icon(Icons.lock),
         title: Text(tr(LocaleKeys.profile_change_password)),
         onTap: () {},
-      )
+      ),
+      Expanded(child: Container()), // Tao khoang trong de Logout Button o cuoi
+      CommonButton(
+          padding: const EdgeInsets.all(16.0),
+          onPressed: () {
+            controller.logoutUser();
+            if (controller.isLogoutSuccessfully) {
+              Navigator.of(context)
+                  .pushNamedAndRemoveUntil(AppRoutes.login, (route) => false);
+            } else {
+              CommonSnackbar.show(context,
+                  type: SnackbarType.error, message: 'Logout failed');
+            }
+          },
+          btnController: controller.buttonController)
     ]));
   }
 }
