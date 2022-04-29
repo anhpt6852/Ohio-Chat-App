@@ -13,11 +13,10 @@ import 'package:ohio_chat_app/routes.dart';
 class LoginForm extends ConsumerWidget {
   LoginForm({Key? key}) : super(key: key);
 
-  final _formKey = GlobalKey<FormState>();
-
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final controller = ref.watch(loginControllerProvider);
+
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16.0),
       child: Form(
@@ -79,10 +78,7 @@ class LoginForm extends ConsumerWidget {
                     CommonSnackbar.show(context,
                         type: SnackbarType.warning,
                         message: tr(LocaleKeys.error_login_wrong_password));
-                  } else {
-                    Navigator.of(context).pushNamedAndRemoveUntil(
-                        AppRoutes.home, (route) => false);
-                  }
+                  } else {}
                 }
 
                 controller.buttonController.reset();

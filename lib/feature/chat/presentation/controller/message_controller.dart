@@ -1,26 +1,19 @@
 import 'dart:io';
 
-import 'package:agora_rtc_engine/rtc_engine.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:ohio_chat_app/core/constant/agora_contants.dart';
 import 'package:ohio_chat_app/core/constant/colors.dart';
 import 'package:ohio_chat_app/core/constant/firestore_constants.dart';
 import 'package:ohio_chat_app/core/constant/message_constants.dart';
 import 'package:ohio_chat_app/feature/chat/data/models/message.dart';
 import 'package:ohio_chat_app/generated/locale_keys.g.dart';
-import 'package:permission_handler/permission_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 final messageControllerProvider = Provider.autoDispose((ref) {
-  return MessageController(ref);
-});
-
-final getTimeProvider = Provider.autoDispose((ref) {
   return MessageController(ref);
 });
 
@@ -42,10 +35,6 @@ class MessageController {
   // var currentUserId = StateProvider.autoDispose<String>(((ref) => ''));
   var currentUserId = '';
   var isMessagesLoaded = false;
-
-  var joined = StateProvider.autoDispose<bool>((ref) {
-    return false;
-  });
 
   bool isMessageReceived(int index) {
     if ((index > 0 &&
@@ -235,32 +224,5 @@ class MessageController {
     } else {
       print('bbbbbbb');
     }
-  }
-
-  Future<void> initPlatformState() async {
-    await [Permission.camera, Permission.microphone].request();
-
-    //Create RTC
-
-    RtcEngineContext context = RtcEngineContext(APP_ID);
-    var engine = await RtcEngine.createWithContext(context);
-
-    //Define event handling logic
-    engine.setEventHandler(RtcEngineEventHandler(
-      joinChannelSuccess: (channel, uid, elapsed) {
-        print('joinChannelSuccess $channel - $uid');
-        ref.read(joined.state).state = true;
-      },
-      userJoined: (int uid, int elapsed) {
-        print('userJoined $uid');
-      },
-      userOffline: (int uid, UserOfflineReason reason) {
-        print('userOffline $uid');
-      },
-    ));
-
-    await engine.enableVideo();
-
-    await engine.joinChannel(TOKEN, 'Ohio Chat App', null, 0);
   }
 }

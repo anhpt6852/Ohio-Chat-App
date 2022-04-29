@@ -11,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:ohio_chat_app/core/constant/message_constants.dart';
 import 'package:ohio_chat_app/feature/chat/data/models/message.dart';
 import 'package:ohio_chat_app/feature/chat/presentation/controller/message_controller.dart';
+import 'package:ohio_chat_app/feature/video_call/presentation/controller/video_call_controller.dart';
 import 'package:ohio_chat_app/generated/locale_keys.g.dart';
 import 'package:ohio_chat_app/routes.dart';
 
@@ -549,10 +550,13 @@ class ChatPage extends ConsumerWidget {
                 actions: [
                   GestureDetector(
                       onTap: () async {
-                        await controller.initPlatformState();
                         Navigator.of(context).pushNamed(AppRoutes.videoCall);
+                        ref.watch(videoControllerProvider).initPlatformState();
                       },
-                      child: Icon(Icons.video_camera_back))
+                      child: const Padding(
+                        padding: EdgeInsets.only(right: 16.0),
+                        child: Icon(Icons.videocam, size: 32),
+                      ))
                 ],
               ),
               body: SafeArea(

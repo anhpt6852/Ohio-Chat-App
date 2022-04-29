@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ohio_chat_app/feature/chat/presentation/message_page.dart';
-import 'package:ohio_chat_app/feature/chat/presentation/video_call_page.dart';
+import 'package:ohio_chat_app/feature/video_call/presentation/video_call_page.dart';
 import 'package:ohio_chat_app/feature/home/presentation/home_page.dart';
 import 'package:ohio_chat_app/feature/login/presentation/login_page.dart';
 import 'package:ohio_chat_app/feature/register/presentation/register_page.dart';

@@ -58,18 +58,7 @@ class UserProfileInfo extends ConsumerWidget {
                       content: Row(
                         children: [
                           TextButton(
-                              onPressed: () {
-                                controller.logoutUser();
-                                if (controller.isLogoutSuccessfully) {
-                                  Navigator.of(context).pushNamedAndRemoveUntil(
-                                      AppRoutes.login, (route) => false);
-                                } else {
-                                  CommonSnackbar.show(context,
-                                      type: SnackbarType.error,
-                                      message: 'Logout failed');
-                                }
-                              },
-                              child: const Text('Yes')),
+                              onPressed: () {}, child: const Text('Yes')),
                           VerticalDivider(color: AppColors.ink[0]),
                           TextButton(
                               onPressed: () => Navigator.pop(context),

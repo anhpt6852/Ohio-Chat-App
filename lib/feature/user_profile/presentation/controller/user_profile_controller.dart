@@ -14,6 +14,7 @@ import 'package:ohio_chat_app/feature/user_profile/domain/repositories/user_prof
 import 'package:ohio_chat_app/generated/locale_keys.g.dart';
 import 'package:ohio_chat_app/routes.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 final userProfileControllerProvider = Provider.autoDispose((ref) {
   final userProfileRepositories = ref.watch(userProfileRepositoryProvider);
@@ -43,7 +44,6 @@ class UserProfileController {
   final firebaseStorage = FirebaseStorage.instance;
   var firebaseFirestore = FirebaseFirestore.instance;
 
-  var isLogoutSuccessfully = false;
   var isUpdateSuccessfully = false;
   var imageUrl = StateProvider((ref) => '');
 
@@ -75,14 +75,18 @@ class UserProfileController {
     return userAva;
   }
 
-  logoutUser() {
+  logoutUser() async {
     try {
-      final User user = _firebaseAuth.currentUser!;
-      FirebaseAuth.instance.signOut();
+      final SharedPreferences sharedPreferences =
+          await SharedPreferences.getInstance();
+      await sharedPreferences.setString('usernameFirebase', '');
+      await sharedPreferences.setString('passwordFirebase', '');
+      await FirebaseAuth.instance.signOut();
 
-      isLogoutSuccessfully = true;
+      return true;
     } catch (e) {
-      isLogoutSuccessfully = false;
+      buttonController.reset();
+      return false;
     }
   }
 

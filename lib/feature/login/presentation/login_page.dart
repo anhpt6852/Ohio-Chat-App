@@ -1,16 +1,29 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flag/flag.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:ohio_chat_app/core/config/theme.dart';
 import 'package:ohio_chat_app/core/constant/colors.dart';
+import 'package:ohio_chat_app/feature/login/presentation/controller/login_controller.dart';
 import 'package:ohio_chat_app/feature/login/presentation/widgets/language_selector.dart';
 import 'package:ohio_chat_app/feature/login/presentation/widgets/language_widget.dart';
 import 'package:ohio_chat_app/feature/login/presentation/widgets/login_form.dart';
 import 'package:ohio_chat_app/generated/assets.gen.dart';
 import 'package:ohio_chat_app/generated/locale_keys.g.dart';
 
-class LoginPage extends StatelessWidget {
+class LoginPage extends ConsumerStatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
+
+  @override
+  ConsumerState<ConsumerStatefulWidget> createState() => _LoginPageState();
+}
+
+class _LoginPageState extends ConsumerState<LoginPage> {
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    ref.watch(loginControllerProvider).checkLogin(context);
+  }
 
   @override
   Widget build(BuildContext context) {

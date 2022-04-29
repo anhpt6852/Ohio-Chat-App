@@ -93,9 +93,9 @@ class UserProfileDrawer extends ConsumerWidget {
           padding: const EdgeInsets.all(32.0),
           child: CommonButton(
               child: Text(tr(LocaleKeys.config_logout)),
-              onPressed: () {
-                controller.logoutUser();
-                if (controller.isLogoutSuccessfully) {
+              onPressed: () async {
+                var logoutRes = await controller.logoutUser();
+                if (logoutRes) {
                   Navigator.of(context).pushNamedAndRemoveUntil(
                       AppRoutes.login, (route) => false);
                 } else {

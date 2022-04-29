@@ -46,12 +46,12 @@ class RegisterPage extends ConsumerWidget {
                       onTap: () {
                         controller.getImage();
                       },
-                      child: ref.watch(controller.imageUrl) == ''
-                          ? Stack(
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.all(0.0),
-                                  child: CircleAvatar(
+                      child: Stack(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(0.0),
+                            child: ref.watch(controller.imageUrl) == ''
+                                ? CircleAvatar(
                                     radius: 48,
                                     backgroundColor: AppColors.ink[300],
                                     child: Icon(
@@ -59,32 +59,30 @@ class RegisterPage extends ConsumerWidget {
                                       color: AppColors.ink[0],
                                       size: 56,
                                     ),
+                                  )
+                                : CircleAvatar(
+                                    radius: 48,
+                                    backgroundImage: NetworkImage(
+                                        ref.watch(controller.imageUrl)),
                                   ),
-                                ),
-                                Positioned(
-                                  bottom: 0,
-                                  right: 0,
-                                  child: Container(
-                                    padding: const EdgeInsets.all(4.0),
-                                    decoration: BoxDecoration(
-                                        color: AppColors.ink[0],
-                                        shape: BoxShape.circle),
-                                    child: Icon(
-                                      Icons.camera_alt,
-                                      color: AppColors.ink[300],
-                                      size: 24,
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            )
-                          : Image.network(
-                              ref.watch(controller.imageUrl),
-                              width: 112,
-                              height: 112,
-                              fit: BoxFit.contain,
+                          ),
+                          Positioned(
+                            bottom: 0,
+                            right: 0,
+                            child: Container(
+                              padding: const EdgeInsets.all(4.0),
+                              decoration: BoxDecoration(
+                                  color: AppColors.ink[0],
+                                  shape: BoxShape.circle),
+                              child: Icon(
+                                Icons.camera_alt,
+                                color: AppColors.ink[300],
+                                size: 24,
+                              ),
                             ),
-                    ),
+                          ),
+                        ],
+                      )),
               const SizedBox(height: 24),
               CommonTextFormField(
                 height: 52,
@@ -197,6 +195,7 @@ class RegisterPage extends ConsumerWidget {
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
+        backgroundColor: AppColors.ink[0],
         appBar: appBar,
         body: body,
       ),
