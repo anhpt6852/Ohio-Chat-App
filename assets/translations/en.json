@@ -58,7 +58,10 @@
         "empty_error": "This field cannot be left blank",
         "edit": "Edit Profile",
         "change_password": "Change Password",
-        "success": "Save profile successfully"
+        "success": "Save profile successfully",
+        "current_password":  "Current password",
+        "new_password": "New password",
+        "confirm_new_password": "Confirm new password"
     },
     "home": {
         "title": "Chat"

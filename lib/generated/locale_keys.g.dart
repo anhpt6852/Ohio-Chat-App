@@ -52,6 +52,9 @@ abstract class  LocaleKeys {
   static const profile_edit = 'profile.edit';
   static const profile_change_password = 'profile.change_password';
   static const profile_success = 'profile.success';
+  static const profile_current_password = 'profile.current_password';
+  static const profile_new_password = 'profile.new_password';
+  static const profile_confirm_new_password = 'profile.confirm_new_password';
   static const profile = 'profile';
   static const home_title = 'home.title';
   static const home = 'home';
