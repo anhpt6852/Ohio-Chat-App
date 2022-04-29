@@ -146,13 +146,40 @@ class UserProfileController {
 
   changePassword(context) async {
     final User user = _firebaseAuth.currentUser!;
-    var result = await _firebaseAuth.signInWithEmailAndPassword(
-        email: user.email!, password: profilePasswordController.text);
+    final SharedPreferences sharedPreferences =
+        await SharedPreferences.getInstance();
+    var currentPassword = sharedPreferences.getString('passwordFirebase');
 
-    if (profilePasswordNewController.text != '' &&
-        profilePasswordNewController.text ==
-            profilePasswordNewController.text) {
-      user.updatePassword(profilePasswordNewController.text);
+    var credential = EmailAuthProvider.credential(
+        email: user.email!, password: currentPassword!);
+    try {
+      user.reauthenticateWithCredential(credential).then((value) {
+        if (profilePasswordController.text == currentPassword) {
+          if (profilePasswordNewController.text != '' &&
+              profilePasswordNewController.text ==
+                  profilePasswordNewController.text) {
+            user.updatePassword(profilePasswordNewController.text);
+          } else {
+            CommonSnackbar.show(context,
+                type: SnackbarType.error,
+                message: tr(LocaleKeys.profile_error_invalid_password));
+          }
+        } else {
+          CommonSnackbar.show(context,
+              type: SnackbarType.error,
+              message: tr(LocaleKeys.profile_error_wrong_password));
+        }
+      }).catchError((e) {
+        CommonSnackbar.show(context,
+            type: SnackbarType.error, message: e.toString());
+      });
+      buttonController.reset();
+
+      return true;
+    } catch (e) {
+      buttonController.reset();
+
+      return false;
     }
   }
 }

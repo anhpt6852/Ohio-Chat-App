@@ -8,8 +8,8 @@ import 'package:ohio_chat_app/core/constant/colors.dart';
 import 'package:ohio_chat_app/feature/user_profile/presentation/controller/user_profile_controller.dart';
 import 'package:ohio_chat_app/generated/locale_keys.g.dart';
 
-class ChangePassword extends ConsumerWidget {
-  const ChangePassword({Key? key}) : super(key: key);
+class ChangePasswordPage extends ConsumerWidget {
+  const ChangePasswordPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -60,8 +60,14 @@ class ChangePassword extends ConsumerWidget {
                 color: AppColors.ink[0],
               ),
               CommonButton(
-                  onPressed: () {
-                    controller.changePassword(context);
+                  child: Text(
+                    tr(LocaleKeys.profile_change_password),
+                  ),
+                  onPressed: () async {
+                    var res = await controller.changePassword(context);
+                    if (res) {
+                      Navigator.of(context).pop();
+                    }
                   },
                   btnController: controller.buttonController)
             ])));

@@ -67,6 +67,7 @@ class UserProfileDrawer extends ConsumerWidget {
                   size: 20,
                 ),
                 onTap: () {
+                  Navigator.of(context).pop();
                   Navigator.of(context).pushNamed(AppRoutes.userProfileConfig);
                 },
               ),
@@ -80,7 +81,10 @@ class UserProfileDrawer extends ConsumerWidget {
                   Icons.arrow_forward_ios,
                   size: 20,
                 ),
-                onTap: () {},
+                onTap: () {
+                  Navigator.of(context).pop();
+                  Navigator.of(context).pushNamed(AppRoutes.changePassword);
+                },
               ),
               Divider(
                 thickness: 1,

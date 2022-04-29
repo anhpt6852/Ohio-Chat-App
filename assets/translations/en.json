@@ -61,7 +61,11 @@
         "success": "Save profile successfully",
         "current_password":  "Current password",
         "new_password": "New password",
-        "confirm_new_password": "Confirm new password"
+        "confirm_new_password": "Confirm new password",
+        "error": {
+            "wrong_password": "The current password is incorrect, please try again",
+            "invalid_password": "Re-entered password is incorrect, please try again"
+        }
     },
     "home": {
         "title": "Chat"

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ohio_chat_app/feature/chat/presentation/message_page.dart';
+import 'package:ohio_chat_app/feature/user_profile/presentation/widgets/user_change_password.dart';
 import 'package:ohio_chat_app/feature/video_call/presentation/video_call_page.dart';
 import 'package:ohio_chat_app/feature/home/presentation/home_page.dart';
 import 'package:ohio_chat_app/feature/login/presentation/login_page.dart';
@@ -12,6 +13,7 @@ class AppRoutes {
   static const login = '/login-page';
   static const register = '/register-page';
   static const resetPassword = '/reset-password';
+  static const changePassword = '/change-password';
   static const home = '/home-page';
   static const chat = '/chat-page';
   static const userProfileConfig = '/user-profile-config';
@@ -42,7 +44,6 @@ class AppRouter {
     switch (settings.name) {
       case AppRoutes.login:
         return _createRoute(const LoginPage());
-
       case AppRoutes.home:
         return _createRoute(HomePage());
       case AppRoutes.userProfile:
@@ -51,6 +52,8 @@ class AppRouter {
         return _createRoute(const UserProfileConfig());
       case AppRoutes.resetPassword:
         return _createRoute(const ResetPasswordPage());
+      case AppRoutes.changePassword:
+        return _createRoute(const ChangePasswordPage());
       case AppRoutes.register:
         return _createRoute(RegisterPage());
       case AppRoutes.videoCall:
