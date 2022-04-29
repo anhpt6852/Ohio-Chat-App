@@ -50,6 +50,7 @@ abstract class  LocaleKeys {
   static const profile_save = 'profile.save';
   static const profile_empty_error = 'profile.empty_error';
   static const profile_edit = 'profile.edit';
+  static const profile_change_password = 'profile.change_password';
   static const profile_success = 'profile.success';
   static const profile = 'profile';
   static const home_title = 'home.title';

@@ -58,6 +58,7 @@
         "save": "Lưu",
         "empty_error": "Không được bỏ trống trường này",
         "edit": "Điều chỉnh thông tin cá nhân",
+        "change_password": "Đổi mật khẩu",
         "success": "Lưu dữ liệu thành công"
     },
     "home": {
