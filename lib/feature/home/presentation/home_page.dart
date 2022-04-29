@@ -12,6 +12,7 @@ import 'package:ohio_chat_app/feature/chat/data/models/chat_user.dart';
 import 'package:ohio_chat_app/feature/chat/presentation/controller/message_controller.dart';
 import 'package:ohio_chat_app/feature/chat/presentation/message_page.dart';
 import 'package:ohio_chat_app/feature/home/presentation/controller/home_controller.dart';
+import 'package:ohio_chat_app/feature/home/presentation/widgets/user_profile_drawer.dart';
 import 'package:ohio_chat_app/generated/locale_keys.g.dart';
 import 'package:ohio_chat_app/routes.dart';
 
@@ -351,32 +352,33 @@ class HomePage extends ConsumerWidget {
 
     return Scaffold(
         backgroundColor: AppColors.ink[0],
+        drawer: const UserProfileDrawer(),
         appBar: AppBar(
           elevation: 0.0,
           centerTitle: true,
           automaticallyImplyLeading: false,
-          leading: GestureDetector(
-            onTap: () => AppRoutes.userProfile,
-            child: Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: GestureDetector(
-                onTap: () =>
-                    Navigator.of(context).pushNamed(AppRoutes.userProfile),
-                child: CircleAvatar(
-                  backgroundColor: AppColors.ink[400],
-                  backgroundImage: controller.getUserAvatar() == ''
-                      ? null
-                      : NetworkImage(controller.getUserAvatar()!),
-                  child: controller.getUserAvatar() == ''
-                      ? Icon(
-                          Icons.person,
-                          color: AppColors.ink[0],
-                          size: 16,
-                        )
-                      : const SizedBox.shrink(),
+          leading: Builder(
+            builder: (context) {
+              return GestureDetector(
+                onTap: () => Scaffold.of(context).openDrawer(),
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child:  CircleAvatar(
+                      backgroundColor: AppColors.ink[400],
+                      backgroundImage: controller.getUserAvatar() == ''
+                          ? null
+                          : NetworkImage(controller.getUserAvatar()!),
+                      child: controller.getUserAvatar() == ''
+                          ? Icon(
+                              Icons.person,
+                              color: AppColors.ink[0],
+                              size: 16,
+                            )
+                          : const SizedBox.shrink(),
+                    ),
                 ),
-              ),
-            ),
+              );
+            }
           ),
           title: Text(
             tr(LocaleKeys.home_title),

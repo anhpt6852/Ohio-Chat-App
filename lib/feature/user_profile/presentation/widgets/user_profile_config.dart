@@ -59,7 +59,7 @@ class UserProfileConfig extends ConsumerWidget {
                               ? Icon(
                                   Icons.person,
                                   color: AppColors.ink[0],
-                                  size: 16,
+                                  size: 72,
                                 )
                               : const SizedBox.shrink(),
                         ),

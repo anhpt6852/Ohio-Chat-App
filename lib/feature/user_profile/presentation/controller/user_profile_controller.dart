@@ -71,8 +71,7 @@ class UserProfileController {
 
   String displayUserAva() {
     final User user = _firebaseAuth.currentUser!;
-    var userAva = user.photoURL ??
-        'https://cdn3.iconfinder.com/data/icons/avatars-round-flat/33/avat-01-512.png';
+    var userAva = user.photoURL ?? '';
     return userAva;
   }
 
