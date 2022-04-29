@@ -104,7 +104,8 @@ class UserProfileDrawer extends ConsumerWidget {
                       AppRoutes.login, (route) => false);
                 } else {
                   CommonSnackbar.show(context,
-                      type: SnackbarType.error, message: 'Logout failed');
+                      type: SnackbarType.error,
+                      message: tr(LocaleKeys.profile_error_logout));
                 }
               },
               btnController: controller.buttonController),

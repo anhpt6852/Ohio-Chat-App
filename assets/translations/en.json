@@ -64,7 +64,8 @@
         "confirm_new_password": "Confirm new password",
         "error": {
             "wrong_password": "The current password is incorrect, please try again",
-            "invalid_password": "Re-entered password is incorrect, please try again"
+            "invalid_password": "Re-entered password is incorrect, please try again",
+            "logout": "Logout failed"
         }
     },
     "home": {
@@ -75,7 +76,7 @@
         "logout": "Log out"
     },
     "confirmation": {
-        "logout": "Do you want to log out?"
+        "logout": "Are you sure you want to logout?"
     },
     "chat": {
         "last_seen": "Active",
