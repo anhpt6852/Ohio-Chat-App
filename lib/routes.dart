@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ohio_chat_app/feature/chat/presentation/message_page.dart';
+import 'package:ohio_chat_app/feature/chat/presentation/video_call_page.dart';
 import 'package:ohio_chat_app/feature/home/presentation/home_page.dart';
 import 'package:ohio_chat_app/feature/login/presentation/login_page.dart';
 import 'package:ohio_chat_app/feature/register/presentation/register_page.dart';
@@ -15,6 +16,7 @@ class AppRoutes {
   static const chat = '/chat-page';
   static const userProfileConfig = '/user-profile-config';
   static const userProfile = '/user-profile-page';
+  static const videoCall = '/video-call-page';
   AppRoutes(Type userProfileConfig);
 }
 
@@ -46,11 +48,13 @@ class AppRouter {
       case AppRoutes.userProfile:
         return _createRoute(const UserProfilePage());
       case AppRoutes.userProfileConfig:
-        return _createRoute(UserProfileConfig());
+        return _createRoute(const UserProfileConfig());
       case AppRoutes.resetPassword:
         return _createRoute(const ResetPasswordPage());
       case AppRoutes.register:
         return _createRoute(RegisterPage());
+      case AppRoutes.videoCall:
+        return _createRoute(const VideoCallPage());
     }
     return null;
   }

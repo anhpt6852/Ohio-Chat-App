@@ -8,12 +8,11 @@ import 'package:ohio_chat_app/core/config/theme.dart';
 import 'package:ohio_chat_app/core/constant/colors.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:ohio_chat_app/core/constant/firestore_constants.dart';
 import 'package:ohio_chat_app/core/constant/message_constants.dart';
 import 'package:ohio_chat_app/feature/chat/data/models/message.dart';
 import 'package:ohio_chat_app/feature/chat/presentation/controller/message_controller.dart';
-import 'package:ohio_chat_app/feature/login/presentation/login_page.dart';
 import 'package:ohio_chat_app/generated/locale_keys.g.dart';
+import 'package:ohio_chat_app/routes.dart';
 
 class ChatPage extends ConsumerWidget {
   final String peerId;
@@ -154,7 +153,7 @@ class ChatPage extends ConsumerWidget {
                       ? Container(
                           clipBehavior: Clip.hardEdge,
                           decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(16),
+                            borderRadius: BorderRadius.circular(50),
                           ),
                           child: Image.network(
                             peerAvatar,
@@ -257,40 +256,44 @@ class ChatPage extends ConsumerWidget {
                         ),
                       ),
                     )
-                  : Image.network(
-                      peerAvatar,
-                      width: 40,
-                      height: 40,
-                      fit: BoxFit.cover,
-                      loadingBuilder: (BuildContext ctx, Widget child,
-                          ImageChunkEvent? loadingProgress) {
-                        if (loadingProgress == null) return child;
-                        return Center(
-                          child: CircularProgressIndicator(
-                            color: AppColors.primary,
-                            value: loadingProgress.expectedTotalBytes != null &&
-                                    loadingProgress.expectedTotalBytes != null
-                                ? loadingProgress.cumulativeBytesLoaded /
-                                    loadingProgress.expectedTotalBytes!
-                                : null,
-                          ),
-                        );
-                      },
-                      errorBuilder: (context, object, stackTrace) {
-                        return Icon(
-                          Icons.account_circle,
-                          size: 35,
-                          color: AppColors.ink[100],
-                        );
-                      },
+                  : ClipRRect(
+                      borderRadius: BorderRadius.circular(50),
+                      child: Image.network(
+                        peerAvatar,
+                        width: 96,
+                        height: 96,
+                        fit: BoxFit.cover,
+                        loadingBuilder: (BuildContext ctx, Widget child,
+                            ImageChunkEvent? loadingProgress) {
+                          if (loadingProgress == null) return child;
+                          return Center(
+                            child: CircularProgressIndicator(
+                              color: AppColors.primary,
+                              value: loadingProgress.expectedTotalBytes !=
+                                          null &&
+                                      loadingProgress.expectedTotalBytes != null
+                                  ? loadingProgress.cumulativeBytesLoaded /
+                                      loadingProgress.expectedTotalBytes!
+                                  : null,
+                            ),
+                          );
+                        },
+                        errorBuilder: (context, object, stackTrace) {
+                          return Icon(
+                            Icons.account_circle,
+                            size: 35,
+                            color: AppColors.ink[100],
+                          );
+                        },
+                      ),
                     ),
               Text(
                 peerNickname,
                 style: t20M,
               ),
-              const Text(
+              Text(
                 'OhioChat',
-                style: t14M,
+                style: t14M.copyWith(color: AppColors.ink[400]),
               ),
               const SizedBox(height: 24)
             ],
@@ -489,34 +492,39 @@ class ChatPage extends ConsumerWidget {
                               ),
                             ),
                           )
-                        : Image.network(
-                            peerAvatar,
-                            width: 40,
-                            height: 40,
-                            fit: BoxFit.cover,
-                            loadingBuilder: (BuildContext ctx, Widget child,
-                                ImageChunkEvent? loadingProgress) {
-                              if (loadingProgress == null) return child;
-                              return Center(
-                                child: CircularProgressIndicator(
-                                  color: AppColors.primary,
-                                  value: loadingProgress.expectedTotalBytes !=
-                                              null &&
-                                          loadingProgress.expectedTotalBytes !=
-                                              null
-                                      ? loadingProgress.cumulativeBytesLoaded /
-                                          loadingProgress.expectedTotalBytes!
-                                      : null,
-                                ),
-                              );
-                            },
-                            errorBuilder: (context, object, stackTrace) {
-                              return Icon(
-                                Icons.account_circle,
-                                size: 35,
-                                color: AppColors.ink[100],
-                              );
-                            },
+                        : ClipRRect(
+                            borderRadius: BorderRadius.circular(50),
+                            child: Image.network(
+                              peerAvatar,
+                              width: 40,
+                              height: 40,
+                              fit: BoxFit.cover,
+                              loadingBuilder: (BuildContext ctx, Widget child,
+                                  ImageChunkEvent? loadingProgress) {
+                                if (loadingProgress == null) return child;
+                                return Center(
+                                  child: CircularProgressIndicator(
+                                    color: AppColors.primary,
+                                    value: loadingProgress.expectedTotalBytes !=
+                                                null &&
+                                            loadingProgress
+                                                    .expectedTotalBytes !=
+                                                null
+                                        ? loadingProgress
+                                                .cumulativeBytesLoaded /
+                                            loadingProgress.expectedTotalBytes!
+                                        : null,
+                                  ),
+                                );
+                              },
+                              errorBuilder: (context, object, stackTrace) {
+                                return Icon(
+                                  Icons.account_circle,
+                                  size: 35,
+                                  color: AppColors.ink[100],
+                                );
+                              },
+                            ),
                           ),
                     const SizedBox(width: 8),
                     Column(
@@ -538,6 +546,14 @@ class ChatPage extends ConsumerWidget {
                     ),
                   ],
                 ),
+                actions: [
+                  GestureDetector(
+                      onTap: () async {
+                        await controller.initPlatformState();
+                        Navigator.of(context).pushNamed(AppRoutes.videoCall);
+                      },
+                      child: Icon(Icons.video_camera_back))
+                ],
               ),
               body: SafeArea(
                 child: Container(

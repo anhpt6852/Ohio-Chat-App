@@ -117,22 +117,23 @@ class UserProfileController {
           .update({
         FirestoreConstants.displayName: profileNameController.text,
       });
-      await user.updateEmail(profileEmailController.text);
       if (ref.read(imageUrl.state).state != '') {
         await user.updatePhotoURL(ref.read(imageUrl.state).state);
         await firebaseFirestore
             .collection(FirestoreConstants.pathUserCollection)
             .doc(user.uid)
             .update({
-          FirestoreConstants.displayName: ref.read(imageUrl.state).state,
+          FirestoreConstants.photoUrl: ref.read(imageUrl.state).state,
         });
       }
 
       isUpdateSuccessfully = true;
-      AppRoutes.userProfile;
+      Navigator.of(context).pop();
       CommonSnackbar.show(context,
           type: SnackbarType.success, message: tr(LocaleKeys.profile_success));
+      buttonController.reset();
     } catch (e) {
+      buttonController.reset();
       isUpdateSuccessfully = false;
     }
   }

@@ -34,6 +34,10 @@ dependencies:
   image_picker: ^0.8.5
   flutter_local_notifications: ^9.4.1
   open_mail_app: ^0.4.5
+
+  #video-call
+  agora_rtc_engine: ^5.1.0
+  permission_handler: ^9.2.0
   
   #Firebase
   firebase_auth: ^3.3.15

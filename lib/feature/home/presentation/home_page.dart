@@ -98,7 +98,7 @@ class HomePage extends ConsumerWidget {
                                       userChat.photoUrl.isNotEmpty
                                           ? ClipRRect(
                                               borderRadius:
-                                                  BorderRadius.circular(24),
+                                                  BorderRadius.circular(50),
                                               child: Image.network(
                                                 userChat.photoUrl,
                                                 fit: BoxFit.cover,
@@ -295,7 +295,7 @@ class HomePage extends ConsumerWidget {
                   children: [
                     userChat.photoUrl.isNotEmpty
                         ? ClipRRect(
-                            borderRadius: BorderRadius.circular(24),
+                            borderRadius: BorderRadius.circular(50),
                             child: Image.network(
                               userChat.photoUrl,
                               fit: BoxFit.cover,
@@ -307,8 +307,8 @@ class HomePage extends ConsumerWidget {
                                   return child;
                                 } else {
                                   return const SizedBox(
-                                      width: 50,
-                                      height: 50,
+                                      width: 64,
+                                      height: 64,
                                       child: CircularProgressIndicator());
                                 }
                               },
@@ -364,11 +364,16 @@ class HomePage extends ConsumerWidget {
                     Navigator.of(context).pushNamed(AppRoutes.userProfile),
                 child: CircleAvatar(
                   backgroundColor: AppColors.ink[400],
-                  child: Icon(
-                    Icons.person,
-                    color: AppColors.ink[0],
-                    size: 16,
-                  ),
+                  backgroundImage: controller.getUserAvatar() == ''
+                      ? null
+                      : NetworkImage(controller.getUserAvatar()!),
+                  child: controller.getUserAvatar() == ''
+                      ? Icon(
+                          Icons.person,
+                          color: AppColors.ink[0],
+                          size: 16,
+                        )
+                      : const SizedBox.shrink(),
                 ),
               ),
             ),

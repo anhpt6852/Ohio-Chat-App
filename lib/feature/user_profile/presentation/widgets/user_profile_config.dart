@@ -22,103 +22,92 @@ class UserProfileConfig extends ConsumerWidget {
         ref.read(controller.imageUrl.state).state = '';
         return true;
       },
-      child: Scaffold(
-          appBar: AppBar(
-            automaticallyImplyLeading: false,
-            leading: GestureDetector(
-                onTap: () {
-                  ref.read(controller.imageUrl.state).state = '';
-                  Navigator.pop(context);
-                },
-                child: const Icon(Icons.arrow_back_ios)),
-            centerTitle: true,
-            title: Text(
-              tr(LocaleKeys.profile_edit),
-              style: t16M.copyWith(
-                color: AppColors.ink[500],
+      child: GestureDetector(
+        onTap: () => FocusScope.of(context).unfocus(),
+        child: Scaffold(
+            backgroundColor: AppColors.ink[0],
+            appBar: AppBar(
+              automaticallyImplyLeading: false,
+              leading: GestureDetector(
+                  onTap: () {
+                    ref.read(controller.imageUrl.state).state = '';
+                    Navigator.pop(context);
+                  },
+                  child: const Icon(Icons.arrow_back_ios)),
+              centerTitle: true,
+              title: Text(
+                tr(LocaleKeys.profile_edit),
+                style: t16M.copyWith(
+                  color: AppColors.ink[500],
+                ),
               ),
             ),
-          ),
-          body: SingleChildScrollView(
-              padding: const EdgeInsets.all(16.0),
-              child: Column(children: [
-                Stack(
-                  children: [
-                    SizedBox(
-                      height: 100,
-                      width: 100,
-                      child: CircleAvatar(
-                        backgroundColor: Colors.transparent,
-                        child: Image.network(
-                            ref.watch(controller.imageUrl) == ''
-                                ? controller.displayUserAva()
-                                : ref.watch(controller.imageUrl)),
+            body: SingleChildScrollView(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(children: [
+                  Stack(
+                    children: [
+                      SizedBox(
+                        height: 112,
+                        width: 112,
+                        child: CircleAvatar(
+                          backgroundColor: AppColors.ink[400],
+                          backgroundImage: controller.displayUserAva() == ''
+                              ? null
+                              : NetworkImage(controller.displayUserAva()),
+                          child: controller.displayUserAva() == ''
+                              ? Icon(
+                                  Icons.person,
+                                  color: AppColors.ink[0],
+                                  size: 16,
+                                )
+                              : const SizedBox.shrink(),
+                        ),
                       ),
-                    ),
-                    Positioned(
-                        height: 40,
-                        width: 40,
-                        bottom: 0,
-                        right: 0,
-                        child: IconButton(
-                          onPressed: (() async {
-                            await controller.getImage();
-                          }),
-                          icon: const Icon(Icons.add_a_photo),
-                          color: Colors.white,
-                        ))
-                  ],
-                ),
-                Divider(
-                  color: AppColors.ink[0],
-                ),
-                Container(
-                  decoration: BoxDecoration(
-                      color: AppColors.ink[100],
-                      borderRadius: BorderRadius.circular(24),
-                      border: Border.all(width: 1.2, color: AppColors.ink[0]!)),
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                  child: CommonTextFormField(
+                      Positioned(
+                          height: 40,
+                          width: 40,
+                          bottom: 0,
+                          right: 0,
+                          child: GestureDetector(
+                            onTap: (() async {
+                              await controller.getImage();
+                            }),
+                            child: Container(
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  color: AppColors.ink[0],
+                                ),
+                                child: Icon(
+                                  Icons.camera_alt,
+                                  color: AppColors.ink[400],
+                                )),
+                          ))
+                    ],
+                  ),
+                  const SizedBox(height: 16),
+                  CommonTextFormField(
                     labelText: tr(LocaleKeys.profile_name),
                     controller: controller.profileNameController,
                     textInputAction: TextInputAction.done,
                   ),
-                ),
-                Divider(
-                  color: AppColors.ink[0],
-                ),
-                Container(
-                  decoration: BoxDecoration(
-                      color: AppColors.ink[100],
-                      borderRadius: BorderRadius.circular(24),
-                      border: Border.all(width: 1.2, color: AppColors.ink[0]!)),
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                  child: CommonTextFormField(
-                    labelText: tr(LocaleKeys.profile_email),
-                    controller: controller.profileEmailController,
-                    textInputAction: TextInputAction.done,
-                  ),
-                ),
-                Divider(
-                  color: AppColors.ink[0],
-                ),
-                CommonButton(
-                  child: Text(tr(LocaleKeys.profile_save), style: t16M),
-                  onPressed: () async {
-                    if (controller.profileNameController.text.isEmpty ||
-                        controller.profileEmailController.text.isEmpty) {
-                      CommonSnackbar.show(context,
-                          type: SnackbarType.warning,
-                          message: tr(LocaleKeys.profile_empty_error));
-                    } else {
-                      await controller.updateUser(context);
-                    }
-                  },
-                  btnController: controller.buttonController,
-                )
-              ]))),
+                  const SizedBox(height: 24),
+                  CommonButton(
+                    child: Text(tr(LocaleKeys.profile_save), style: t16M),
+                    onPressed: () async {
+                      if (controller.profileNameController.text.isEmpty ||
+                          controller.profileEmailController.text.isEmpty) {
+                        CommonSnackbar.show(context,
+                            type: SnackbarType.warning,
+                            message: tr(LocaleKeys.profile_empty_error));
+                      } else {
+                        await controller.updateUser(context);
+                      }
+                    },
+                    btnController: controller.buttonController,
+                  )
+                ]))),
+      ),
     );
   }
 }

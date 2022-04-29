@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:ohio_chat_app/core/constant/firestore_constants.dart';
 import 'package:ohio_chat_app/core/services/shared_preferences.dart';
@@ -23,6 +24,11 @@ class HomeController {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     ref.read(currentUid.state).state =
         prefs.getString(FirestoreConstants.id) ?? '';
+  }
+
+  String? getUserAvatar() {
+    FirebaseAuth firebaseAuth = FirebaseAuth.instance;
+    return firebaseAuth.currentUser!.photoURL ?? '';
   }
 
   Future<void> updateFirestoreData(
