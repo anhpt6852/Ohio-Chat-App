@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:ohio_chat_app/core/config/theme.dart';
 import 'package:ohio_chat_app/core/constant/colors.dart';
 import 'package:ohio_chat_app/feature/user_profile/presentation/widgets/profile_pic.dart';
+import 'package:ohio_chat_app/feature/user_profile/presentation/widgets/user_profile_drawer.dart';
 import 'package:ohio_chat_app/generated/locale_keys.g.dart';
 import 'package:ohio_chat_app/routes.dart';
 
@@ -34,6 +35,7 @@ class UserProfilePage extends StatelessWidget {
               icon: const Icon(Icons.edit))
         ],
       ),
+      drawer: UserProfileDrawer(),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
         child: Column(
