@@ -36,6 +36,9 @@ class UserProfileController {
 
   final profileNameController = TextEditingController();
   final profileEmailController = TextEditingController();
+  final profilePasswordController = TextEditingController();
+  final profilePasswordNewController = TextEditingController();
+  final profilePasswordNewConfirmController = TextEditingController();
 
   final RoundedLoadingButtonController buttonController =
       RoundedLoadingButtonController();
@@ -138,6 +141,18 @@ class UserProfileController {
     } catch (e) {
       buttonController.reset();
       isUpdateSuccessfully = false;
+    }
+  }
+
+  changePassword(context) async {
+    final User user = _firebaseAuth.currentUser!;
+    var result = await _firebaseAuth.signInWithEmailAndPassword(
+        email: user.email!, password: profilePasswordController.text);
+
+    if (profilePasswordNewController.text != '' &&
+        profilePasswordNewController.text ==
+            profilePasswordNewController.text) {
+      user.updatePassword(profilePasswordNewController.text);
     }
   }
 }

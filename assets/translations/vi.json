@@ -59,7 +59,10 @@
         "empty_error": "Không được bỏ trống trường này",
         "edit": "Điều chỉnh thông tin cá nhân",
         "change_password": "Đổi mật khẩu",
-        "success": "Lưu dữ liệu thành công"
+        "success": "Lưu dữ liệu thành công",
+        "current_password":  "Mật khẩu hiện tại",
+        "new_password": "Mật khẩu mới",
+        "confirm_new_password": "Xác nhận mật khẩu mới"
     },
     "home": {
         "title": "Đoạn chat"
