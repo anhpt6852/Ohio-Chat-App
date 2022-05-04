@@ -65,7 +65,8 @@
         "confirm_new_password": "Xác nhận mật khẩu mới",
         "error": {
             "wrong_password": "Mật khẩu hiện tại không đúng xin vui lòng thử lại",
-            "invalid_password": "Mật khẩu nhập lại không đúng xin vui lòng thử lại"
+            "invalid_password": "Mật khẩu nhập lại không đúng xin vui lòng thử lại",
+            "logout": "Đăng xuất thất bại"
         }
     },
     "home": {
