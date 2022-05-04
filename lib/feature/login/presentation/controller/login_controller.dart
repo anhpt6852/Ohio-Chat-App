@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:ohio_chat_app/core/commons/presentation/snack_bar.dart';
@@ -144,6 +145,11 @@ class LoginController {
               FirestoreConstants.phoneNumber, userChat.phoneNumber);
         }
         ref.read(isLogined.state).state = true;
+
+        try {
+          RemoteMessage? initialMessage =
+              await FirebaseMessaging.instance.getInitialMessage();
+        } catch (e) {}
         Navigator.of(context)
             .pushNamedAndRemoveUntil(AppRoutes.home, (route) => false);
 

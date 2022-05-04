@@ -22,8 +22,6 @@ Future _displayNotification(RemoteMessage message) async {
   AndroidNotification? android = message.notification?.android;
   AppleNotification? ios = message.notification?.apple;
 
-  print(message.data);
-
   if (notification != null) {
     flutterLocalNotificationsPlugin.show(
       notification.hashCode,
@@ -61,7 +59,7 @@ _messageHandler(RemoteMessage message) async {
 
 Future<void> _backgroundMessageHandler(RemoteMessage message) async {
   await Firebase.initializeApp();
-  return null;
+  return;
 }
 
 void main() async {
@@ -80,6 +78,10 @@ void main() async {
     sound: false,
     badge: false,
   );
+
+  var deviceToken = await FirebaseMessaging.instance.getToken();
+
+  print('deviceToken: ' + deviceToken!);
 
   FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) async {
     var token = await firebaseToken;
