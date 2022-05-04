@@ -70,6 +70,14 @@
     "home": {
         "title": "Chat"
     },
+    "social": {
+        "title": "Newfeeds",
+        "create_post": "Create new post",
+        "hint_text": "What do you think today?",
+        "post_button": "Post",
+        "like": "Like",
+        "comment": "Comment"
+    },
     "config": {
         "options": "Choose option",
         "logout": "Log out"

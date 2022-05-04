@@ -61,6 +61,13 @@ abstract class  LocaleKeys {
   static const profile = 'profile';
   static const home_title = 'home.title';
   static const home = 'home';
+  static const social_title = 'social.title';
+  static const social_create_post = 'social.create_post';
+  static const social_hint_text = 'social.hint_text';
+  static const social_post_button = 'social.post_button';
+  static const social_like = 'social.like';
+  static const social_comment = 'social.comment';
+  static const social = 'social';
   static const config_options = 'config.options';
   static const config_logout = 'config.logout';
   static const config = 'config';

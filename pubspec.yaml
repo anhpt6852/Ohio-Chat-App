@@ -34,6 +34,8 @@ dependencies:
   image_picker: ^0.8.5
   flutter_local_notifications: ^9.4.1
   open_mail_app: ^0.4.5
+  nanoid: ^1.0.0
+  dotted_border: ^2.0.0+2
 
   #video-call
   agora_rtc_engine: ^5.1.0

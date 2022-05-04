@@ -17,6 +17,7 @@ class HomeController {
 
   HomeController({required this.ref});
   var currentUid = StateProvider.autoDispose<String>(((ref) => ''));
+  var currentIndex = StateProvider.autoDispose<int>(((ref) => 0));
   var userChat = StateProvider.autoDispose<ChatUser>(((ref) => const ChatUser(
       id: '', photoUrl: '', displayName: '', phoneNumber: '', aboutMe: '')));
 

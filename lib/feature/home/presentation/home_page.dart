@@ -13,6 +13,7 @@ import 'package:ohio_chat_app/feature/chat/presentation/controller/message_contr
 import 'package:ohio_chat_app/feature/chat/presentation/message_page.dart';
 import 'package:ohio_chat_app/feature/home/presentation/controller/home_controller.dart';
 import 'package:ohio_chat_app/feature/home/presentation/widgets/user_profile_drawer.dart';
+import 'package:ohio_chat_app/feature/social/presentation/social_page.dart';
 import 'package:ohio_chat_app/generated/locale_keys.g.dart';
 import 'package:ohio_chat_app/routes.dart';
 
@@ -350,85 +351,106 @@ class HomePage extends ConsumerWidget {
       }
     }
 
-    return Scaffold(
+    return GestureDetector(
+      onTap:() => FocusScope.of(context).unfocus(),
+      child: Scaffold(
         backgroundColor: AppColors.ink[0],
         drawer: const UserProfileDrawer(),
         appBar: AppBar(
           elevation: 0.0,
           centerTitle: true,
           automaticallyImplyLeading: false,
-          leading: Builder(
-            builder: (context) {
-              return GestureDetector(
-                onTap: () => Scaffold.of(context).openDrawer(),
-                child: Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child:  CircleAvatar(
-                      backgroundColor: AppColors.ink[400],
-                      backgroundImage: controller.getUserAvatar() == ''
-                          ? null
-                          : NetworkImage(controller.getUserAvatar()!),
-                      child: controller.getUserAvatar() == ''
-                          ? Icon(
-                              Icons.person,
-                              color: AppColors.ink[0],
-                              size: 16,
-                            )
-                          : const SizedBox.shrink(),
-                    ),
+          leading: Builder(builder: (context) {
+            return GestureDetector(
+              onTap: () => Scaffold.of(context).openDrawer(),
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: CircleAvatar(
+                  backgroundColor: AppColors.ink[400],
+                  backgroundImage: controller.getUserAvatar() == ''
+                      ? null
+                      : NetworkImage(controller.getUserAvatar()!),
+                  child: controller.getUserAvatar() == ''
+                      ? Icon(
+                          Icons.person,
+                          color: AppColors.ink[0],
+                          size: 16,
+                        )
+                      : const SizedBox.shrink(),
                 ),
-              );
-            }
-          ),
+              ),
+            );
+          }),
           title: Text(
-            tr(LocaleKeys.home_title),
+            ref.watch(controller.currentIndex) == 0
+                ? tr(LocaleKeys.social_title)
+                : tr(LocaleKeys.home_title),
             style: t16M.copyWith(color: AppColors.ink[500]),
           ),
         ),
-        body: SingleChildScrollView(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            children: [
-              StreamBuilder<QuerySnapshot>(
-                stream: controller.getFirestoreData(
-                    FirestoreConstants.pathUserCollection, 20),
-                builder: (BuildContext context,
-                    AsyncSnapshot<QuerySnapshot> snapshot) {
-                  if (snapshot.hasData) {
-                    if ((snapshot.data?.docs.length ?? 0) > 0) {
-                      return Column(children: [
-                        SizedBox(
-                          height: 112,
-                          child: ListView.builder(
-                            shrinkWrap: true,
-                            scrollDirection: Axis.horizontal,
-                            itemCount: snapshot.data!.docs.length,
-                            itemBuilder: (context, index) =>
-                                buildItem(context, snapshot.data?.docs[index]),
-                            controller: scrollController,
-                          ),
-                        ),
-                        Wrap(
-                            runSpacing: 16.0,
-                            children: List.generate(
-                                snapshot.data!.docs.length,
-                                (index) => buildListTile(
-                                    context, snapshot.data?.docs[index])))
-                      ]);
-                    } else {
-                      return const Center(
-                        child: Text('No user found...'),
-                      );
-                    }
-                  } else {
-                    return const Center(
-                      child: CircularProgressIndicator(),
-                    );
-                  }
-                },
+        body: ref.watch(controller.currentIndex) == 0
+            ? const SocialPage()
+            : SingleChildScrollView(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  children: [
+                    StreamBuilder<QuerySnapshot>(
+                      stream: controller.getFirestoreData(
+                          FirestoreConstants.pathUserCollection, 20),
+                      builder: (BuildContext context,
+                          AsyncSnapshot<QuerySnapshot> snapshot) {
+                        if (snapshot.hasData) {
+                          if ((snapshot.data?.docs.length ?? 0) > 0) {
+                            return Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                              SizedBox(
+                                height: 112,
+                                child: ListView.builder(
+                                  shrinkWrap: true,
+                                  scrollDirection: Axis.horizontal,
+                                  itemCount: snapshot.data!.docs.length,
+                                  itemBuilder: (context, index) => buildItem(
+                                      context, snapshot.data?.docs[index]),
+                                  controller: scrollController,
+                                ),
+                              ),
+                              Wrap(
+                                  runSpacing: 16.0,
+                                  children: List.generate(
+                                      snapshot.data!.docs.length,
+                                      (index) => buildListTile(
+                                          context, snapshot.data?.docs[index])))
+                            ]);
+                          } else {
+                            return const Center();
+                          }
+                        } else {
+                          return const Center();
+                        }
+                      },
+                    ),
+                  ],
+                ),
               ),
-            ],
-          ),
-        ));
+        bottomNavigationBar: BottomNavigationBar(
+          type: BottomNavigationBarType.fixed,
+          currentIndex: ref.watch(controller.currentIndex),
+          items: [
+            BottomNavigationBarItem(
+              icon: const Icon(Icons.public),
+              label: tr(LocaleKeys.social_title),
+            ),
+            BottomNavigationBarItem(
+              icon: const Icon(Icons.mail),
+              label: tr(LocaleKeys.home_title),
+            ),
+          ],
+          onTap: (int index) {
+            ref.read(controller.currentIndex.state).state = index;
+          },
+        ),
+      ),
+    );
   }
 }

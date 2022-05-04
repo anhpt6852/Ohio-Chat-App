@@ -81,6 +81,12 @@ const TextStyle t14M = TextStyle(
   height: 20 / 14,
   fontFamily: primaryFont,
 );
+const TextStyle t14R = TextStyle(
+  fontSize: 14,
+  fontWeight: FontWeight.normal,
+  height: 20 / 14,
+  fontFamily: primaryFont,
+);
 const TextStyle t12M = TextStyle(
   fontSize: 12,
   fontWeight: FontWeight.w400,
@@ -105,8 +111,8 @@ const TextTheme textTheme = TextTheme(
   subtitle1: t16M,
   subtitle2: t16R20,
 
-  bodyText1: t14M,
-  bodyText2: t14M,
+  bodyText1: t14R,
+  bodyText2: t14R,
 
   button: t16B,
   caption: t16M,

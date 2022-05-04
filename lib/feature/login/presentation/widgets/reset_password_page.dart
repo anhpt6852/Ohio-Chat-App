@@ -36,10 +36,9 @@ class ResetPasswordPage extends ConsumerWidget {
       color: AppColors.ink[0],
       child: ref.watch(controller.isSendEmail)
           ? AnimatedSwitcher(
-              duration: const Duration(milliseconds: 500),
-              transitionBuilder: (Widget child, Animation<double> animation) {
-                return FadeTransition(opacity: animation, child: child);
-              },
+              duration: const Duration(milliseconds: 1500),
+              transitionBuilder: (Widget child, Animation<double> animation) =>
+                  FadeTransition(child: child, opacity: animation),
               child: Center(
                 child: Column(
                   children: [

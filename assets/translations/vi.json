@@ -71,6 +71,14 @@
     "home": {
         "title": "Đoạn chat"
     },
+    "social": {
+        "title": "Bảng tin",
+        "create_post": "Tạo bài viết mới",
+        "hint_text": "Hôm nay bạn nghĩ gì?",
+        "post_button": "Đăng",
+        "like": "Thích",
+        "comment": "Bình luận"
+    },
     "config": {
         "options": "Chọn cách",
         "logout": "Đăng xuất"
