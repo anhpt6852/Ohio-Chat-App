@@ -33,35 +33,44 @@ class _LoginPageState extends ConsumerState<LoginPage> {
         backgroundColor: AppColors.ink[0],
         body: SafeArea(
           child: SingleChildScrollView(
-            child: Column(
+            child: Stack(
               children: [
-                // SizedBox(
-                //     width: MediaQuery.of(context).size.width,
-                //     height: MediaQuery.of(context).size.height,
-                //     child: Assets.images.loginBackground.image(fit: BoxFit.fill)),
-                // const LanguageWidget(),
-                SizedBox(height: MediaQuery.of(context).size.height / 6),
-                SizedBox(
-                  width: MediaQuery.of(context).size.width,
-                  child: Align(
-                    alignment: Alignment.center,
-                    child: Assets.images.logoBanner.image(
-                        width: MediaQuery.of(context).size.width / 1.8,
-                        color: AppColors.ink[500]),
-                  ),
-                ),
-                const SizedBox(height: 16),
-                SizedBox(
-                  width: MediaQuery.of(context).size.width,
-                  child: Align(
-                    alignment: Alignment.center,
-                    child: Text(
-                      tr(LocaleKeys.login_subtitle),
-                      style: t14M.copyWith(color: AppColors.ink[500]),
+                Column(
+                  children: [
+                    // SizedBox(
+                    //     width: MediaQuery.of(context).size.width,
+                    //     height: MediaQuery.of(context).size.height,
+                    //     child: Assets.images.loginBackground.image(fit: BoxFit.fill)),
+                    // const LanguageWidget(),
+                    SizedBox(height: MediaQuery.of(context).size.height / 6),
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width,
+                      child: Align(
+                        alignment: Alignment.center,
+                        child: Assets.images.logoBanner.image(
+                            width: MediaQuery.of(context).size.width / 1.8,
+                            color: AppColors.ink[500]),
+                      ),
                     ),
-                  ),
+                    const SizedBox(height: 16),
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width,
+                      child: Align(
+                        alignment: Alignment.center,
+                        child: Text(
+                          tr(LocaleKeys.login_subtitle),
+                          style: t14M.copyWith(color: AppColors.ink[500]),
+                        ),
+                      ),
+                    ),
+                    LoginForm(),
+                  ],
                 ),
-                LoginForm(),
+                Positioned(
+                  top: 0,
+                  right: 0,
+                  child: const LanguageWidget(),
+                )
               ],
             ),
           ),

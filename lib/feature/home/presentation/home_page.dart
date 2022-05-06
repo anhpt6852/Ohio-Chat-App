@@ -352,7 +352,7 @@ class HomePage extends ConsumerWidget {
     }
 
     return GestureDetector(
-      onTap:() => FocusScope.of(context).unfocus(),
+      onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
         backgroundColor: AppColors.ink[0],
         drawer: const UserProfileDrawer(),
@@ -402,26 +402,27 @@ class HomePage extends ConsumerWidget {
                         if (snapshot.hasData) {
                           if ((snapshot.data?.docs.length ?? 0) > 0) {
                             return Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                              SizedBox(
-                                height: 112,
-                                child: ListView.builder(
-                                  shrinkWrap: true,
-                                  scrollDirection: Axis.horizontal,
-                                  itemCount: snapshot.data!.docs.length,
-                                  itemBuilder: (context, index) => buildItem(
-                                      context, snapshot.data?.docs[index]),
-                                  controller: scrollController,
-                                ),
-                              ),
-                              Wrap(
-                                  runSpacing: 16.0,
-                                  children: List.generate(
-                                      snapshot.data!.docs.length,
-                                      (index) => buildListTile(
-                                          context, snapshot.data?.docs[index])))
-                            ]);
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  SizedBox(
+                                    height: 112,
+                                    child: ListView.builder(
+                                      shrinkWrap: true,
+                                      scrollDirection: Axis.horizontal,
+                                      itemCount: snapshot.data!.docs.length,
+                                      itemBuilder: (context, index) =>
+                                          buildItem(context,
+                                              snapshot.data?.docs[index]),
+                                      controller: scrollController,
+                                    ),
+                                  ),
+                                  Wrap(
+                                      runSpacing: 16.0,
+                                      children: List.generate(
+                                          snapshot.data!.docs.length,
+                                          (index) => buildListTile(context,
+                                              snapshot.data?.docs[index])))
+                                ]);
                           } else {
                             return const Center();
                           }

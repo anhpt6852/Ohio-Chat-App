@@ -36,10 +36,6 @@ class LoginController {
     return false;
   });
 
-  final languageSelector = StateProvider.autoDispose<String>((ref) {
-    return 'vi';
-  });
-
   var isObscureText = StateProvider((ref) => true);
   var isSendEmail = StateProvider((ref) => false);
 
@@ -109,10 +105,21 @@ class LoginController {
         var firebaseUser = result.user!;
         await prefs.setString('usernameFirebase', email.trim());
         await prefs.setString('passwordFirebase', password.trim());
+
+        var deviceToken = await FirebaseMessaging.instance.getToken();
+
+        print('deviceToken: ' + deviceToken!);
+
         final QuerySnapshot data = await firebaseFirestore
             .collection(FirestoreConstants.pathUserCollection)
             .where(FirestoreConstants.id, isEqualTo: firebaseUser.uid)
             .get();
+
+        await firebaseFirestore
+            .collection(FirestoreConstants.pathUserCollection)
+            .doc(firebaseUser.uid)
+            .update({"deviceToken": deviceToken});
+
         final List<DocumentSnapshot> document = data.docs;
         if (document.isEmpty) {
           firebaseFirestore
@@ -123,7 +130,8 @@ class LoginController {
             FirestoreConstants.photoUrl: firebaseUser.photoURL,
             FirestoreConstants.id: firebaseUser.uid,
             "createdAt: ": DateTime.now().millisecondsSinceEpoch.toString(),
-            FirestoreConstants.chattingWith: null
+            FirestoreConstants.chattingWith: null,
+            "deviceToken": deviceToken
           });
 
           User? currentUser = firebaseUser;

@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:math';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -131,6 +132,20 @@ class MessageController {
         .update(dataUpdate);
   }
 
+  Future<bool> deleteMessage(String groupChatId, String docPath) async {
+    try {
+      await firebaseFirestore
+          .collection(FirestoreConstants.pathMessageCollection)
+          .doc(groupChatId)
+          .collection(groupChatId)
+          .doc(docPath)
+          .delete();
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
   void showPreviewDialog(context, url) {
     showGeneralDialog(
       context: context,
@@ -176,6 +191,7 @@ class MessageController {
 
   Stream<QuerySnapshot> getChatMessage(String groupChatId, int limit) {
     isMessagesLoaded = true;
+
     print('aaaaa');
     return firebaseFirestore
         .collection(FirestoreConstants.pathMessageCollection)
@@ -200,6 +216,7 @@ class MessageController {
         timestamp: DateTime.now().millisecondsSinceEpoch.toString(),
         isSeen: false,
         content: content,
+        userNotificated: [],
         type: type);
 
     FirebaseFirestore.instance.runTransaction((transaction) async {

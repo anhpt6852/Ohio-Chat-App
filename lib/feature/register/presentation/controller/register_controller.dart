@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dio/dio.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -60,6 +61,10 @@ class RegisterController {
       }
       print(res);
       var firebaseUser = res.user!;
+
+      var deviceToken = await FirebaseMessaging.instance.getToken();
+
+      print('deviceToken: ' + deviceToken!);
       final QuerySnapshot data = await firebaseFirestore
           .collection(FirestoreConstants.pathUserCollection)
           .where(FirestoreConstants.id, isEqualTo: firebaseUser.uid)
@@ -74,7 +79,8 @@ class RegisterController {
           FirestoreConstants.photoUrl: firebaseUser.photoURL,
           FirestoreConstants.id: firebaseUser.uid,
           "createdAt: ": DateTime.now().millisecondsSinceEpoch.toString(),
-          FirestoreConstants.chattingWith: null
+          FirestoreConstants.chattingWith: null,
+          "deviceToken": deviceToken
         });
 
         User? currentUser = firebaseUser;

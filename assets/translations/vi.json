@@ -78,7 +78,20 @@
         "hint_text": "Hôm nay bạn nghĩ gì?",
         "post_button": "Đăng",
         "like": "Thích",
-        "comment": "Bình luận"
+        "comment": "Bình luận",
+        "like_count": "lượt thích",
+        "comment_count": "Bình luận",
+        "delete_post": "Xoá bài viết",
+        "delete_comment": "Xoá bình luận",
+        "delete_message": "Xoá tin nhắn",
+        "notification": {
+            "post_success": "Xoá bài viết thành công",
+            "post_failed": "Xoá bài viết thất bại",
+            "comment_success": "Xoá bình luận thành công",
+            "comment_failed": "Xoá bình luận thất bại",
+            "message_success": "Xoá tin nhắn thành công",
+            "message_failed": "Xoá tin nhắn thất bại"
+        }
     },
     "config": {
         "options": "Chọn cách",

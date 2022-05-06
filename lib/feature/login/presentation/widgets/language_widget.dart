@@ -1,20 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:ohio_chat_app/core/constant/colors.dart';
+import 'package:ohio_chat_app/feature/login/presentation/controller/language_controller.dart';
 import 'package:ohio_chat_app/feature/login/presentation/controller/login_controller.dart';
 import 'package:ohio_chat_app/feature/login/presentation/widgets/language_selector.dart';
 import 'package:ohio_chat_app/generated/assets.gen.dart';
+import 'package:ohio_chat_app/routes.dart';
 
 class LanguageWidget extends ConsumerWidget {
   const LanguageWidget({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final controller = ref.watch(loginControllerProvider);
+    final controller = ref.watch(languageControllerProvider);
 
-    Widget getFlag(String lang) {
+    Widget getFlag(Locale lang) {
       Widget flagWidget;
-      switch (lang) {
+      switch (lang.languageCode) {
         case 'vi':
           flagWidget = Assets.images.vnFlag.image();
           break;
@@ -32,14 +34,20 @@ class LanguageWidget extends ConsumerWidget {
       child: Padding(
         padding: const EdgeInsets.only(top: 16, right: 16),
         child: GestureDetector(
-            onTap: () => LanguageSelector.showCustomDialog(context,
-                language: ref.watch(controller.languageSelector.state).state),
+            onTap: () {
+              Navigator.of(context).pushNamed(AppRoutes.language);
+            },
             child: Container(
                 height: 24,
+                width: 32,
                 decoration: BoxDecoration(
-                    border: Border.all(width: 2.0, color: AppColors.ink[500]!)),
-                child: getFlag(
-                    ref.watch(controller.languageSelector.state).state))),
+                    borderRadius: BorderRadius.circular(4.0),
+                    border: Border.all(width: 1.0, color: AppColors.ink[0]!)),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(4.0),
+                  child:
+                      getFlag(ref.watch(controller.languageSelector(context))),
+                ))),
       ),
     );
   }

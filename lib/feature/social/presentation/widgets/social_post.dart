@@ -2,13 +2,16 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:ohio_chat_app/core/commons/presentation/snack_bar.dart';
 import 'package:ohio_chat_app/core/config/theme.dart';
 import 'package:ohio_chat_app/core/constant/colors.dart';
 import 'package:ohio_chat_app/feature/chat/data/models/chat_user.dart';
 import 'package:ohio_chat_app/feature/social/data/models/newfeeds.dart';
 import 'package:ohio_chat_app/feature/social/presentation/controller/social_controller.dart';
+import 'package:ohio_chat_app/feature/social/presentation/widgets/bottomsheet_post.dart';
 import 'package:ohio_chat_app/feature/social/presentation/widgets/comments_page.dart';
 import 'package:ohio_chat_app/feature/social/presentation/widgets/common_react.dart';
+import 'package:ohio_chat_app/generated/locale_keys.g.dart';
 
 class SocialPost extends ConsumerWidget {
   SocialPost({Key? key, required this.documentSnapshot}) : super(key: key);
@@ -121,69 +124,97 @@ class SocialPost extends ConsumerWidget {
                     padding: const EdgeInsets.only(
                         top: 16.0, right: 16.0, left: 16.0, bottom: 8.0),
                     child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        user.photoUrl.isNotEmpty
-                            ? ClipRRect(
-                                borderRadius: BorderRadius.circular(50),
-                                child: Image.network(
-                                  user.photoUrl,
-                                  fit: BoxFit.cover,
-                                  width: 48,
-                                  height: 48,
-                                  loadingBuilder: (BuildContext ctx,
-                                      Widget child,
-                                      ImageChunkEvent? loadingProgress) {
-                                    if (loadingProgress == null) {
-                                      return child;
-                                    } else {
-                                      return const SizedBox(
-                                          width: 48,
-                                          height: 48,
-                                          child: CircularProgressIndicator());
-                                    }
-                                  },
-                                  errorBuilder: (context, object, stackTrace) {
-                                    return const Icon(Icons.account_circle,
-                                        size: 40);
-                                  },
-                                ),
-                              )
-                            : Container(
-                                height: 48,
-                                width: 48,
-                                decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    color: AppColors.ink[400]),
-                                child: const Icon(
-                                  Icons.person,
-                                  color: Colors.white,
-                                  size: 32,
-                                ),
-                              ),
-                        const SizedBox(width: 16),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                        Row(
                           children: [
-                            SizedBox(
-                              width: 200,
-                              child: Text(
-                                user.displayName,
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
-                                style:
-                                    t20M.copyWith(fontWeight: FontWeight.bold),
-                              ),
-                            ),
-                            Text(
-                                DateFormat('dd MMM yyyy, hh:mm a').format(
-                                  DateTime.fromMillisecondsSinceEpoch(
-                                    int.parse(newfeeds.timestamp),
+                            user.photoUrl.isNotEmpty
+                                ? ClipRRect(
+                                    borderRadius: BorderRadius.circular(50),
+                                    child: Image.network(
+                                      user.photoUrl,
+                                      fit: BoxFit.cover,
+                                      width: 48,
+                                      height: 48,
+                                      loadingBuilder: (BuildContext ctx,
+                                          Widget child,
+                                          ImageChunkEvent? loadingProgress) {
+                                        if (loadingProgress == null) {
+                                          return child;
+                                        } else {
+                                          return const SizedBox(
+                                              width: 48,
+                                              height: 48,
+                                              child:
+                                                  CircularProgressIndicator());
+                                        }
+                                      },
+                                      errorBuilder:
+                                          (context, object, stackTrace) {
+                                        return const Icon(Icons.account_circle,
+                                            size: 40);
+                                      },
+                                    ),
+                                  )
+                                : Container(
+                                    height: 48,
+                                    width: 48,
+                                    decoration: BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        color: AppColors.ink[400]),
+                                    child: const Icon(
+                                      Icons.person,
+                                      color: Colors.white,
+                                      size: 32,
+                                    ),
+                                  ),
+                            const SizedBox(width: 16),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                SizedBox(
+                                  width: 200,
+                                  child: Text(
+                                    user.displayName,
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: t20M.copyWith(
+                                        fontWeight: FontWeight.bold),
                                   ),
                                 ),
-                                style:
-                                    t12M.copyWith(color: AppColors.ink[400])),
+                                Text(
+                                    DateFormat('dd MMM yyyy, hh:mm a').format(
+                                      DateTime.fromMillisecondsSinceEpoch(
+                                        int.parse(newfeeds.timestamp),
+                                      ),
+                                    ),
+                                    style: t12M.copyWith(
+                                        color: AppColors.ink[400])),
+                              ],
+                            ),
                           ],
                         ),
+                        controller.displayUserId() == newfeeds.id
+                            ? GestureDetector(
+                                onTap: (() =>
+                                    BottomSheetPost.show(context, () async {
+                                      var deleteRes = await controller
+                                          .deletePost(documentSnapshot.id);
+                                      Navigator.of(context).pop();
+                                      if (deleteRes) {
+                                        CommonSnackbar.show(context,
+                                            type: SnackbarType.success,
+                                            message: tr(LocaleKeys
+                                                .social_notification_post_success));
+                                      } else {
+                                        CommonSnackbar.show(context,
+                                            type: SnackbarType.error,
+                                            message: tr(LocaleKeys
+                                                .social_notification_post_failed));
+                                      }
+                                    }, tr(LocaleKeys.social_delete_post))),
+                                child: const Icon(Icons.more_horiz))
+                            : const SizedBox.shrink()
                       ],
                     ),
                   ),
@@ -231,10 +262,11 @@ class SocialPost extends ConsumerWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          '${newfeeds.react.length} lượt thích',
+                          '${newfeeds.react.length} ${tr(LocaleKeys.social_like_count)}',
                           style: t14M.copyWith(color: AppColors.ink[400]),
                         ),
-                        Text('${newfeeds.comments.length} bình luận',
+                        Text(
+                            '${newfeeds.comments.length} ${tr(LocaleKeys.social_comment_count)}',
                             style: t14M.copyWith(color: AppColors.ink[400])),
                       ],
                     ),

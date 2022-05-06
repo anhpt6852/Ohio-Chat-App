@@ -8,10 +8,13 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:ohio_chat_app/core/config/theme.dart';
 import 'package:ohio_chat_app/core/services/fcm_helper.dart';
+import 'package:ohio_chat_app/feature/login/presentation/controller/language_controller.dart';
 import 'package:ohio_chat_app/routes.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 
 import 'package:timeago/timeago.dart' as timeago;
+import 'package:timezone/timezone.dart' as tz;
+import 'package:timezone/data/latest.dart' as tz;
 
 Future<String?> get firebaseToken {
   return FirebaseMessaging.instance.getToken();
@@ -48,6 +51,7 @@ Future _displayNotification(RemoteMessage message) async {
       ),
       payload: jsonEncode(message.data),
     );
+
     return null;
   }
 }
@@ -88,6 +92,16 @@ void main() async {
     print('A new onMessageOpenedApp event was published!');
   });
 
+  tz.initializeTimeZones();
+
+  await flutterLocalNotificationsPlugin
+      .resolvePlatformSpecificImplementation<
+          AndroidFlutterLocalNotificationsPlugin>()
+      ?.createNotificationChannel(channel);
+  await flutterLocalNotificationsPlugin.initialize(
+    initializationSettings,
+  );
+
   runApp(
     EasyLocalization(
         supportedLocales: const [
@@ -97,23 +111,23 @@ void main() async {
         useOnlyLangCode: true,
         saveLocale: true,
         path: 'assets/translations',
-        fallbackLocale: const Locale('vi'),
         child: const ProviderScope(child: MyApp())),
   );
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends ConsumerWidget {
   const MyApp({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, ref) {
+    var languageController = ref.watch(languageControllerProvider);
     return MaterialApp(
       title: '',
       debugShowCheckedModeBanner: false,
       theme: appLightTheme,
       onGenerateRoute: (settings) => AppRouter.onGenerateRoute(settings),
       initialRoute: AppRoutes.login,
-      locale: context.locale,
+      locale: ref.watch(languageController.languageSelector(context)),
       localizationsDelegates: context.localizationDelegates,
       supportedLocales: context.supportedLocales,
       builder: (context, widget) => MediaQuery(

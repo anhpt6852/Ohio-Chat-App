@@ -8,6 +8,7 @@ class ChatMessages {
   String content;
   bool isSeen;
   int type;
+  List userNotificated;
 
   ChatMessages(
       {required this.idFrom,
@@ -15,6 +16,7 @@ class ChatMessages {
       required this.timestamp,
       required this.content,
       required this.isSeen,
+      required this.userNotificated,
       required this.type});
 
   Map<String, dynamic> toJson() {
@@ -25,6 +27,7 @@ class ChatMessages {
       FirestoreConstants.content: content,
       FirestoreConstants.isSeen: isSeen,
       FirestoreConstants.type: type,
+      'userNotificated': userNotificated,
     };
   }
 
@@ -35,6 +38,7 @@ class ChatMessages {
     String content = documentSnapshot.get(FirestoreConstants.content);
     bool isSeen = documentSnapshot.get(FirestoreConstants.isSeen) ?? true;
     int type = documentSnapshot.get(FirestoreConstants.type);
+    List userNotificated = documentSnapshot.get('userNotificated');
 
     return ChatMessages(
         idFrom: idFrom,
@@ -42,6 +46,7 @@ class ChatMessages {
         timestamp: timestamp,
         content: content,
         isSeen: isSeen,
+        userNotificated: userNotificated,
         type: type);
   }
 }

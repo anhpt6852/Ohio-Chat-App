@@ -21,7 +21,7 @@ class SocialPostBottomSheet {
       isScrollControlled: true,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(
-          top: Radius.circular(20),
+          top: Radius.circular(24),
         ),
       ),
       clipBehavior: Clip.antiAliasWithSaveLayer,

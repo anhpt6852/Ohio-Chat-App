@@ -77,7 +77,20 @@
         "hint_text": "What do you think today?",
         "post_button": "Post",
         "like": "Like",
-        "comment": "Comment"
+        "comment": "Comment",
+        "like_count": "likes",
+        "comment_count": "comments",
+        "delete_post": "Delete post",
+        "delete_comment": "Delete comment",
+        "delete_message": "Delete message",
+        "notification": {
+            "post_success": "Post deleted successfully",
+            "post_failed": "Delete failed post",
+            "comment_success": "Comment deleted successfully",
+            "comment_failed": "Delete failed comment",
+            "message_success": "Message deleted successfully",
+            "message_failed": "Delete failed message"
+        }
     },
     "config": {
         "options": "Choose option",

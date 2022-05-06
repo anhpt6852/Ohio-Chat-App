@@ -8,7 +8,7 @@
     <uses-feature android:name="android.hardware.camera.autofocus" />
     
    <application
-        android:label="ohio_chat_app"
+        android:label="Ohio Chatting"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

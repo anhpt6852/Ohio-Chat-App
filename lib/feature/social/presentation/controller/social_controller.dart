@@ -111,6 +111,26 @@ class SocialController {
     }
   }
 
+  Future<bool> deleteComments(
+      String postId, String commentId, List comments) async {
+    try {
+      comments.remove(commentId);
+      firebaseFirestore
+          .collection(FirestoreConstants.pathNewfeedsCollection)
+          .doc(FirestoreConstants.comments)
+          .collection(postId)
+          .doc(commentId)
+          .delete();
+      firebaseFirestore
+          .collection(FirestoreConstants.pathNewfeedsCollection)
+          .doc(postId)
+          .update({"comments": comments});
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
   LinearGradient colorPost(listColor) {
     var color = LinearGradient(colors: [
       Color.fromRGBO(255, listColor[1], listColor[2], 1),
@@ -199,6 +219,18 @@ class SocialController {
         .collection(FirestoreConstants.pathNewfeedsCollection)
         .doc(postId)
         .update({FirestoreConstants.comments: listComments});
+  }
+
+  Future<bool> deletePost(String postId) async {
+    try {
+      await firebaseFirestore
+          .collection(FirestoreConstants.pathNewfeedsCollection)
+          .doc(postId)
+          .delete();
+      return true;
+    } catch (e) {
+      return false;
+    }
   }
 
   getTimeOfLastSeen(String timestamp) {

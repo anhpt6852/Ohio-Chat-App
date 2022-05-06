@@ -1,13 +1,18 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:ohio_chat_app/core/commons/presentation/snack_bar.dart';
 import 'package:ohio_chat_app/core/config/theme.dart';
 import 'package:ohio_chat_app/core/constant/colors.dart';
 import 'package:ohio_chat_app/feature/chat/data/models/chat_user.dart';
 import 'package:ohio_chat_app/feature/social/data/models/comments.dart';
 import 'package:ohio_chat_app/feature/social/data/models/newfeeds.dart';
 import 'package:ohio_chat_app/feature/social/presentation/controller/social_controller.dart';
+import 'package:ohio_chat_app/feature/social/presentation/widgets/bottomsheet_post.dart';
 import 'package:ohio_chat_app/feature/social/presentation/widgets/common_react.dart';
+import 'package:ohio_chat_app/generated/locale_keys.g.dart';
+import 'package:ohio_chat_app/routes.dart';
 
 class CommentPage extends ConsumerWidget {
   final String userPostAvatar;
@@ -115,32 +120,60 @@ class CommentPage extends ConsumerWidget {
                                               ),
                                             ),
                                       const SizedBox(width: 16.0),
-                                      Container(
-                                        padding: const EdgeInsets.only(
-                                            left: 8.0,
-                                            right: 8.0,
-                                            bottom: 8.0,
-                                            top: 4.0),
-                                        decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(16.0),
-                                            color: AppColors.ink[200]),
-                                        child: ConstrainedBox(
-                                          constraints: const BoxConstraints(
-                                              maxWidth: 288),
-                                          child: Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Text(
-                                                userComment.displayName,
-                                                style: t16M,
-                                              ),
-                                              Text(
-                                                comment.content,
-                                                style: t16R,
-                                              ),
-                                            ],
+                                      GestureDetector(
+                                        onLongPress: () {
+                                          BottomSheetPost.show(context,
+                                              () async {
+                                            var deleteRes =
+                                                await controller.deleteComments(
+                                                    postId,
+                                                    comments[index].id,
+                                                    comments
+                                                        .map((e) => e.id)
+                                                        .toList());
+                                            Navigator.of(context).pop();
+                                            if (deleteRes) {
+                                              CommonSnackbar.show(context,
+                                                  type: SnackbarType.success,
+                                                  message: tr(LocaleKeys
+                                                      .social_notification_comment_success));
+                                            } else {
+                                              CommonSnackbar.show(context,
+                                                  type: SnackbarType.error,
+                                                  message: tr(LocaleKeys
+                                                      .social_notification_comment_failed));
+                                            }
+                                          },
+                                              tr(LocaleKeys
+                                                  .social_delete_comment));
+                                        },
+                                        child: Container(
+                                          padding: const EdgeInsets.only(
+                                              left: 8.0,
+                                              right: 8.0,
+                                              bottom: 8.0,
+                                              top: 4.0),
+                                          decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(16.0),
+                                              color: AppColors.ink[200]),
+                                          child: ConstrainedBox(
+                                            constraints: const BoxConstraints(
+                                                maxWidth: 288),
+                                            child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Text(
+                                                  userComment.displayName,
+                                                  style: t16M,
+                                                ),
+                                                Text(
+                                                  comment.content,
+                                                  style: t16R,
+                                                ),
+                                              ],
+                                            ),
                                           ),
                                         ),
                                       ),
@@ -224,7 +257,7 @@ class CommentPage extends ConsumerWidget {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 8.0),
                 child: Text(
-                  '${newfeeds.react.length} lượt thích',
+                  '${newfeeds.react.length} ${tr(LocaleKeys.social_like_count)}',
                   style: t14M.copyWith(color: AppColors.ink[400]),
                 ),
               ),
@@ -335,6 +368,33 @@ class CommentPage extends ConsumerWidget {
                             ),
                           ],
                         ),
+                        actions: [
+                          GestureDetector(
+                            onTap: () =>
+                                BottomSheetPost.show(context, () async {
+                              Navigator.of(context)
+                                  .popUntil((route) => route.isFirst);
+                              var deleteRes =
+                                  await controller.deletePost(postId);
+
+                              if (deleteRes) {
+                                CommonSnackbar.show(context,
+                                    type: SnackbarType.success,
+                                    message: tr(LocaleKeys
+                                        .social_notification_post_success));
+                              } else {
+                                CommonSnackbar.show(context,
+                                    type: SnackbarType.error,
+                                    message: tr(LocaleKeys
+                                        .social_notification_post_failed));
+                              }
+                            }, tr(LocaleKeys.social_delete_post)),
+                            child: const Padding(
+                              padding: EdgeInsets.only(right: 16.0),
+                              child: Icon(Icons.more_horiz),
+                            ),
+                          )
+                        ],
                       ),
                       body: body(newfeeds, snapshot.data!),
                     ),

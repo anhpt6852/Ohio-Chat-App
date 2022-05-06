@@ -90,6 +90,21 @@ class UserProfileDrawer extends ConsumerWidget {
                 thickness: 1,
                 color: AppColors.ink[100],
               ),
+              ListTile(
+                title: Text(tr(LocaleKeys.chooseLanguage)),
+                trailing: const Icon(
+                  Icons.arrow_forward_ios,
+                  size: 20,
+                ),
+                onTap: () {
+                  Navigator.of(context).pop();
+                  Navigator.of(context).pushNamed(AppRoutes.language);
+                },
+              ),
+              Divider(
+                thickness: 1,
+                color: AppColors.ink[100],
+              ),
             ],
           ),
         ),

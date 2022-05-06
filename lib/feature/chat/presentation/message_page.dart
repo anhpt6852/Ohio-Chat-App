@@ -4,6 +4,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:ohio_chat_app/core/commons/presentation/common_text_form_field.dart';
+import 'package:ohio_chat_app/core/commons/presentation/snack_bar.dart';
 import 'package:ohio_chat_app/core/config/theme.dart';
 import 'package:ohio_chat_app/core/constant/colors.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -11,6 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:ohio_chat_app/core/constant/message_constants.dart';
 import 'package:ohio_chat_app/feature/chat/data/models/message.dart';
 import 'package:ohio_chat_app/feature/chat/presentation/controller/message_controller.dart';
+import 'package:ohio_chat_app/feature/social/presentation/widgets/bottomsheet_post.dart';
 import 'package:ohio_chat_app/feature/video_call/presentation/controller/video_call_controller.dart';
 import 'package:ohio_chat_app/generated/locale_keys.g.dart';
 import 'package:ohio_chat_app/routes.dart';
@@ -105,24 +107,45 @@ class ChatPage extends ConsumerWidget {
           return Column(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
-              chatMessages.type == MessageType.text
-                  ? messageBubble(
-                      chatContent: chatMessages.content,
-                      color: AppColors.primary,
-                      textColor: AppColors.ink[0],
-                      margin: const EdgeInsets.only(right: 8, top: 2),
-                    )
-                  : chatMessages.type == MessageType.image
-                      ? GestureDetector(
-                          onTap: () => controller.showPreviewDialog(
-                              context, chatMessages.content),
-                          child: Container(
-                            margin: const EdgeInsets.only(right: 8, top: 8),
-                            child: chatImage(
-                                imageSrc: chatMessages.content, onTap: () {}),
-                          ),
-                        )
-                      : const SizedBox.shrink(),
+              GestureDetector(
+                onLongPress: () {
+                  BottomSheetPost.show(context, () async {
+                    var deleteRes = await controller.deleteMessage(
+                        ref.read(controller.groupChatId.state).state,
+                        documentSnapshot.id);
+                    Navigator.of(context).pop();
+                    if (deleteRes) {
+                      CommonSnackbar.show(context,
+                          type: SnackbarType.success,
+                          message: tr(
+                              LocaleKeys.social_notification_message_success));
+                    } else {
+                      CommonSnackbar.show(context,
+                          type: SnackbarType.error,
+                          message: tr(
+                              LocaleKeys.social_notification_message_failed));
+                    }
+                  }, tr(LocaleKeys.social_delete_message));
+                },
+                child: chatMessages.type == MessageType.text
+                    ? messageBubble(
+                        chatContent: chatMessages.content,
+                        color: AppColors.primary,
+                        textColor: AppColors.ink[0],
+                        margin: const EdgeInsets.only(right: 8, top: 2),
+                      )
+                    : chatMessages.type == MessageType.image
+                        ? GestureDetector(
+                            onTap: () => controller.showPreviewDialog(
+                                context, chatMessages.content),
+                            child: Container(
+                              margin: const EdgeInsets.only(right: 8, top: 8),
+                              child: chatImage(
+                                  imageSrc: chatMessages.content, onTap: () {}),
+                            ),
+                          )
+                        : const SizedBox.shrink(),
+              ),
               controller.isMessageSent(index)
                   ? Container(
                       margin:
@@ -191,7 +214,7 @@ class ChatPage extends ConsumerWidget {
                           ),
                         )
                       : Container(
-                          width: 32,
+                          width: 40,
                         ),
                   chatMessages.type == MessageType.text
                       ? messageBubble(
@@ -350,40 +373,45 @@ class ChatPage extends ConsumerWidget {
                                       ),
                                     ),
                                   )
-                                : Image.network(
-                                    peerAvatar,
-                                    width: 40,
-                                    height: 40,
-                                    fit: BoxFit.cover,
-                                    loadingBuilder: (BuildContext ctx,
-                                        Widget child,
-                                        ImageChunkEvent? loadingProgress) {
-                                      if (loadingProgress == null) return child;
-                                      return Center(
-                                        child: CircularProgressIndicator(
-                                          color: AppColors.primary,
-                                          value: loadingProgress
-                                                          .expectedTotalBytes !=
-                                                      null &&
-                                                  loadingProgress
-                                                          .expectedTotalBytes !=
-                                                      null
-                                              ? loadingProgress
-                                                      .cumulativeBytesLoaded /
-                                                  loadingProgress
-                                                      .expectedTotalBytes!
-                                              : null,
-                                        ),
-                                      );
-                                    },
-                                    errorBuilder:
-                                        (context, object, stackTrace) {
-                                      return Icon(
-                                        Icons.account_circle,
-                                        size: 35,
-                                        color: AppColors.ink[100],
-                                      );
-                                    },
+                                : ClipRRect(
+                                    borderRadius: BorderRadius.circular(50),
+                                    child: Image.network(
+                                      peerAvatar,
+                                      width: 96,
+                                      height: 96,
+                                      fit: BoxFit.cover,
+                                      loadingBuilder: (BuildContext ctx,
+                                          Widget child,
+                                          ImageChunkEvent? loadingProgress) {
+                                        if (loadingProgress == null) {
+                                          return child;
+                                        }
+                                        return Center(
+                                          child: CircularProgressIndicator(
+                                            color: AppColors.primary,
+                                            value: loadingProgress
+                                                            .expectedTotalBytes !=
+                                                        null &&
+                                                    loadingProgress
+                                                            .expectedTotalBytes !=
+                                                        null
+                                                ? loadingProgress
+                                                        .cumulativeBytesLoaded /
+                                                    loadingProgress
+                                                        .expectedTotalBytes!
+                                                : null,
+                                          ),
+                                        );
+                                      },
+                                      errorBuilder:
+                                          (context, object, stackTrace) {
+                                        return Icon(
+                                          Icons.account_circle,
+                                          size: 35,
+                                          color: AppColors.ink[100],
+                                        );
+                                      },
+                                    ),
                                   ),
                             Text(
                               peerNickname,
